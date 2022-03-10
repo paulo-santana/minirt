@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:56:12 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 19:27:08 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:01:12 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,13 @@ t_tuple	*multiply_scalar(t_tuple *tuple, float value)
 			tuple->y * value,
 			tuple->z * value,
 			tuple->w * value));
+}
+
+t_tuple	*divide_scalar(t_tuple *tuple, float value)
+{
+	return (new_tuple(
+			tuple->x / value,
+			tuple->y / value,
+			tuple->z / value,
+			tuple->w / value));
 }
