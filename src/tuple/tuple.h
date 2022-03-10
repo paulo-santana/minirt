@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:17:07 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 17:58:41 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:16:36 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ t_tuple	*new_point(float x, float y, float z);
 t_tuple	*new_vector(float x, float y, float z);
 
 t_tuple	*add_tuples(t_tuple *a, t_tuple *b);
+t_tuple	*subtract_tuples(t_tuple *a, t_tuple *b);
 
-#endif /* !TUPLE_H */
+#endif
