@@ -143,6 +143,34 @@ MunitResult test_negate_tuple(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
+MunitResult test_multiply_scalar(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a = new_tuple(1, -2, 3, -4);
+
+	t_tuple *result = multiply_scalar(a, 3.5);
+	t_tuple *expected = new_tuple(3.5, -7, 10.5, -14);
+
+	munit_assert_true(tuple_equals(result, expected));
+	free(result);
+	free(expected);
+	free(a);
+	return (MUNIT_OK);
+}
+
+MunitResult test_multiply_scalar2(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a = new_tuple(1, -2, 3, -4);
+
+	t_tuple *result = multiply_scalar(a, 0.5);
+	t_tuple *expected = new_tuple(0.5, -1, 1.5, -2);
+
+	munit_assert_true(tuple_equals(result, expected));
+	free(result);
+	free(expected);
+	free(a);
+	return (MUNIT_OK);
+}
+
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
 		{ "/is_point() and is_vector()", a_tuple_with_w_1_is_a_point, NULL, NULL, 0, NULL },
@@ -155,6 +183,8 @@ int main(int argc, char **argv) {
 		{ "/subtract_tuples() point - point = vector", test_subtract_tuples, NULL, NULL, 0, NULL },
 		{ "/subtract_tuples() point - vector = point", test_subtract_tuples2, NULL, NULL, 0, NULL },
 		{ "/negate_tuple() neagtes a vector", test_negate_tuple, NULL, NULL, 0, NULL },
+		{ "/multiply_scalar() multplies a tuple by a scalar value", test_multiply_scalar, NULL, NULL, 0, NULL },
+		{ "/multiply_scalar() multplies a tuple by a fraction", test_multiply_scalar2, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
