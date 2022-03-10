@@ -131,15 +131,15 @@ MunitResult test_subtract_tuples2(const MunitParameter params[], void *fixture)
 
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
-		{ "/is_point", a_tuple_with_w_1_is_a_point, NULL, NULL, 0, NULL },
-		{ "/is_vector", a_tuple_with_w_0_is_a_vector, NULL, NULL, 0, NULL },
-		{ "/new_point", new_point_creates_tuples_with_w_1, NULL, NULL, 0, NULL },
-		{ "/new_vector", new_vector_creates_tuples_with_w_0, NULL, NULL, 0, NULL },
-		{ "/add_tuples", test_add_tuples, NULL, NULL, 0, NULL },
-		{ "/add_tuples2", test_add_tuples2, NULL, NULL, 0, NULL },
-		{ "/add_tuples3", test_add_tuples3, NULL, NULL, 0, NULL },
-		{ "/subtract_tuples", test_subtract_tuples, NULL, NULL, 0, NULL },
-		{ "/subtract_tuples2", test_subtract_tuples2, NULL, NULL, 0, NULL },
+		{ "/is_point() and is_vector()", a_tuple_with_w_1_is_a_point, NULL, NULL, 0, NULL },
+		{ "/is_point() and is_vector()", a_tuple_with_w_0_is_a_vector, NULL, NULL, 0, NULL },
+		{ "/new_point() creates a point", new_point_creates_tuples_with_w_1, NULL, NULL, 0, NULL },
+		{ "/new_vector() creates a vector", new_vector_creates_tuples_with_w_0, NULL, NULL, 0, NULL },
+		{ "/add_tuples() point + vector", test_add_tuples, NULL, NULL, 0, NULL },
+		{ "/add_tuples() vector + vector", test_add_tuples2, NULL, NULL, 0, NULL },
+		{ "/add_tuples() point + point makes no sense", test_add_tuples3, NULL, NULL, 0, NULL },
+		{ "/subtract_tuples() point - point = vector", test_subtract_tuples, NULL, NULL, 0, NULL },
+		{ "/subtract_tuples() point - vector = point", test_subtract_tuples2, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
