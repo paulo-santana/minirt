@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:11:11 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 14:38:26 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/10 17:27:33 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 
 # include "structures.h"
 # include "tuple/tuple.h"
+# include "utils/utils.h"
 
 #endif /* !MINIRT_H */
