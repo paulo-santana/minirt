@@ -129,6 +129,20 @@ MunitResult test_subtract_tuples2(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
+MunitResult test_negate_tuple(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a = new_tuple(1, -2, 3, -4);
+
+	t_tuple *result = negate_tuple(a);
+	t_tuple *expected = new_tuple(-1, 2, -3, 4);
+
+	munit_assert_true(tuple_equals(result, expected));
+	free(result);
+	free(expected);
+	free(a);
+	return (MUNIT_OK);
+}
+
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
 		{ "/is_point() and is_vector()", a_tuple_with_w_1_is_a_point, NULL, NULL, 0, NULL },
@@ -140,6 +154,7 @@ int main(int argc, char **argv) {
 		{ "/add_tuples() point + point makes no sense", test_add_tuples3, NULL, NULL, 0, NULL },
 		{ "/subtract_tuples() point - point = vector", test_subtract_tuples, NULL, NULL, 0, NULL },
 		{ "/subtract_tuples() point - vector = point", test_subtract_tuples2, NULL, NULL, 0, NULL },
+		{ "/negate_tuple() neagtes a vector", test_negate_tuple, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
