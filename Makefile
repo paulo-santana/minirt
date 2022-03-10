@@ -30,7 +30,7 @@ all: $(NAME)
 $(NAME): $(OBJ_DIRS) $(OBJ) $(OBJ_ROOT)/main.o
 	$(CC) $(OBJ) $(OBJ_ROOT)/main.o -o $(NAME)
 
-$(OBJ_DIRS): $(OBJ_ROOT)
+$(OBJ_DIRS):
 	mkdir -p $@
 
 $(OBJ_ROOT):
@@ -47,9 +47,10 @@ test: $(OBJ_ROOT) $(OBJ)
 	./test_bin
 
 clean:
-	$(RM) $(OBJ_ROOT)
+	$(RM) $(OBJ)
 
 fclean: clean
+	$(RM) $(OBJ_ROOT)
 	$(RM) $(NAME)
 
 re: fclean all
