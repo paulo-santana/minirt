@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   tuple.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:11:11 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 14:38:26 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/10 14:17:07 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/10 14:36:48 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef TUPLE_H
+# define TUPLE_H
 
-# include <stdio.h>
-# include <stdlib.h>
+# include "../structures.h"
 
-# include "structures.h"
-# include "tuple/tuple.h"
+int		is_point(t_tuple *tuple);
+int		is_vector(t_tuple *tuple);
 
-#endif /* !MINIRT_H */
+t_tuple	*new_tuple(float x, float y, float z, float w);
+
+#endif /* !TUPLE_H */

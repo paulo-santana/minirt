@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   tuple_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:11:11 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 14:38:26 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/10 14:16:34 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/10 14:16:52 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "../structures.h"
 
-# include <stdio.h>
-# include <stdlib.h>
+int	is_point(t_tuple *tuple)
+{
+	return (tuple->w == 1.0);
+}
 
-# include "structures.h"
-# include "tuple/tuple.h"
-
-#endif /* !MINIRT_H */
+int	is_vector(t_tuple *tuple)
+{
+	return (tuple->w == 0.0);
+}

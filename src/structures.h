@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:11:11 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 14:38:26 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/10 14:10:16 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef STRUCTURES_H
+# define STRUCTURES_H
 
-# include <stdio.h>
-# include <stdlib.h>
+typedef struct s_tuple {
+	float	x;
+	float	y;
+	float	z;
+	float	w;
+}	t_tuple;
 
-# include "structures.h"
-# include "tuple/tuple.h"
-
-#endif /* !MINIRT_H */
+#endif /* !STRUCTURES_H */
