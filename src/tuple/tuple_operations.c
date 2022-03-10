@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple.h                                            :+:      :+:    :+:   */
+/*   tuple_operations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:17:07 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 17:58:41 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/10 17:56:12 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/10 17:57:59 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TUPLE_H
-# define TUPLE_H
+#include "../minirt.h"
+#include "tuple.h"
 
-# include "../structures.h"
-
-int		is_point(t_tuple *tuple);
-int		is_vector(t_tuple *tuple);
-int		tuple_equals(t_tuple *a, t_tuple *b);
-
-t_tuple	*new_tuple(float x, float y, float z, float w);
-t_tuple	*new_point(float x, float y, float z);
-t_tuple	*new_vector(float x, float y, float z);
-
-t_tuple	*add_tuples(t_tuple *a, t_tuple *b);
-
-#endif /* !TUPLE_H */
+t_tuple	*add_tuples(t_tuple *a, t_tuple *b)
+{
+	return (new_tuple(
+			a->x + b->x,
+			a->y + b->y,
+			a->z + b->z,
+			a->w + b->w));
+}

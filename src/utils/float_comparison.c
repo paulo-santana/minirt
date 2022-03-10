@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple.h                                            :+:      :+:    :+:   */
+/*   float_comparison.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:17:07 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 17:58:41 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/10 17:01:49 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/10 17:03:04 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TUPLE_H
-# define TUPLE_H
+#include <math.h>
 
-# include "../structures.h"
+#define EPSILON 0.00001
 
-int		is_point(t_tuple *tuple);
-int		is_vector(t_tuple *tuple);
-int		tuple_equals(t_tuple *a, t_tuple *b);
-
-t_tuple	*new_tuple(float x, float y, float z, float w);
-t_tuple	*new_point(float x, float y, float z);
-t_tuple	*new_vector(float x, float y, float z);
-
-t_tuple	*add_tuples(t_tuple *a, t_tuple *b);
-
-#endif /* !TUPLE_H */
+int	fequals(float a, float b)
+{
+	if (fabs(a - b) < EPSILON)
+		return (1);
+	return (0);
+}
