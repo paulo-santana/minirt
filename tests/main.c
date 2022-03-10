@@ -68,13 +68,46 @@ MunitResult test_add_tuples(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
+MunitResult test_add_tuples2(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a = new_tuple(3, -2 , 5, 0);
+	t_tuple *b = new_tuple(-2, 3 , -1, 0);
+
+	t_tuple *result = add_tuples(a, b);
+	t_tuple *expected = new_tuple(1, 1, 4, 0);
+
+	munit_assert_true(tuple_equals(result, expected));
+	free(result);
+	free(expected);
+	free(a);
+	free(b);
+	return (MUNIT_OK);
+}
+
+MunitResult test_add_tuples3(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a = new_tuple(3, -2 , 5, 1);
+	t_tuple *b = new_tuple(-2, 3 , -1, 1);
+
+	t_tuple *result = add_tuples(a, b);
+
+	munit_assert_false(is_point(result));
+	munit_assert_false(is_vector(result));
+	free(result);
+	free(a);
+	free(b);
+	return (MUNIT_OK);
+}
+
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
 		{ "/is_point", a_tuple_with_w_1_is_a_point, NULL, NULL, 0, NULL },
 		{ "/is_vector", a_tuple_with_w_0_is_a_vector, NULL, NULL, 0, NULL },
 		{ "/new_point", new_point_creates_tuples_with_w_1, NULL, NULL, 0, NULL },
 		{ "/new_vector", new_vector_creates_tuples_with_w_0, NULL, NULL, 0, NULL },
-		{ "/add_tuples", new_vector_creates_tuples_with_w_0, NULL, NULL, 0, NULL },
+		{ "/add_tuples", test_add_tuples, NULL, NULL, 0, NULL },
+		{ "/add_tuples2", test_add_tuples2, NULL, NULL, 0, NULL },
+		{ "/add_tuples3", test_add_tuples3, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
