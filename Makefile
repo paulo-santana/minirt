@@ -43,7 +43,7 @@ TEST_SRC += tests/munit/munit.c
 TEST_SRC += tests/main.c
 
 test: $(OBJ_ROOT) $(OBJ)
-	$(CC) $(TEST_SRC) $(OBJ) -o ./test_bin
+	$(CC) $(TEST_SRC) $(OBJ) -o ./test_bin -lm
 	./test_bin
 
 clean:

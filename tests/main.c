@@ -1,6 +1,7 @@
 #include "munit/munit.h"
 #include "../src/structures.h"
 #include "../src/minirt.h"
+#include <math.h>
 
 MunitResult a_tuple_with_w_1_is_a_point(const MunitParameter params[], void *fixture)
 {
@@ -185,6 +186,53 @@ MunitResult test_divide_scalar(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
+float	magnitude(t_tuple *a)
+{
+	return (sqrt(
+			a->x * a->x
+			+ a->y * a->y
+			+ a->z * a->z
+			+ a->w * a->w
+			));
+}
+
+MunitResult test_magnitude1(const MunitParameter params[], void *fixture)
+{
+	float result, expected;
+	t_tuple *a;
+
+	a = new_vector(1, 0, 0);
+	result = magnitude(a);
+	expected = 1.0;
+	munit_assert_float(result, ==, expected);
+	free(a);
+
+	a = new_vector(0, 1, 0);
+	result = magnitude(a);
+	expected = 1.0;
+	munit_assert_float(result, ==, expected);
+	free(a);
+
+	a = new_vector(0, 0, 1);
+	result = magnitude(a);
+	expected = 1.0;
+	munit_assert_float(result, ==, expected);
+	free(a);
+
+	a = new_vector(1, 2, 3);
+	result = magnitude(a);
+	expected = sqrt(14);
+	munit_assert_float(result, ==, expected);
+	free(a);
+
+	a = new_vector(-1, -2, -3);
+	result = magnitude(a);
+	expected = sqrt(14);
+	munit_assert_float(result, ==, expected);
+	free(a);
+	return (MUNIT_OK);
+}
+
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
 		{ "/is_point() and is_vector()", a_tuple_with_w_1_is_a_point, NULL, NULL, 0, NULL },
@@ -200,6 +248,7 @@ int main(int argc, char **argv) {
 		{ "/multiply_scalar() multplies a tuple by a scalar value", test_multiply_scalar, NULL, NULL, 0, NULL },
 		{ "/multiply_scalar() multplies a tuple by a fraction", test_multiply_scalar2, NULL, NULL, 0, NULL },
 		{ "/divide_scalar() divides a tuple by a scalar value", test_divide_scalar, NULL, NULL, 0, NULL },
+		{ "/magnitude() calculates correctly", test_magnitude1, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
