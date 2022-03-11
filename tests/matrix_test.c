@@ -213,3 +213,14 @@ MunitResult test33(const MunitParameter params[], void *fixture)
 	free(b);
 	return (MUNIT_OK);
 }
+
+MunitResult test34(const MunitParameter params[], void *fixture)
+{
+	t_matrix22 *a = matrix22((float [2][2]){
+			{ 1, 5},
+			{-3, 2},
+		});
+	float result = determinant22(a);
+	munit_assert_float(result, ==, 17);
+	return (MUNIT_OK);
+}
