@@ -6,11 +6,34 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 13:26:34 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 13:58:41 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/11 20:07:14 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "matrix.h"
+
+t_matrix44	*identity_matrix44(void)
+{
+	int			i;
+	int			j;
+	t_matrix44	*matrix;
+
+	i = 0;
+	matrix = malloc(sizeof(t_matrix44));
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			matrix->data[i][j] = 0;
+			if (i == j)
+				matrix->data[i][j] = 1;
+			j++;
+		}
+		i++;
+	}
+	return (matrix);
+}
 
 t_matrix44	*matrix44(float initial_values[4][4])
 {
