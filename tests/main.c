@@ -186,16 +186,6 @@ MunitResult test_divide_scalar(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-float	magnitude(t_tuple *a)
-{
-	return (sqrt(
-			a->x * a->x
-			+ a->y * a->y
-			+ a->z * a->z
-			+ a->w * a->w
-			));
-}
-
 MunitResult test_magnitude1(const MunitParameter params[], void *fixture)
 {
 	float result, expected;
@@ -233,6 +223,42 @@ MunitResult test_magnitude1(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
+
+MunitResult test_normalize(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a, *norm, *expected;
+
+	a = new_vector(4, 0, 0);
+	norm = normalize(a);
+	expected = new_vector(1, 0, 0);
+	munit_assert_true(tuple_equals(norm, expected));
+	free(a);
+	free(norm);
+	free(expected);
+
+	a = new_vector(1, 2, 3);
+	norm = normalize(a);
+	expected = new_vector(0.26726, 0.53452, 0.80178);
+	munit_assert_true(tuple_equals(norm, expected));
+	free(a);
+	free(norm);
+	free(expected);
+
+	return (MUNIT_OK);
+}
+
+MunitResult test_normalize2(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a, *norm;
+
+	a = new_vector(1, 2, 3);
+	norm = normalize(a);
+	munit_assert_true(fequals(magnitude(norm), 1));
+	free(a);
+	free(norm);
+
+	return (MUNIT_OK);
+}
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
 		{ "/is_point() and is_vector()", a_tuple_with_w_1_is_a_point, NULL, NULL, 0, NULL },
@@ -249,6 +275,8 @@ int main(int argc, char **argv) {
 		{ "/multiply_scalar() multplies a tuple by a fraction", test_multiply_scalar2, NULL, NULL, 0, NULL },
 		{ "/divide_scalar() divides a tuple by a scalar value", test_divide_scalar, NULL, NULL, 0, NULL },
 		{ "/magnitude() calculates correctly", test_magnitude1, NULL, NULL, 0, NULL },
+		{ "/normalize() does what it says", test_normalize, NULL, NULL, 0, NULL },
+		{ "/the magnitude of a normalized vector is 1", test_normalize2, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

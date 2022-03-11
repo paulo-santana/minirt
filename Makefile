@@ -10,6 +10,7 @@ HEADERS += src/utils/utils.h
 SRC_FILES =  tuple/tuple_check.c
 SRC_FILES += tuple/tuple_creation.c
 SRC_FILES += tuple/tuple_operations.c
+SRC_FILES += tuple/vector_utils.c
 SRC_FILES += utils/float_comparison.c
 
 SRC_DIR = ./src
@@ -28,7 +29,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ_DIRS) $(OBJ) $(OBJ_ROOT)/main.o
-	$(CC) $(OBJ) $(OBJ_ROOT)/main.o -o $(NAME)
+	$(CC) $(OBJ) $(OBJ_ROOT)/main.o -o $(NAME) -lm
 
 $(OBJ_DIRS):
 	mkdir -p $@
