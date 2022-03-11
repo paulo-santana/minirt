@@ -47,6 +47,7 @@ MunitResult test25(const MunitParameter params[], void *fixture)
 	munit_assert_false(matrix44_equals(matrix2, matrix3));
 	free(matrix1);
 	free(matrix2);
+	free(matrix3);
 	return (MUNIT_OK);
 }
 
@@ -71,6 +72,7 @@ MunitResult test26(const MunitParameter params[], void *fixture)
 	munit_assert_false(matrix33_equals(matrix2, matrix3));
 	free(matrix1);
 	free(matrix2);
+	free(matrix3);
 	return (MUNIT_OK);
 }
 
@@ -93,5 +95,37 @@ MunitResult test27(const MunitParameter params[], void *fixture)
 	munit_assert_false(matrix22_equals(matrix2, matrix3));
 	free(matrix1);
 	free(matrix2);
+	free(matrix3);
+	return (MUNIT_OK);
+}
+
+
+MunitResult test28(const MunitParameter params[], void *fixture)
+{
+	t_matrix44 *a = matrix44((float[4][4]) {
+			{ 1 , 2 , 3 , 4 },
+			{ 5 , 6 , 7 , 8 },
+			{ 9 , 8 , 7 , 6 },
+			{ 5 , 4 , 3 , 2 },
+			});
+	t_matrix44 *b = matrix44((float[4][4]) {
+			{ -2, 1, 2, 3 },
+			{  3, 2, 1, -1},
+			{  4, 3, 6, 5 },
+			{  1, 2, 7, 8 },
+			});
+	t_matrix44 *expected = matrix44((float[4][4]) {
+			{ 20, 22 , 50 , 48 },
+			{ 44, 54 , 114, 108},
+			{ 40, 58 , 110, 102},
+			{ 16, 26 , 46 , 42 },
+			});
+
+	t_matrix44 *result = matrix44_multiply(a, b);
+	munit_assert_true(matrix44_equals(result, expected));
+	free(a);
+	free(b);
+	free(result);
+	free(expected);
 	return (MUNIT_OK);
 }
