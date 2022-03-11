@@ -202,3 +202,14 @@ MunitResult test32(const MunitParameter params[], void *fixture)
 	free(a);
 	return (MUNIT_OK);
 }
+
+MunitResult test33(const MunitParameter params[], void *fixture)
+{
+	t_matrix44 *a = identity_matrix44();
+	t_matrix44 *b = identity_matrix44();
+	t_matrix44 *result = transpose(a);
+	munit_assert_true(matrix44_equals(result, b));
+	free(a);
+	free(b);
+	return (MUNIT_OK);
+}
