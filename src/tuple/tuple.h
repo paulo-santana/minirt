@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:17:07 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 10:01:49 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/11 10:27:55 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,9 @@ t_tuple	*normalize(t_tuple *vector);
 t_tuple	*cross(t_tuple *a, t_tuple *b);
 
 t_color	*new_color(float red, float green, float blue);
+t_color	*add_colors(t_color *a, t_color *b);
+t_color	*subtract_colors(t_color *a, t_color *b);
+t_color	*multiply_scalar_color(t_color *tuple, float value);
+t_color	*multiply_colors(t_color *a, t_color *b);
 
 #endif

@@ -24,6 +24,10 @@ MunitResult test16(PARAMS);
 MunitResult test17(PARAMS);
 MunitResult test18(PARAMS);
 MunitResult test19(PARAMS);
+MunitResult test20(PARAMS);
+MunitResult test21(PARAMS);
+MunitResult test22(PARAMS);
+MunitResult test23(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
@@ -46,6 +50,10 @@ int main(int argc, char **argv) {
 		{ "/dot()", test17, NULL, NULL, 0, NULL },
 		{ "/cross()", test18, NULL, NULL, 0, NULL },
 		{ "/new_color()", test19, NULL, NULL, 0, NULL },
+		{ "/add_colors()", test20, NULL, NULL, 0, NULL },
+		{ "/subtract_colors()", test21, NULL, NULL, 0, NULL },
+		{ "/multiply_scalar_color()", test22, NULL, NULL, 0, NULL },
+		{ "/multiply_colors()", test23, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
