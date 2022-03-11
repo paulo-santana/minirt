@@ -259,6 +259,53 @@ MunitResult test_normalize2(const MunitParameter params[], void *fixture)
 
 	return (MUNIT_OK);
 }
+
+float	dot(t_tuple *a, t_tuple *b)
+{
+	return (
+		a->x * b->x
+		+ a->y * b->y
+		+ a->z * b->z
+		+ a->w * b->w
+	);
+}
+
+MunitResult test_dot_product(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a, *b;
+
+	a = new_vector(1, 2, 3);
+	b = new_vector(2, 3, 4);
+	munit_assert_float(dot(a, b), ==, 20);
+	free(a);
+	free(b);
+
+	return (MUNIT_OK);
+}
+
+MunitResult test_cross_product(const MunitParameter params[], void *fixture)
+{
+	t_tuple *a, *b, *expected, *result;
+
+	a = new_vector(1, 2, 3);
+	b = new_vector(2, 3, 4);
+	result = cross(a, b);
+	expected = new_vector(-1, 2, -1);
+	munit_assert_true(tuple_equals(result, expected));
+	free(expected);
+	free(result);
+
+	result = cross(b, a);
+	expected = new_vector(1, -2, 1);
+	munit_assert_true(tuple_equals(result, expected));
+	free(expected);
+	free(result);
+	free(a);
+	free(b);
+
+	return (MUNIT_OK);
+}
+
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
 		{ "/is_point() and is_vector()", a_tuple_with_w_1_is_a_point, NULL, NULL, 0, NULL },
@@ -277,6 +324,8 @@ int main(int argc, char **argv) {
 		{ "/magnitude() calculates correctly", test_magnitude1, NULL, NULL, 0, NULL },
 		{ "/normalize() does what it says", test_normalize, NULL, NULL, 0, NULL },
 		{ "/the magnitude of a normalized vector is 1", test_normalize2, NULL, NULL, 0, NULL },
+		{ "/dot()", test_dot_product, NULL, NULL, 0, NULL },
+		{ "/cross()", test_cross_product, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

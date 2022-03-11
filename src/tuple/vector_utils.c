@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 20:45:51 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 20:46:27 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/10 22:16:45 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,14 @@ t_tuple	*normalize(t_tuple *vector)
 			vector->y / mag,
 			vector->z / mag,
 			vector->w / mag
+		));
+}
+
+t_tuple	*cross(t_tuple *a, t_tuple *b)
+{
+	return (new_vector(
+			a->y * b->z - a->z * b->y,
+			a->z * b->x - a->x * b->z,
+			a->x * b->y - a->y * b->x
 		));
 }
