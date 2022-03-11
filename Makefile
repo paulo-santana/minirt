@@ -1,5 +1,8 @@
 NAME = miniRT
 
+MLX_DIR = ./minilibx-linux
+MLX = $(MLX_DIR)/libmlx.a
+
 IFLAGS = -I ./src
 
 HEADERS =  src/minirt.h
@@ -22,14 +25,18 @@ SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 -I $(MLX_DIR) -I src
+LFLAGS = -lm -L $(MLX_DIR) -lmlx -lXext -lX11
 
 RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIRS) $(OBJ) $(OBJ_ROOT)/main.o
-	$(CC) $(OBJ) $(OBJ_ROOT)/main.o -o $(NAME) -lm
+$(NAME): $(MLX) $(OBJ_DIRS) $(OBJ) $(OBJ_ROOT)/main.o
+	$(CC) $(OBJ) $(OBJ_ROOT)/main.o -o $(NAME) $(LFLAGS)
+
+$(MLX):
+	make -C $(MLX_DIR)
 
 $(OBJ_DIRS):
 	mkdir -p $@
@@ -42,6 +49,7 @@ $(OBJ_ROOT)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 
 TEST_SRC += tests/munit/munit.c
 TEST_SRC += tests/main.c
+TEST_SRC += tests/tuples_test.c
 
 test: $(OBJ_ROOT) $(OBJ)
 	$(CC) $(TEST_SRC) $(OBJ) -o ./test_bin -lm

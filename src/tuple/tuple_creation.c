@@ -35,3 +35,8 @@ t_tuple	*new_vector(float x, float y, float z)
 {
 	return (new_tuple(x, y, z, 0.0));
 }
+
+t_tuple	*new_color(float red, float green, float blue)
+{
+	return (new_tuple(red, green, blue, 0.0));
+}
