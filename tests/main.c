@@ -30,6 +30,8 @@ MunitResult test22(PARAMS);
 MunitResult test23(PARAMS);
 MunitResult test24(PARAMS);
 MunitResult test25(PARAMS);
+MunitResult test26(PARAMS);
+MunitResult test27(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -62,6 +64,8 @@ int main(int argc, char **argv) {
 	MunitTest matrix_tests[] = {
 		{ "/matrix44()", test24, NULL, NULL, 0, NULL },
 		{ "/matrix44_equals()", test25, NULL, NULL, 0, NULL },
+		{ "/matrix33_equals()", test26, NULL, NULL, 0, NULL },
+		{ "/matrix22_equals()", test27, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
