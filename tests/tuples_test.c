@@ -3,7 +3,7 @@
 #include "../src/minirt.h"
 #include <math.h>
 
-MunitResult a_tuple_with_w_1_is_a_point(const MunitParameter params[], void *fixture)
+MunitResult test1(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(4.3, -4.2, 3.1, 1);
 
@@ -17,7 +17,7 @@ MunitResult a_tuple_with_w_1_is_a_point(const MunitParameter params[], void *fix
 	return (MUNIT_OK);
 }
 
-MunitResult a_tuple_with_w_0_is_a_vector(const MunitParameter params[], void *fixture)
+MunitResult test2(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(4.3, -4.2, 3.1, 0);
 
@@ -31,7 +31,7 @@ MunitResult a_tuple_with_w_0_is_a_vector(const MunitParameter params[], void *fi
 	return (MUNIT_OK);
 }
 
-MunitResult new_point_creates_tuples_with_w_1(const MunitParameter params[], void *fixture)
+MunitResult test3(const MunitParameter params[], void *fixture)
 {
 	t_tuple *result = new_point(4.3, -4.2, 3.1);
 	t_tuple *expected = new_tuple(4.3, -4.2, 3.1, 1.0);
@@ -42,7 +42,7 @@ MunitResult new_point_creates_tuples_with_w_1(const MunitParameter params[], voi
 	return (MUNIT_OK);
 }
 
-MunitResult new_vector_creates_tuples_with_w_0(const MunitParameter params[], void *fixture)
+MunitResult test4(const MunitParameter params[], void *fixture)
 {
 	t_tuple *result = new_vector(4.3, -4.2, 3.1);
 	t_tuple *expected = new_tuple(4.3, -4.2, 3.1, 0.0);
@@ -53,7 +53,7 @@ MunitResult new_vector_creates_tuples_with_w_0(const MunitParameter params[], vo
 	return (MUNIT_OK);
 }
 
-MunitResult test_add_tuples(const MunitParameter params[], void *fixture)
+MunitResult test5(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(3, -2 , 5, 1);
 	t_tuple *b = new_tuple(-2, 3 , 1, 0);
@@ -69,7 +69,7 @@ MunitResult test_add_tuples(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_add_tuples2(const MunitParameter params[], void *fixture)
+MunitResult test6(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(3, -2 , 5, 0);
 	t_tuple *b = new_tuple(-2, 3 , -1, 0);
@@ -85,7 +85,7 @@ MunitResult test_add_tuples2(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_add_tuples3(const MunitParameter params[], void *fixture)
+MunitResult test7(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(3, -2 , 5, 1);
 	t_tuple *b = new_tuple(-2, 3 , -1, 1);
@@ -100,7 +100,7 @@ MunitResult test_add_tuples3(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_subtract_tuples(const MunitParameter params[], void *fixture)
+MunitResult test8(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_point(3, 2, 1);
 	t_tuple *b = new_point(5, 6, 7);
@@ -115,7 +115,7 @@ MunitResult test_subtract_tuples(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_subtract_tuples2(const MunitParameter params[], void *fixture)
+MunitResult test9(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_point(3, 2, 1);
 	t_tuple *b = new_vector(5, 6, 7);
@@ -130,7 +130,7 @@ MunitResult test_subtract_tuples2(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_negate_tuple(const MunitParameter params[], void *fixture)
+MunitResult test10(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(1, -2, 3, -4);
 
@@ -144,7 +144,7 @@ MunitResult test_negate_tuple(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_multiply_scalar(const MunitParameter params[], void *fixture)
+MunitResult test11(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(1, -2, 3, -4);
 
@@ -158,7 +158,7 @@ MunitResult test_multiply_scalar(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_multiply_scalar2(const MunitParameter params[], void *fixture)
+MunitResult test12(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(1, -2, 3, -4);
 
@@ -172,7 +172,7 @@ MunitResult test_multiply_scalar2(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_divide_scalar(const MunitParameter params[], void *fixture)
+MunitResult test13(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a = new_tuple(1, -2, 3, -4);
 
@@ -186,7 +186,7 @@ MunitResult test_divide_scalar(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_magnitude1(const MunitParameter params[], void *fixture)
+MunitResult test14(const MunitParameter params[], void *fixture)
 {
 	float result, expected;
 	t_tuple *a;
@@ -224,7 +224,7 @@ MunitResult test_magnitude1(const MunitParameter params[], void *fixture)
 }
 
 
-MunitResult test_normalize(const MunitParameter params[], void *fixture)
+MunitResult test15(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a, *norm, *expected;
 
@@ -247,7 +247,7 @@ MunitResult test_normalize(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_normalize2(const MunitParameter params[], void *fixture)
+MunitResult test16(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a, *norm;
 
@@ -270,7 +270,7 @@ float	dot(t_tuple *a, t_tuple *b)
 	);
 }
 
-MunitResult test_dot_product(const MunitParameter params[], void *fixture)
+MunitResult test17(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a, *b;
 
@@ -283,7 +283,7 @@ MunitResult test_dot_product(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test_cross_product(const MunitParameter params[], void *fixture)
+MunitResult test18(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a, *b, *expected, *result;
 
