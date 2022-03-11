@@ -180,3 +180,25 @@ MunitResult test31(const MunitParameter params[], void *fixture)
 	free(result);
 	return (MUNIT_OK);
 }
+
+MunitResult test32(const MunitParameter params[], void *fixture)
+{
+	t_matrix44 *a = matrix44((float [4][4]) {
+		{ 0 , 9 , 3 , 0 },
+		{ 9 , 8 , 0 , 8 },
+		{ 1 , 8 , 5 , 3 },
+		{ 0 , 0 , 5 , 8 },
+	});
+
+	t_matrix44 *expected = matrix44((float [4][4]) {
+		{ 0 , 9 , 1 , 0 },
+		{ 9 , 8 , 8 , 0 },
+		{ 3 , 0 , 5 , 5 },
+		{ 0 , 8 , 3 , 8 },
+	});
+	t_matrix44 *result = transpose(a);
+	munit_assert_true(matrix44_equals(result, expected));
+	free(expected);
+	free(a);
+	return (MUNIT_OK);
+}

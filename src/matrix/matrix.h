@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 13:56:50 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 20:08:44 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/11 20:33:34 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int			matrix22_equals(t_matrix22 *a, t_matrix22 *b);
 
 t_matrix44	*matrix44_multiply(t_matrix44 *a, t_matrix44 *b);
 t_tuple		*matrix44_multiply_tuple(t_matrix44 *a, t_tuple *b);
+t_matrix44	*transpose(t_matrix44 *matrix);
 
 #endif /* !MATRIX_H */

@@ -110,6 +110,7 @@ MunitResult test8(const MunitParameter params[], void *fixture)
 
 	munit_assert_true(tuple_equals(result, expected));
 	free(result);
+	free(expected);
 	free(a);
 	free(b);
 	return (MUNIT_OK);
@@ -125,6 +126,7 @@ MunitResult test9(const MunitParameter params[], void *fixture)
 
 	munit_assert_true(tuple_equals(result, expected));
 	free(result);
+	free(expected);
 	free(a);
 	free(b);
 	return (MUNIT_OK);

@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 19:27:02 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 19:57:23 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/11 20:37:37 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,26 @@ t_tuple	*matrix44_multiply_tuple(t_matrix44 *a, t_tuple *b)
 	}
 	result = new_tuple(tmp[0], tmp[1], tmp[2], tmp[3]);
 	return (result);
+}
+
+t_matrix44	*transpose(t_matrix44 *matrix)
+{
+	int		i;
+	int		j;
+	float	tmp;
+
+	i = 0;
+	while (i < 4)
+	{
+		j = i;
+		while (j < 4)
+		{
+			tmp = matrix->data[i][j];
+			matrix->data[i][j] = matrix->data[j][i];
+			matrix->data[j][i] = tmp;
+			j++;
+		}
+		i++;
+	}
+	return (matrix);
 }

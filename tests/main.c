@@ -36,6 +36,7 @@ MunitResult test28(PARAMS);
 MunitResult test29(PARAMS);
 MunitResult test30(PARAMS);
 MunitResult test31(PARAMS);
+MunitResult test32(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -74,6 +75,7 @@ int main(int argc, char **argv) {
 		{ "/matrix44_multiply_tuple()", test29, NULL, NULL, 0, NULL },
 		{ "/identity_matrix44()", test30, NULL, NULL, 0, NULL },
 		{ "/identity_matrix44() multiply a tuple", test31, NULL, NULL, 0, NULL },
+		{ "/transponse()", test32, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
