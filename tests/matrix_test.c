@@ -23,25 +23,6 @@ MunitResult test24(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-int	matrix44_equals(t_matrix44 *a, t_matrix44 *b)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			if (!fequals(a->data[i][j], b->data[i][j]))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
 
 MunitResult test25(const MunitParameter params[], void *fixture)
 {
@@ -55,6 +36,22 @@ MunitResult test25(const MunitParameter params[], void *fixture)
 	t_matrix44	*matrix2 = matrix44(initial1);
 
 	munit_assert_true(matrix44_equals(matrix1, matrix2));
+	free(matrix1);
+	free(matrix2);
+	return (MUNIT_OK);
+}
+
+MunitResult test26(const MunitParameter params[], void *fixture)
+{
+	float	initial1[3][3] = {
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+	};
+	t_matrix33	*matrix1 = matrix33(initial1);
+	t_matrix33	*matrix2 = matrix33(initial1);
+
+	munit_assert_true(matrix33_equals(matrix1, matrix2));
 	free(matrix1);
 	free(matrix2);
 	return (MUNIT_OK);
