@@ -129,3 +129,23 @@ MunitResult test28(const MunitParameter params[], void *fixture)
 	free(expected);
 	return (MUNIT_OK);
 }
+
+MunitResult test29(const MunitParameter params[], void *fixture)
+{
+	t_matrix44 *a = matrix44((float[4][4]) {
+			{ 1 , 2 , 3 , 4 },
+			{ 2 , 4 , 4 , 2 },
+			{ 8 , 6 , 4 , 1 },
+			{ 0 , 0 , 0 , 1 },
+			});
+	t_tuple *b = new_tuple(1, 2, 3, 1);
+	t_tuple *expected = new_tuple(18, 24, 33, 1);
+
+	t_tuple *result = matrix44_multiply_tuple(a, b);
+	munit_assert_true(tuple_equals(result, expected));
+	free(a);
+	free(b);
+	free(result);
+	free(expected);
+	return (MUNIT_OK);
+}

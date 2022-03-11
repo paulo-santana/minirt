@@ -6,13 +6,14 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 13:56:50 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 19:36:20 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/11 19:49:10 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MATRIX_H
 # define MATRIX_H
 # include <stdlib.h>
+# include "../structures.h"
 
 typedef struct s_matrix44 {
 	float	data[4][4];
@@ -35,5 +36,6 @@ int			matrix33_equals(t_matrix33 *a, t_matrix33 *b);
 int			matrix22_equals(t_matrix22 *a, t_matrix22 *b);
 
 t_matrix44	*matrix44_multiply(t_matrix44 *a, t_matrix44 *b);
+t_tuple		*matrix44_multiply_tuple(t_matrix44 *a, t_tuple *b);
 
 #endif /* !MATRIX_H */
