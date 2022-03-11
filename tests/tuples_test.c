@@ -305,3 +305,14 @@ MunitResult test18(const MunitParameter params[], void *fixture)
 
 	return (MUNIT_OK);
 }
+
+MunitResult test19(const MunitParameter params[], void *fixture)
+{
+	t_color	*color;
+
+	color = new_color(-0.5, 0.4, 1.7);
+	munit_assert_float(color->red, ==, -0.5);
+	munit_assert_float(color->green, ==, 0.4);
+	munit_assert_float(color->blue, ==, 1.7);
+	return (MUNIT_OK);
+}

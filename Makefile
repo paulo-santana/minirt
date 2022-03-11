@@ -14,6 +14,7 @@ SRC_FILES =  tuple/tuple_check.c
 SRC_FILES += tuple/tuple_creation.c
 SRC_FILES += tuple/tuple_operations.c
 SRC_FILES += tuple/vector_utils.c
+SRC_FILES += tuple/color_utils.c
 SRC_FILES += utils/float_comparison.c
 
 SRC_DIR = ./src

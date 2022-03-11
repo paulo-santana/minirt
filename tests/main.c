@@ -23,6 +23,7 @@ MunitResult test15(PARAMS);
 MunitResult test16(PARAMS);
 MunitResult test17(PARAMS);
 MunitResult test18(PARAMS);
+MunitResult test19(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tests[] = {
@@ -44,6 +45,7 @@ int main(int argc, char **argv) {
 		{ "/the magnitude of a normalized vector is 1", test16, NULL, NULL, 0, NULL },
 		{ "/dot()", test17, NULL, NULL, 0, NULL },
 		{ "/cross()", test18, NULL, NULL, 0, NULL },
+		{ "/new_color()", test19, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

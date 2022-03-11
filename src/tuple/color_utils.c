@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple_creation.c                                   :+:      :+:    :+:   */
+/*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:37:42 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 10:00:42 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/11 09:57:37 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/11 10:01:49 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 
-t_tuple	*new_tuple(float x, float y, float z, float w)
+t_color	*new_color(float red, float green, float blue)
 {
-	t_tuple	*tuple;
+	t_color	*color;
 
-	tuple = malloc(sizeof(t_tuple));
-	if (tuple == NULL)
-		exit (90);
-	tuple->x = x;
-	tuple->y = y;
-	tuple->z = z;
-	tuple->w = w;
-	return (tuple);
-}
-
-t_tuple	*new_point(float x, float y, float z)
-{
-	return (new_tuple(x, y, z, 1.0));
-}
-
-t_tuple	*new_vector(float x, float y, float z)
-{
-	return (new_tuple(x, y, z, 0.0));
+	color = malloc(sizeof(t_color));
+	color->red = red;
+	color->green = green;
+	color->blue = blue;
+	return (color);
 }
