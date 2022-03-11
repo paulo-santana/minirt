@@ -15,12 +15,14 @@ SRC_FILES += tuple/tuple_creation.c
 SRC_FILES += tuple/tuple_operations.c
 SRC_FILES += tuple/vector_utils.c
 SRC_FILES += tuple/color_utils.c
+SRC_FILES += matrix/creation.c
 SRC_FILES += utils/float_comparison.c
 
 SRC_DIR = ./src
 OBJ_ROOT = ./obj
 OBJ_DIRS += $(OBJ_ROOT)/tuple
 OBJ_DIRS += $(OBJ_ROOT)/utils
+OBJ_DIRS += $(OBJ_ROOT)/matrix
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
@@ -51,6 +53,7 @@ $(OBJ_ROOT)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 TEST_SRC += tests/munit/munit.c
 TEST_SRC += tests/main.c
 TEST_SRC += tests/tuples_test.c
+TEST_SRC += tests/matrix_test.c
 
 test: $(OBJ_ROOT) $(OBJ)
 	$(CC) $(TEST_SRC) $(OBJ) -o ./test_bin -lm

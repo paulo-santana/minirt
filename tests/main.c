@@ -28,9 +28,10 @@ MunitResult test20(PARAMS);
 MunitResult test21(PARAMS);
 MunitResult test22(PARAMS);
 MunitResult test23(PARAMS);
+MunitResult test24(PARAMS);
 
 int main(int argc, char **argv) {
-	MunitTest tests[] = {
+	MunitTest tuple_tests[] = {
 		{ "/is_point() and is_vector()", test1, NULL, NULL, 0, NULL },
 		{ "/is_point() and is_vector()", test2, NULL, NULL, 0, NULL },
 		{ "/new_point() creates a point", test3, NULL, NULL, 0, NULL },
@@ -57,13 +58,33 @@ int main(int argc, char **argv) {
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
+	MunitTest matrix_tests[] = {
+		{ "/matrix44()", test24, NULL, NULL, 0, NULL },
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
+	MunitSuite suites[] = {
+		{
+			"/tuples",
+			tuple_tests,
+			NULL,
+			1,
+			MUNIT_SUITE_OPTION_NONE,
+		}, {
+			"/matrices",
+			matrix_tests,
+			NULL,
+			1,
+			MUNIT_SUITE_OPTION_NONE,
+		}
+	};
+
 	MunitSuite suite = {
-		"/tuples",
-		tests,
+		"",
 		NULL,
+		suites,
 		1,
 		MUNIT_SUITE_OPTION_NONE,
 	};
-
 	return (munit_suite_main(&suite, NULL, argc, argv));
 }
