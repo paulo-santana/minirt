@@ -41,8 +41,9 @@ t_tuple		*matrix44_multiply_tuple(t_matrix44 *a, t_tuple *b);
 t_matrix44	*transpose(t_matrix44 *matrix);
 
 float		determinant22(t_matrix22 *a);
+float		determinant33(t_matrix33 *a);
 float		minor33(t_matrix33 *a, int row, int col);
-float		cofactor(t_matrix33 *a, int row, int col);;
+float		cofactor(t_matrix33 *a, int row, int col);
 
 t_matrix22	*submatrix22(t_matrix33 *a, int row, int col);
 t_matrix33	*submatrix33(t_matrix44 *a, int row, int col);
