@@ -47,6 +47,13 @@ MunitResult test39(PARAMS);
 MunitResult test40(PARAMS);
 MunitResult test41(PARAMS);
 MunitResult test42(PARAMS);
+MunitResult test43(PARAMS);
+MunitResult test44(PARAMS);
+MunitResult test45(PARAMS);
+MunitResult test46(PARAMS);
+MunitResult test47(PARAMS);
+MunitResult test48(PARAMS);
+MunitResult test49(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -96,9 +103,19 @@ int main(int argc, char **argv) {
 		{ "/determinant(4x4)", test40, NULL, NULL, 0, NULL },
 		{ "/is_invertible(4x4)", test41, NULL, NULL, 0, NULL },
 		{ "/is_invertible(4x4) returns false", test42, NULL, NULL, 0, NULL },
+		{ "/inverse() works", test43, NULL, NULL, 0, NULL },
+		{ "/inverse() works again", test44, NULL, NULL, 0, NULL },
+		{ "/inverse() works again again", test45, NULL, NULL, 0, NULL },
+		{ "/multiplying by the inverse() is the same as dividing", test46, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
+	MunitTest matrix_transform_tests[] = {
+		{ "/translation() moves a point", test47, NULL, NULL, 0, NULL },
+		{ "/invserse(translation()) moves a point to the oposite direction", test48, NULL, NULL, 0, NULL },
+		{ "/translation() * a vector doesn't change it", test49, NULL, NULL, 0, NULL },
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
 	MunitSuite tuple_suite = {
 		"/tuples",
 		tuple_tests,
@@ -115,9 +132,18 @@ int main(int argc, char **argv) {
 		MUNIT_SUITE_OPTION_NONE,
 	};
 
+	MunitSuite matrix_transform_suite = {
+		"/matrices/tranform",
+		matrix_transform_tests,
+		NULL,
+		1,
+		MUNIT_SUITE_OPTION_NONE,
+	};
+
 	MunitSuite suites[] = {
 		tuple_suite,
 		matrix_suite,
+		matrix_transform_suite,
 		NULL,
 	};
 

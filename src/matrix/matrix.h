@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 13:56:50 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 21:41:36 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/12 13:09:20 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ t_matrix	*transpose(t_matrix *matrix);
 float		determinant(t_matrix *a);
 float		minor(t_matrix *a, int row, int col);
 float		cofactor(t_matrix *a, int row, int col);
+t_matrix	*inverse(t_matrix *matrix);
 
 t_matrix	*submatrix(t_matrix *a, int row, int col);
+
+t_matrix	*translation(float x, float y, float z);
 
 #endif /* !MATRIX_H */

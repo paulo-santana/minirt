@@ -80,3 +80,30 @@ t_matrix	*transpose(t_matrix *matrix)
 	}
 	return (matrix);
 }
+
+t_matrix	*inverse(t_matrix *matrix)
+{
+	t_matrix	*inversed;
+	int			row;
+	int			col;
+	float		cofact;
+	float		determn;
+
+	if (!is_invertible(matrix))
+		return (NULL);
+	inversed = new_matrix(matrix->size, NULL);
+	determn = determinant(matrix);
+	row = 0;
+	while (row < matrix->size)
+	{
+		col = 0;
+		while (col < matrix->size)
+		{
+			cofact = cofactor(matrix, row, col);
+			inversed->data[col][row] = cofact / determn;
+			col++;
+		}
+		row++;
+	}
+	return (inversed);
+}

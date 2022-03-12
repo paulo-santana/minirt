@@ -20,7 +20,9 @@ SRC_FILES += matrix/check.c
 SRC_FILES += matrix/operations.c
 SRC_FILES += matrix/determinant.c
 SRC_FILES += matrix/submatrix.c
+SRC_FILES += matrix/transform.c
 SRC_FILES += utils/float_comparison.c
+SRC_FILES += debug.c
 
 SRC_DIR = ./src
 OBJ_ROOT = ./obj
@@ -58,6 +60,7 @@ TEST_SRC += tests/munit/munit.c
 TEST_SRC += tests/main.c
 TEST_SRC += tests/tuples_test.c
 TEST_SRC += tests/matrix_test.c
+TEST_SRC += tests/matrix_transform_test.c
 
 test: $(OBJ_ROOT) $(OBJ)
 	$(CC) $(TEST_SRC) $(OBJ) -o ./test_bin -lm
