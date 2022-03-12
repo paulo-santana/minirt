@@ -113,14 +113,21 @@ void	test_projectile(t_data *data)
 	free(env);
 }
 
+int	init_mlx_image(t_image *image, int width, int height, t_data *data)
+{
+	image->ptr = mlx_new_image(data->mlx, width, height);
+	image->data = mlx_get_data_addr(image->ptr, &image->bpp,
+			&image->size_line, &image->endian);
+	return (1);
+}
+
 int	main(void)
 {
 	t_data data;
 
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
-	data.canvas.ptr = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	data.canvas.data = mlx_get_data_addr(data.canvas.ptr, &data.canvas.bpp, &data.canvas.size_line, &data.canvas.endian);
+	init_mlx_image(&data.canvas, WIN_WIDTH, WIN_HEIGHT, &data);
 	test_projectile(&data);
 	mlx_put_image_to_window(data.mlx, data.window, data.canvas.ptr, 0, 0);
 	mlx_hook(data.window, 2, 1, exit_hook, &data);
