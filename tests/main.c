@@ -45,6 +45,8 @@ MunitResult test37(PARAMS);
 MunitResult test38(PARAMS);
 MunitResult test39(PARAMS);
 MunitResult test40(PARAMS);
+MunitResult test41(PARAMS);
+MunitResult test42(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -92,6 +94,8 @@ int main(int argc, char **argv) {
 		{ "/cofactor(3x3)", test38, NULL, NULL, 0, NULL },
 		{ "/determinant(3x3)", test39, NULL, NULL, 0, NULL },
 		{ "/determinant(4x4)", test40, NULL, NULL, 0, NULL },
+		{ "/is_invertible(4x4)", test41, NULL, NULL, 0, NULL },
+		{ "/is_invertible(4x4) returns false", test42, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

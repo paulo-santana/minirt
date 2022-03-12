@@ -319,3 +319,35 @@ MunitResult test40(const MunitParameter params[], void *fixture)
 	munit_assert_float(determinant(a), ==, -4071);
 	return (MUNIT_OK);
 }
+
+int	is_invertible(t_matrix *a)
+{
+	return (determinant(a) != 0);
+}
+
+MunitResult test41(const MunitParameter params[], void *fixture)
+{
+	t_matrix *a = new_matrix(4, (float[4][4]){
+		{ 6 , 4 , 4 , 4 },
+		{ 5 , 5 , 7 , 6 },
+		{ 4 , -9, 3 , -7},
+		{ 9 , 1 , 7 , -6},
+			});
+	 munit_assert_float(determinant(a), ==, -2120);
+	 munit_assert_true(is_invertible(a));
+	 return (MUNIT_OK);
+}
+
+MunitResult test42(const MunitParameter params[], void *fixture)
+{
+	t_matrix *a = new_matrix(4, (float[4][4]){
+			{ -4, 2 ,-2 , -3},
+			{ 9 , 6 , 2 , 6 },
+			{ 0 ,-5 , 1 , -5},
+			{ 0 , 0 , 0 , 0 },
+			});
+
+	munit_assert_float(determinant(a), ==, 0);
+	munit_assert_false(is_invertible(a));
+	return (MUNIT_OK);
+}
