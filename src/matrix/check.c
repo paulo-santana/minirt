@@ -13,56 +13,18 @@
 #include "matrix.h"
 #include <minirt.h>
 
-int	matrix44_equals(t_matrix44 *a, t_matrix44 *b)
+int	matrix_equals(t_matrix *a, t_matrix *b)
 {
 	int	i;
 	int	j;
 
+	if (a->size != b->size)
+		return (0);
 	i = 0;
-	while (i < 4)
+	while (i < a->size)
 	{
 		j = 0;
-		while (j < 4)
-		{
-			if (!fequals(a->data[i][j], b->data[i][j]))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	matrix33_equals(t_matrix33 *a, t_matrix33 *b)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 3)
-	{
-		j = 0;
-		while (j < 3)
-		{
-			if (!fequals(a->data[i][j], b->data[i][j]))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	matrix22_equals(t_matrix22 *a, t_matrix22 *b)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 2)
-	{
-		j = 0;
-		while (j < 2)
+		while (j < a->size)
 		{
 			if (!fequals(a->data[i][j], b->data[i][j]))
 				return (0);

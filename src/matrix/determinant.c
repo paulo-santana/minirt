@@ -12,37 +12,43 @@
 
 #include "matrix.h"
 
-inline float	determinant22(t_matrix22 *a)
+inline float	determinant(t_matrix *a)
 {
-	return (a->data[0][0] * a->data[1][1] - a->data[0][1] * a->data[1][0]);
+	float	det;
+	int		col;
+
+	if (a->size == 2)
+		det = a->data[0][0] * a->data[1][1] - a->data[0][1] * a->data[1][0];
+	else
+	{
+		det = 0;
+		col = 0;
+		while (col < a->size)
+		{
+			det = det + a->data[0][col] * cofactor(a, 0, col);
+			col++;
+		}
+	}
+	return (det);
 }
 
-float	cofactor(t_matrix33 *a, int row, int col)
+float	cofactor(t_matrix *a, int row, int col)
 {
-	float	minor;
+	float	min;
 
-	minor = minor33(a, row, col);
+	min = minor(a, row, col);
 	if ((row + col) % 2 != 0)
-		minor = -minor;
-	return (minor);
+		min = -min;
+	return (min);
 }
 
-float	determinant33(t_matrix33 *a)
+float	minor(t_matrix *a, int row, int col)
 {
-	return (
-		a->data[0][0] * cofactor(a, 0, 0)
-		+ a->data[0][1] * cofactor(a, 0, 1)
-		+ a->data[0][2] * cofactor(a, 0, 2)
-		);
-}
-
-float	minor33(t_matrix33 *a, int row, int col)
-{
-	t_matrix22	*sub;
+	t_matrix	*sub;
 	float		minor;
 
-	sub = submatrix22(a, row, col);
-	minor = determinant22(sub);
+	sub = submatrix(a, row, col);
+	minor = determinant(sub);
 	free(sub);
 	return (minor);
 }

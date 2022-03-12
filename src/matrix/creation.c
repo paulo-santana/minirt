@@ -12,14 +12,14 @@
 
 #include "matrix.h"
 
-t_matrix44	*identity_matrix44(void)
+t_matrix	*identity_matrix(void)
 {
 	int			i;
 	int			j;
-	t_matrix44	*matrix;
+	t_matrix	*matrix;
 
 	i = 0;
-	matrix = malloc(sizeof(t_matrix44));
+	matrix = malloc(sizeof(t_matrix));
 	while (i < 4)
 	{
 		j = 0;
@@ -32,69 +32,25 @@ t_matrix44	*identity_matrix44(void)
 		}
 		i++;
 	}
+	matrix->size = 4;
 	return (matrix);
 }
 
-t_matrix44	*matrix44(float initial_values[4][4])
+t_matrix	*new_matrix(int size, float initial_values[4][4])
 {
 	int			i;
 	int			j;
-	t_matrix44	*matrix;
+	t_matrix	*matrix;
 
 	i = 0;
-	matrix = malloc(sizeof(t_matrix44));
+	matrix = malloc(sizeof(t_matrix));
+	matrix->size = size;
 	if (initial_values == NULL)
 		return (matrix);
-	while (i < 4)
+	while (i < size)
 	{
 		j = 0;
-		while (j < 4)
-		{
-			matrix->data[i][j] = initial_values[i][j];
-			j++;
-		}
-		i++;
-	}
-	return (matrix);
-}
-
-t_matrix33	*matrix33(float initial_values[3][3])
-{
-	int			i;
-	int			j;
-	t_matrix33	*matrix;
-
-	i = 0;
-	matrix = malloc(sizeof(t_matrix33));
-	if (initial_values == NULL)
-		return (matrix);
-	while (i < 3)
-	{
-		j = 0;
-		while (j < 3)
-		{
-			matrix->data[i][j] = initial_values[i][j];
-			j++;
-		}
-		i++;
-	}
-	return (matrix);
-}
-
-t_matrix22	*matrix22(float initial_values[2][2])
-{
-	int			i;
-	int			j;
-	t_matrix22	*matrix;
-
-	i = 0;
-	matrix = malloc(sizeof(t_matrix22));
-	if (initial_values == NULL)
-		return (matrix);
-	while (i < 2)
-	{
-		j = 0;
-		while (j < 2)
+		while (j < size)
 		{
 			matrix->data[i][j] = initial_values[i][j];
 			j++;

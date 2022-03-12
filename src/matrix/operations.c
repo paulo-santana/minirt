@@ -14,14 +14,14 @@
 #include "structures.h"
 #include "tuple/tuple.h"
 
-t_matrix44	*matrix44_multiply(t_matrix44 *a, t_matrix44 *b)
+t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b)
 {
 	int			row;
 	int			col;
-	t_matrix44	*result;
+	t_matrix	*result;
 
 	row = 0;
-	result = matrix44(NULL);
+	result = new_matrix(4, NULL);
 	while (row < 4)
 	{
 		col = 0;
@@ -39,7 +39,7 @@ t_matrix44	*matrix44_multiply(t_matrix44 *a, t_matrix44 *b)
 	return (result);
 }
 
-t_tuple	*matrix44_multiply_tuple(t_matrix44 *a, t_tuple *b)
+t_tuple	*matrix_multiply_tuple(t_matrix *a, t_tuple *b)
 {
 	int		row;
 	float	tmp[4];
@@ -59,17 +59,17 @@ t_tuple	*matrix44_multiply_tuple(t_matrix44 *a, t_tuple *b)
 	return (result);
 }
 
-t_matrix44	*transpose(t_matrix44 *matrix)
+t_matrix	*transpose(t_matrix *matrix)
 {
 	int		i;
 	int		j;
 	float	tmp;
 
 	i = 0;
-	while (i < 4)
+	while (i < matrix->size)
 	{
 		j = i;
-		while (j < 4)
+		while (j < matrix->size)
 		{
 			tmp = matrix->data[i][j];
 			matrix->data[i][j] = matrix->data[j][i];
