@@ -302,3 +302,20 @@ MunitResult test39(const MunitParameter params[], void *fixture)
 	munit_assert_float(determinant(a), ==, -196);
 	return (MUNIT_OK);
 }
+
+MunitResult test40(const MunitParameter params[], void *fixture)
+{
+	t_matrix *a = new_matrix(4, (float[4][4]){
+			{ -2, -8,  3,  5 },
+			{ -3,  1,  7,  3 },
+			{  1,  2, -9,  6 },
+			{ -6,  7,  7, -9 },
+			});
+
+	munit_assert_float(cofactor(a, 0, 0), ==, 690);
+	munit_assert_float(cofactor(a, 0, 1), ==, 447);
+	munit_assert_float(cofactor(a, 0, 2), ==, 210);
+	munit_assert_float(cofactor(a, 0, 3), ==, 51);
+	munit_assert_float(determinant(a), ==, -4071);
+	return (MUNIT_OK);
+}
