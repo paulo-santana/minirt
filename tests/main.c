@@ -44,6 +44,7 @@ MunitResult test36(PARAMS);
 MunitResult test37(PARAMS);
 MunitResult test38(PARAMS);
 MunitResult test39(PARAMS);
+MunitResult test40(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -74,22 +75,23 @@ int main(int argc, char **argv) {
 	};
 
 	MunitTest matrix_tests[] = {
-		{ "/matrix44()", test24, NULL, NULL, 0, NULL },
-		{ "/matrix44_equals()", test25, NULL, NULL, 0, NULL },
-		{ "/matrix33_equals()", test26, NULL, NULL, 0, NULL },
-		{ "/matrix22_equals()", test27, NULL, NULL, 0, NULL },
-		{ "/matrix44_multiply()", test28, NULL, NULL, 0, NULL },
-		{ "/matrix44_multiply_tuple()", test29, NULL, NULL, 0, NULL },
-		{ "/identity_matrix44()", test30, NULL, NULL, 0, NULL },
-		{ "/identity_matrix44() multiply a tuple", test31, NULL, NULL, 0, NULL },
+		{ "/new_matrix(size, initial_values)", test24, NULL, NULL, 0, NULL },
+		{ "/matrix_equals(4x4, 4x4)", test25, NULL, NULL, 0, NULL },
+		{ "/matrix_equals(3x3, 3x3)", test26, NULL, NULL, 0, NULL },
+		{ "/matrix_equals(2x2, 2x2)", test27, NULL, NULL, 0, NULL },
+		{ "/matrix_multiply(4x4, 4x4)", test28, NULL, NULL, 0, NULL },
+		{ "/matrix_multiply_tuple(4x4, tuple)", test29, NULL, NULL, 0, NULL },
+		{ "/identity_matrix()", test30, NULL, NULL, 0, NULL },
+		{ "/identity_matrix() multiply a tuple", test31, NULL, NULL, 0, NULL },
 		{ "/transponse()", test32, NULL, NULL, 0, NULL },
 		{ "/transponse(identity_matrix)", test33, NULL, NULL, 0, NULL },
-		{ "/determinant22()", test34, NULL, NULL, 0, NULL },
-		{ "/submatrix22()", test35, NULL, NULL, 0, NULL },
-		{ "/submatrix33()", test36, NULL, NULL, 0, NULL },
-		{ "/minor33()", test37, NULL, NULL, 0, NULL },
-		{ "/cofactor()", test38, NULL, NULL, 0, NULL },
-		{ "/determinant33()", test39, NULL, NULL, 0, NULL },
+		{ "/determinant(2x2)", test34, NULL, NULL, 0, NULL },
+		{ "/submatrix(3x3) == 2x2", test35, NULL, NULL, 0, NULL },
+		{ "/submatrix(4x4) == 3x3", test36, NULL, NULL, 0, NULL },
+		{ "/minor(3x3)", test37, NULL, NULL, 0, NULL },
+		{ "/cofactor(3x3)", test38, NULL, NULL, 0, NULL },
+		{ "/determinant(3x3)", test39, NULL, NULL, 0, NULL },
+		{ "/determinant(4x4)", test40, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
