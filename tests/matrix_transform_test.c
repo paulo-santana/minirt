@@ -36,3 +36,14 @@ MunitResult test49(const MunitParameter params[], void *fixture)
 	munit_assert_true(tuple_equals(result, expected));
 	return (MUNIT_OK);
 }
+
+MunitResult test50(const MunitParameter params[], void *fixture)
+{
+	t_matrix *transform = scaling(2, 3, 4);
+	t_tuple *p = new_point(-4, 6, 8);
+	t_tuple *expected = new_point(-8, 18, 32);
+
+	t_tuple *result = matrix_multiply_tuple(transform, p);
+	munit_assert_true(tuple_equals(result, expected));
+	return (MUNIT_OK);
+}

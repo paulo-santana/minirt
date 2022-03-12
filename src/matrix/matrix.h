@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 13:56:50 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/12 13:09:20 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/12 13:17:24 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ t_matrix	*inverse(t_matrix *matrix);
 t_matrix	*submatrix(t_matrix *a, int row, int col);
 
 t_matrix	*translation(float x, float y, float z);
+t_matrix	*scaling(float x, float y, float z);
 
 #endif /* !MATRIX_H */
