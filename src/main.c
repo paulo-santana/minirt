@@ -1,6 +1,8 @@
+#include "matrix/matrix.h"
 #include "minirt.h"
 #include "structures.h"
 #include "tuple/tuple.h"
+#include "debug.h"
 #include <mlx.h>
 
 typedef struct s_projectile {
@@ -123,13 +125,51 @@ int	init_mlx_image(t_image *image, int width, int height, t_data *data)
 
 int	main(void)
 {
-	t_data data;
+	// t_data data;
 
-	data.mlx = mlx_init();
-	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
-	init_mlx_image(&data.canvas, WIN_WIDTH, WIN_HEIGHT, &data);
-	test_projectile(&data);
-	mlx_put_image_to_window(data.mlx, data.window, data.canvas.ptr, 0, 0);
-	mlx_hook(data.window, 2, 1, exit_hook, &data);
-	mlx_loop(data.mlx);
+	// data.mlx = mlx_init();
+	// data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
+	// init_mlx_image(&data.canvas, WIN_WIDTH, WIN_HEIGHT, &data);
+	// test_projectile(&data);
+	// mlx_put_image_to_window(data.mlx, data.window, data.canvas.ptr, 0, 0);
+	// mlx_hook(data.window, 2, 1, exit_hook, &data);
+	// mlx_loop(data.mlx);
+	t_matrix *id_matrix = identity_matrix();
+	t_matrix *inv = inverse(id_matrix);
+	t_matrix *a = new_matrix(4, (float[4][4]){
+			{  9 ,  3 ,  0 ,  9 },
+			{ -5 , -2 , -6 , -3 },
+			{ -4 ,  9 ,  6 ,  4 },
+			{ -7 ,  6 ,  6 ,  2 },
+			});
+	printf("inverse of identity matrix:\n");
+	print_matrix(inv);
+	printf("\n");
+	printf("simple matrix:\n");
+	print_matrix(a);
+	printf("\n");
+	t_matrix *inv_a = inverse(a);
+	printf("inverse of the simple matrix:\n");
+	print_matrix(inv_a);
+	t_matrix *a_mult_inv = matrix_multiply(a, inv_a);
+	printf("\n");
+	printf("simple matrix multiplied by its inverse\n");
+	print_matrix(a_mult_inv);
+	printf("\n");
+	printf("transpose of the simple matrix\n");
+	t_matrix *tran = transpose(a);
+	print_matrix(tran);
+	printf("\n");
+	printf("inverse of the transpose of the simple matrix\n");
+	t_matrix *inv_tran = inverse(tran);
+	print_matrix(inv_tran);
+	printf("transpose of the inverse of the simple matrix\n");
+	t_matrix *tran_inv = transpose(inv_a);
+	print_matrix(tran_inv);
+
+	printf("identity matrix vs tuple\n");
+	t_tuple *tuple = new_tuple(1, 2, 3, 1);
+	id_matrix->data[1][2] = 42;
+	t_tuple *tmult = matrix_multiply_tuple(id_matrix, tuple);
+	print_tuple(tmult);
 }
