@@ -24,6 +24,7 @@ t_matrix	*identity_matrix(void);
 t_matrix	*new_matrix(int size, float initial_values[4][4]);
 
 int			matrix_equals(t_matrix *a, t_matrix *b);
+int			is_invertible(t_matrix *a);
 
 t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b);
 t_tuple		*matrix_multiply_tuple(t_matrix *a, t_tuple *b);

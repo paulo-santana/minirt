@@ -34,3 +34,8 @@ int	matrix_equals(t_matrix *a, t_matrix *b)
 	}
 	return (1);
 }
+
+int	is_invertible(t_matrix *a)
+{
+	return (determinant(a) != 0);
+}
