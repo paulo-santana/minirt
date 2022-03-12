@@ -261,4 +261,30 @@ MunitResult test36(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
+MunitResult test37(const MunitParameter params[], void *fixture)
+{
+	t_matrix33 *a = matrix33((float[3][3]) {
+			{ 3 , 5 , 0 },
+			{ 2 ,-1 ,-7 },
+			{ 6 ,-1 , 5 },
+			});
 
+	float result = minor33(a, 1, 0);
+	munit_assert_float(result, ==, 25);
+	return (MUNIT_OK);
+}
+
+MunitResult test38(const MunitParameter params[], void *fixture)
+{
+	t_matrix33 *a = matrix33((float[3][3]){
+		{ 3 ,  5 ,  0 },
+		{ 2 , -1 , -7 },
+		{ 6 , -1 ,  5 },
+		});
+
+	munit_assert_float(minor33(a, 0, 0), ==, -12);
+	munit_assert_float(cofactor(a, 0, 0), ==, -12);
+	munit_assert_float(minor33(a, 1, 0), ==, 25);
+	munit_assert_float(cofactor(a, 1, 0), ==, -25);
+	return (MUNIT_OK);
+}

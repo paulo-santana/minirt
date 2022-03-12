@@ -41,6 +41,8 @@ MunitResult test33(PARAMS);
 MunitResult test34(PARAMS);
 MunitResult test35(PARAMS);
 MunitResult test36(PARAMS);
+MunitResult test37(PARAMS);
+MunitResult test38(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -84,6 +86,8 @@ int main(int argc, char **argv) {
 		{ "/determinant22()", test34, NULL, NULL, 0, NULL },
 		{ "/submatrix22()", test35, NULL, NULL, 0, NULL },
 		{ "/submatrix33()", test36, NULL, NULL, 0, NULL },
+		{ "/minor33()", test37, NULL, NULL, 0, NULL },
+		{ "/cofactor()", test38, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
