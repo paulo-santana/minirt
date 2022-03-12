@@ -19,6 +19,7 @@ SRC_FILES += matrix/creation.c
 SRC_FILES += matrix/check.c
 SRC_FILES += matrix/operations.c
 SRC_FILES += matrix/determinant.c
+SRC_FILES += matrix/submatrix.c
 SRC_FILES += utils/float_comparison.c
 
 SRC_DIR = ./src

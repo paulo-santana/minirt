@@ -224,3 +224,41 @@ MunitResult test34(const MunitParameter params[], void *fixture)
 	munit_assert_float(result, ==, 17);
 	return (MUNIT_OK);
 }
+
+MunitResult test35(const MunitParameter params[], void *fixture)
+{
+	t_matrix33 *a = matrix33((float[3][3]) {
+			{ 1 , 5 , 0 },
+			{ -3, 2 , 7 },
+			{ 0 , 6 , -3},
+			});
+	t_matrix22 *expected = matrix22((float[2][2]) {
+			{ -3, 2 },
+			{ 0 , 6 },
+			});
+
+	t_matrix22 *result = submatrix22(a, 0, 2);
+	munit_assert_true(matrix22_equals(result, expected));
+	return (MUNIT_OK);
+}
+
+MunitResult test36(const MunitParameter params[], void *fixture)
+{
+	t_matrix44 *a = matrix44((float[4][4]) {
+			{ -6 , 1 , 1 , 6 },
+			{ -8 , 5 , 8 , 6 },
+			{ -1 , 0 , 8 , 2 },
+			{ -7 , 1 , -1, 1 },
+			});
+	t_matrix33 *expected = matrix33((float[3][3]) {
+			{ -6 , 1 , 6 },
+			{ -8 , 8 , 6 },
+			{ -7 ,-1 , 1 },
+			});
+
+	t_matrix33 *result = submatrix33(a, 2, 1);
+	munit_assert_true(matrix33_equals(result, expected));
+	return (MUNIT_OK);
+}
+
+

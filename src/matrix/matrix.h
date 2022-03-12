@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 13:56:50 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 20:53:45 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/11 21:10:55 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ t_tuple		*matrix44_multiply_tuple(t_matrix44 *a, t_tuple *b);
 t_matrix44	*transpose(t_matrix44 *matrix);
 
 float		determinant22(t_matrix22 *a);
+
+t_matrix22	*submatrix22(t_matrix33 *a, int row, int col);
+t_matrix33	*submatrix33(t_matrix44 *a, int row, int col);
 
 #endif /* !MATRIX_H */
