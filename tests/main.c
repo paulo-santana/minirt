@@ -56,6 +56,7 @@ MunitResult test48(PARAMS);
 MunitResult test49(PARAMS);
 MunitResult test50(PARAMS);
 MunitResult test51(PARAMS);
+MunitResult test52(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -118,7 +119,7 @@ int main(int argc, char **argv) {
 		{ "/translation() * a vector doesn't change it", test49, NULL, NULL, 0, NULL },
 		{ "/scaling() scales a point", test50, NULL, NULL, 0, NULL },
 		{ "/scaling() scales a vector", test51, NULL, NULL, 0, NULL },
-		{ "/inverse(scaling()) inverts the scaling", test51, NULL, NULL, 0, NULL },
+		{ "/inverse(scaling()) inverts the scaling", test52, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 	MunitSuite tuple_suite = {
