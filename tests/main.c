@@ -66,6 +66,11 @@ MunitResult test58(PARAMS);
 MunitResult test59(PARAMS);
 MunitResult test60(PARAMS);
 MunitResult test61(PARAMS);
+MunitResult test62(PARAMS);
+MunitResult test63(PARAMS);
+MunitResult test64(PARAMS);
+MunitResult test65(PARAMS);
+MunitResult test66(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -142,6 +147,11 @@ int main(int argc, char **argv) {
 	MunitTest ray_tests[] = {
 		{ "/new_ray()", test60, NULL, NULL, 0, NULL },
 		{ "/position()", test61, NULL, NULL, 0, NULL },
+		{ "/a ray intersect() a sphere at two points", test62, NULL, NULL, 0, NULL },
+		{ "/a ray intersect() a sphere at a tangent", test63, NULL, NULL, 0, NULL },
+		{ "/a ray misses the sphere", test64, NULL, NULL, 0, NULL },
+		{ "/a ray originates inside a sphere", test65, NULL, NULL, 0, NULL },
+		{ "/a sphere is behind a ray", test66, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

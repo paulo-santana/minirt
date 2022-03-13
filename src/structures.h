@@ -26,4 +26,9 @@ typedef struct s_color {
 	float	blue;
 }	t_color;
 
+typedef struct s_sphere {
+	t_tuple	*position;
+	float	radius;
+}	t_sphere;
+
 #endif /* !STRUCTURES_H */
