@@ -39,5 +39,6 @@ t_color	*add_colors(t_color *a, t_color *b);
 t_color	*subtract_colors(t_color *a, t_color *b);
 t_color	*multiply_scalar_color(t_color *tuple, float value);
 t_color	*multiply_colors(t_color *a, t_color *b);
+float	dot(t_tuple *a, t_tuple *b);
 
 #endif

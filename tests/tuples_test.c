@@ -262,16 +262,6 @@ MunitResult test16(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-float	dot(t_tuple *a, t_tuple *b)
-{
-	return (
-		a->x * b->x
-		+ a->y * b->y
-		+ a->z * b->z
-		+ a->w * b->w
-	);
-}
-
 MunitResult test17(const MunitParameter params[], void *fixture)
 {
 	t_tuple *a, *b;

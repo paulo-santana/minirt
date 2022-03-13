@@ -53,3 +53,13 @@ t_tuple	*divide_scalar(t_tuple *tuple, float value)
 			tuple->z / value,
 			tuple->w / value));
 }
+
+float	dot(t_tuple *a, t_tuple *b)
+{
+	return (
+		a->x * b->x
+		+ a->y * b->y
+		+ a->z * b->z
+		+ a->w * b->w
+	);
+}
