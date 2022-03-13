@@ -136,3 +136,29 @@ MunitResult test55(const MunitParameter params[], void *fixture)
 	munit_assert_true(tuple_equals(full_quarter_result, full_quarter_expected));
 	return (MUNIT_OK);
 }
+
+t_matrix *rotation_z(float rad)
+{
+	return (new_matrix(4, (float [4][4]){
+		{cosf(rad), -sinf(rad), 0, 0},
+		{sinf(rad), cosf(rad), 0, 0},
+		{0, 0, 1, 0},
+		{0, 0, 0, 1},
+	}));
+}
+
+MunitResult test56(const MunitParameter params[], void *fixture)
+{
+	t_tuple *p = new_point(0, 1, 0);
+	t_matrix *half_quarter = rotation_z(M_PI_4);
+	t_matrix *full_quarter = rotation_z(M_PI_2);
+
+	t_tuple *half_quarter_expected = new_point(-M_SQRT2 / 2, M_SQRT2 / 2, 0);
+	t_tuple *full_quarter_expected = new_point(-1, 0, 0);
+
+	t_tuple *half_quarter_result = matrix_multiply_tuple(half_quarter, p);
+	t_tuple *full_quarter_result = matrix_multiply_tuple(full_quarter, p);
+	munit_assert_true(tuple_equals(half_quarter_result, half_quarter_expected));
+	munit_assert_true(tuple_equals(full_quarter_result, full_quarter_expected));
+	return (MUNIT_OK);
+}
