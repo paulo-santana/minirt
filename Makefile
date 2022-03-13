@@ -21,6 +21,7 @@ SRC_FILES += matrix/operations.c
 SRC_FILES += matrix/determinant.c
 SRC_FILES += matrix/submatrix.c
 SRC_FILES += matrix/transform.c
+SRC_FILES += ray/creation.c
 SRC_FILES += utils/float_comparison.c
 SRC_FILES += debug.c
 
@@ -29,6 +30,7 @@ OBJ_ROOT = ./obj
 OBJ_DIRS += $(OBJ_ROOT)/tuple
 OBJ_DIRS += $(OBJ_ROOT)/utils
 OBJ_DIRS += $(OBJ_ROOT)/matrix
+OBJ_DIRS += $(OBJ_ROOT)/ray
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
@@ -61,6 +63,7 @@ TEST_SRC += tests/main.c
 TEST_SRC += tests/tuples_test.c
 TEST_SRC += tests/matrix_test.c
 TEST_SRC += tests/matrix_transform_test.c
+TEST_SRC += tests/ray_test.c
 
 test: $(OBJ_ROOT) $(OBJ)
 	$(CC) -g $(TEST_SRC) $(OBJ) -I src -o ./test_bin -lm

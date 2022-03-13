@@ -64,6 +64,7 @@ MunitResult test56(PARAMS);
 MunitResult test57(PARAMS);
 MunitResult test58(PARAMS);
 MunitResult test59(PARAMS);
+MunitResult test60(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -136,6 +137,12 @@ int main(int argc, char **argv) {
 		{ "/chained n transformations", test59, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
+
+	MunitTest ray_tests[] = {
+		{ "/new_ray()", test60, NULL, NULL, 0, NULL },
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
 	MunitSuite tuple_suite = {
 		"/tuples",
 		tuple_tests,
@@ -160,10 +167,19 @@ int main(int argc, char **argv) {
 		MUNIT_SUITE_OPTION_NONE,
 	};
 
+	MunitSuite ray_suite = {
+		"/rays",
+		ray_tests,
+		NULL,
+		1,
+		MUNIT_SUITE_OPTION_NONE,
+	};
+
 	MunitSuite suites[] = {
 		tuple_suite,
 		matrix_suite,
 		matrix_transform_suite,
+		ray_suite,
 		NULL,
 	};
 
