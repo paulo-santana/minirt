@@ -11,6 +11,9 @@ MunitResult test60(const MunitParameter params[], void *fixture)
 	t_ray *r = new_ray(origin, direction);
 	munit_assert_true(tuple_equals(r->origin, origin));
 	munit_assert_true(tuple_equals(r->direction, direction));
+	free(origin);
+	free(direction);
+	free(r);
 	return (MUNIT_OK);
 }
 
@@ -42,5 +45,8 @@ MunitResult test61(const MunitParameter params[], void *fixture)
 	munit_assert_true(tuple_equals(pos, expected));
 	free(pos);
 	free(expected);
+	free(r);
+	free(origin);
+	free(direction);
 	return (MUNIT_OK);
 }
