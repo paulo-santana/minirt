@@ -1,7 +1,9 @@
+#include "matrix/matrix.h"
 #include "munit/munit.h"
 #include "../src/structures.h"
 #include "../src/minirt.h"
 #include "../src/debug.h"
+#include "tuple/tuple.h"
 #include <math.h>
 
 MunitResult test47(const MunitParameter params[], void *fixture)
@@ -130,5 +132,26 @@ MunitResult test56(const MunitParameter params[], void *fixture)
 	t_tuple *full_quarter_result = matrix_multiply_tuple(full_quarter, p);
 	munit_assert_true(tuple_equals(half_quarter_result, half_quarter_expected));
 	munit_assert_true(tuple_equals(full_quarter_result, full_quarter_expected));
+	return (MUNIT_OK);
+}
+
+MunitResult test57(const MunitParameter params[], void *fixture)
+{
+	t_tuple *p = new_point(1, 0, 1);
+	t_matrix *A = rotation_x(M_PI_2);
+	t_matrix *B = scaling(5, 5, 5);
+	t_matrix *C = translation(10, 5, 7);
+
+	t_tuple *p2 = matrix_multiply_tuple(A, p);	
+	t_tuple *p2_expected = new_point(1, -1, 0);
+	munit_assert_true(tuple_equals(p2, p2_expected));
+
+	t_tuple *p3 = matrix_multiply_tuple(B, p2);	
+	t_tuple *p3_expected = new_point(5, -5, 0);
+	munit_assert_true(tuple_equals(p3, p3_expected));
+
+	t_tuple *p4 = matrix_multiply_tuple(C, p3);	
+	t_tuple *p4_expected = new_point(15, 0, 7);
+	munit_assert_true(tuple_equals(p4, p4_expected));
 	return (MUNIT_OK);
 }

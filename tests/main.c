@@ -61,6 +61,7 @@ MunitResult test53(PARAMS);
 MunitResult test54(PARAMS);
 MunitResult test55(PARAMS);
 MunitResult test56(PARAMS);
+MunitResult test57(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -128,6 +129,7 @@ int main(int argc, char **argv) {
 		{ "/inverse(rotation_x())", test54, NULL, NULL, 0, NULL },
 		{ "/rotation_y()", test55, NULL, NULL, 0, NULL },
 		{ "/rotation_z()", test56, NULL, NULL, 0, NULL },
+		{ "/individual transformations", test57, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 	MunitSuite tuple_suite = {
