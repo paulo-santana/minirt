@@ -36,3 +36,14 @@ t_intersections	*intersect(t_sphere *sphere, t_ray *ray)
 	inter->count = 2;
 	return (inter);
 }
+
+t_intersection	*new_intersection(float t, void *obj, t_object_types obj_type)
+{
+	t_intersection	*i;
+
+	i = malloc(sizeof(t_intersection));
+	i->t = t;
+	i->object = obj;
+	i->object_type = obj_type;
+	return (i);
+}

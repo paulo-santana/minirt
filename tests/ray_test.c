@@ -151,3 +151,17 @@ MunitResult test66(const MunitParameter params[], void *fixture)
 	free(xs);
 	return (MUNIT_OK);
 }
+
+MunitResult test67(const MunitParameter params[], void *fixture)
+{
+	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_intersection *intersection = new_intersection(3.5, s, OBJ_SPHERE);
+
+	munit_assert_float(intersection->t, ==, 3.5);
+	munit_assert_ptr_equal(intersection->object, s);
+	munit_assert_int(intersection->object_type, ==, OBJ_SPHERE);
+	free(s->position);
+	free(s);
+	free(intersection);
+	return (MUNIT_OK);
+}
