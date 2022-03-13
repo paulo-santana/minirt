@@ -1,6 +1,7 @@
 #include "munit/munit.h"
 #include "../src/structures.h"
 #include "../src/minirt.h"
+#include "../src/debug.h"
 #include <math.h>
 
 MunitResult test47(const MunitParameter params[], void *fixture)
@@ -68,5 +69,70 @@ MunitResult test52(const MunitParameter params[], void *fixture)
 
 	t_tuple *result = matrix_multiply_tuple(inv, v);
 	munit_assert_true(tuple_equals(result, expected));
+	return (MUNIT_OK);
+}
+
+t_matrix *rotation_x(float rad)
+{
+	return (new_matrix(4, (float [4][4]){
+		{1, 0, 0, 0},
+		{0, cosf(rad), -sinf(rad), 0},
+		{0, sinf(rad), cosf(rad), 0},
+		{0, 0, 0, 1},
+	}));
+}
+
+MunitResult test53(const MunitParameter params[], void *fixture)
+{
+	t_tuple *p = new_point(0, 1, 0);
+	t_matrix *half_quarter = rotation_x(M_PI_4);
+	t_matrix *full_quarter = rotation_x(M_PI_2);
+
+	t_tuple *half_quarter_expected = new_point(0, M_SQRT2 / 2, M_SQRT2 / 2);
+	t_tuple *full_quarter_expected = new_point(0, 0, 1);
+
+	t_tuple *half_quarter_result = matrix_multiply_tuple(half_quarter, p);
+	t_tuple *full_quarter_result = matrix_multiply_tuple(full_quarter, p);
+	munit_assert_true(tuple_equals(half_quarter_result, half_quarter_expected));
+	munit_assert_true(tuple_equals(full_quarter_result, full_quarter_expected));
+	return (MUNIT_OK);
+}
+
+MunitResult test54(const MunitParameter params[], void *fixture)
+{
+	t_tuple *p = new_point(0, 1, 0);
+	t_matrix *half_quarter = rotation_x(M_PI_4);
+	t_matrix *inv = inverse(half_quarter);
+
+	t_tuple *expected = new_point(0, M_SQRT2 / 2, -M_SQRT2 / 2);
+
+	t_tuple *result = matrix_multiply_tuple(inv, p);
+	munit_assert_true(tuple_equals(result, expected));
+	return (MUNIT_OK);
+}
+
+t_matrix *rotation_y(float rad)
+{
+	return (new_matrix(4, (float [4][4]){
+		{cosf(rad), 0, sinf(rad), 0},
+		{0, 1, 0, 0},
+		{-sinf(rad), 0, cosf(rad), 0},
+		{0, 0, 0, 1},
+	}));
+}
+
+MunitResult test55(const MunitParameter params[], void *fixture)
+{
+	t_tuple *p = new_point(0, 0, 1);
+	t_matrix *half_quarter = rotation_y(M_PI_4);
+	t_matrix *full_quarter = rotation_y(M_PI_2);
+
+	t_tuple *half_quarter_expected = new_point(M_SQRT2 / 2, 0, M_SQRT2 / 2);
+	t_tuple *full_quarter_expected = new_point(1, 0, 0);
+
+	t_tuple *half_quarter_result = matrix_multiply_tuple(half_quarter, p);
+	t_tuple *full_quarter_result = matrix_multiply_tuple(full_quarter, p);
+	munit_assert_true(tuple_equals(half_quarter_result, half_quarter_expected));
+	munit_assert_true(tuple_equals(full_quarter_result, full_quarter_expected));
 	return (MUNIT_OK);
 }

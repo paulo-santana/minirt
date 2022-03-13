@@ -63,7 +63,7 @@ TEST_SRC += tests/matrix_test.c
 TEST_SRC += tests/matrix_transform_test.c
 
 test: $(OBJ_ROOT) $(OBJ)
-	$(CC) $(TEST_SRC) $(OBJ) -o ./test_bin -lm
+	$(CC) $(TEST_SRC) $(OBJ) -I src -o ./test_bin -lm
 	./test_bin
 
 clean:
