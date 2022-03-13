@@ -13,6 +13,8 @@
 #include "matrix.h"
 #include "structures.h"
 #include "tuple/tuple.h"
+#include "debug.h"
+#include <stdio.h>
 
 t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b)
 {
@@ -35,6 +37,36 @@ t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b)
 			col++;
 		}
 		row++;
+	}
+	return (result);
+}
+
+t_matrix	*matrix_multiply3(t_matrix *a, t_matrix *b, t_matrix *c)
+{
+	t_matrix	*tmp;
+	t_matrix	*result;
+
+	tmp = matrix_multiply(c, b);
+	result = matrix_multiply(tmp, a);
+	free(tmp);
+	return (result);
+}
+
+t_matrix	*matrix_multiply_n(t_matrix **mats)
+{
+	int			i;
+	t_matrix	*tmp;
+	t_matrix	*result;
+
+	i = 0;
+	while (mats[i])
+		i++;
+	result = mats[--i];
+	while (i--)
+	{
+		tmp = result;
+		result = matrix_multiply(tmp, mats[i]);
+		free(tmp);
 	}
 	return (result);
 }

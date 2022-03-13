@@ -155,3 +155,38 @@ MunitResult test57(const MunitParameter params[], void *fixture)
 	munit_assert_true(tuple_equals(p4, p4_expected));
 	return (MUNIT_OK);
 }
+
+MunitResult test58(const MunitParameter params[], void *fixture)
+{
+	t_tuple *p = new_point(1, 0, 1);
+	t_matrix *A = rotation_x(M_PI_2);
+	t_matrix *B = scaling(5, 5, 5);
+	t_matrix *C = translation(10, 5, 7);
+
+	t_matrix *T = matrix_multiply3(A, B, C);
+
+	t_tuple *p2 = matrix_multiply_tuple(T, p);	
+	t_tuple *p2_expected = new_point(15, 0, 7);
+	munit_assert_true(tuple_equals(p2, p2_expected));
+	return (MUNIT_OK);
+}
+
+MunitResult test59(const MunitParameter params[], void *fixture)
+{
+	t_tuple *p = new_point(1, 0, 1);
+	t_matrix *A = rotation_x(M_PI_2);
+	t_matrix *B = scaling(5, 5, 5);
+	t_matrix *C = translation(10, 5, 7);
+
+	t_matrix **Ts = malloc(sizeof(t_matrix *) * 4);
+	Ts[0] = A;
+	Ts[1] = B;
+	Ts[2] = C;
+	Ts[3] = NULL;
+	t_matrix *T = matrix_multiply_n(Ts);
+
+	t_tuple *p2 = matrix_multiply_tuple(T, p);	
+	t_tuple *p2_expected = new_point(15, 0, 7);
+	munit_assert_true(tuple_equals(p2, p2_expected));
+	return (MUNIT_OK);
+}

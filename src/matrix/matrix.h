@@ -28,6 +28,8 @@ int			matrix_equals(t_matrix *a, t_matrix *b);
 int			is_invertible(t_matrix *a);
 
 t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b);
+t_matrix	*matrix_multiply3(t_matrix *a, t_matrix *b, t_matrix *c);
+t_matrix	*matrix_multiply_n(t_matrix **transformations);
 t_tuple		*matrix_multiply_tuple(t_matrix *a, t_tuple *b);
 t_matrix	*transpose(t_matrix *matrix);
 
