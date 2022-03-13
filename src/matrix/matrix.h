@@ -13,6 +13,7 @@
 #ifndef MATRIX_H
 # define MATRIX_H
 # include <stdlib.h>
+# include <math.h>
 # include "../structures.h"
 
 typedef struct s_matrix {
@@ -39,5 +40,8 @@ t_matrix	*submatrix(t_matrix *a, int row, int col);
 
 t_matrix	*translation(float x, float y, float z);
 t_matrix	*scaling(float x, float y, float z);
+t_matrix	*rotation_x(float rad);
+t_matrix	*rotation_y(float rad);
+t_matrix	*rotation_z(float rad);
 
 #endif /* !MATRIX_H */

@@ -72,16 +72,6 @@ MunitResult test52(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-t_matrix *rotation_x(float rad)
-{
-	return (new_matrix(4, (float [4][4]){
-		{1, 0, 0, 0},
-		{0, cosf(rad), -sinf(rad), 0},
-		{0, sinf(rad), cosf(rad), 0},
-		{0, 0, 0, 1},
-	}));
-}
-
 MunitResult test53(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(0, 1, 0);
@@ -111,16 +101,6 @@ MunitResult test54(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-t_matrix *rotation_y(float rad)
-{
-	return (new_matrix(4, (float [4][4]){
-		{cosf(rad), 0, sinf(rad), 0},
-		{0, 1, 0, 0},
-		{-sinf(rad), 0, cosf(rad), 0},
-		{0, 0, 0, 1},
-	}));
-}
-
 MunitResult test55(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(0, 0, 1);
@@ -135,16 +115,6 @@ MunitResult test55(const MunitParameter params[], void *fixture)
 	munit_assert_true(tuple_equals(half_quarter_result, half_quarter_expected));
 	munit_assert_true(tuple_equals(full_quarter_result, full_quarter_expected));
 	return (MUNIT_OK);
-}
-
-t_matrix *rotation_z(float rad)
-{
-	return (new_matrix(4, (float [4][4]){
-		{cosf(rad), -sinf(rad), 0, 0},
-		{sinf(rad), cosf(rad), 0, 0},
-		{0, 0, 1, 0},
-		{0, 0, 0, 1},
-	}));
 }
 
 MunitResult test56(const MunitParameter params[], void *fixture)
