@@ -55,6 +55,7 @@ t_matrix	*matrix_multiply3(t_matrix *a, t_matrix *b, t_matrix *c)
 t_matrix	*matrix_multiply_n(t_matrix **mats)
 {
 	int			i;
+	int			passed_first;
 	t_matrix	*tmp;
 	t_matrix	*result;
 
@@ -62,11 +63,14 @@ t_matrix	*matrix_multiply_n(t_matrix **mats)
 	while (mats[i])
 		i++;
 	result = mats[--i];
+	passed_first = 0;
 	while (i--)
 	{
 		tmp = result;
 		result = matrix_multiply(tmp, mats[i]);
-		free(tmp);
+		if (passed_first)
+			free(tmp);
+		passed_first = 1;
 	}
 	return (result);
 }
