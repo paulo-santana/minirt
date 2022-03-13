@@ -21,6 +21,7 @@ SRC_FILES += matrix/operations.c
 SRC_FILES += matrix/determinant.c
 SRC_FILES += matrix/submatrix.c
 SRC_FILES += matrix/transform.c
+SRC_FILES += ray/ray.c
 SRC_FILES += ray/creation.c
 SRC_FILES += utils/float_comparison.c
 SRC_FILES += debug.c

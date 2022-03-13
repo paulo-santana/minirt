@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.h                                              :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 13:04:58 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/13 13:30:06 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/13 13:15:01 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/13 13:32:34 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAY_H
-# define RAY_H
+#include "ray.h"
+#include "tuple/tuple.h"
 
-# include <stdlib.h>
-# include "structures.h"
+t_tuple	*position(t_ray *ray, float t)
+{
+	t_tuple	*distance;
+	t_tuple	*new_pos;
 
-typedef struct s_ray {
-	t_tuple	*origin;
-	t_tuple	*direction;
-}	t_ray;
-
-t_ray	*new_ray(t_tuple *origin, t_tuple *direction);
-
-t_tuple	*position(t_ray *ray, float t);
-
-#endif /* !RAY_H */
+	distance = multiply_scalar(ray->direction, t);
+	new_pos = add_tuples(ray->origin, distance);
+	free(distance);
+	return (new_pos);
+}

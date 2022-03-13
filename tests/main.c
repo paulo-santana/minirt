@@ -65,6 +65,7 @@ MunitResult test57(PARAMS);
 MunitResult test58(PARAMS);
 MunitResult test59(PARAMS);
 MunitResult test60(PARAMS);
+MunitResult test61(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -140,6 +141,7 @@ int main(int argc, char **argv) {
 
 	MunitTest ray_tests[] = {
 		{ "/new_ray()", test60, NULL, NULL, 0, NULL },
+		{ "/position()", test61, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
