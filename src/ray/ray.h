@@ -56,4 +56,7 @@ void			add_intersection(
 
 t_ray			*transform(t_ray *ray, t_matrix *matrix);
 
+t_intersections	*new_intersections_list(void);
+void			destroy_intersections_list(t_intersections *inters);
+
 #endif /* !RAY_H */

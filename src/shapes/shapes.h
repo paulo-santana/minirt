@@ -18,5 +18,6 @@
 
 t_sphere	*new_sphere(t_tuple *position, float radius);
 void		destroy_sphere(t_sphere *sphere);
+void		set_transform(t_sphere *sphere, t_matrix *t);
 
 #endif /* !SHAPES_H */

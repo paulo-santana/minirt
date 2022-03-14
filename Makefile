@@ -75,6 +75,7 @@ TEST_SRC += tests/tuples_test.c
 TEST_SRC += tests/matrix_test.c
 TEST_SRC += tests/matrix_transform_test.c
 TEST_SRC += tests/ray_test.c
+TEST_SRC += tests/sphere_test.c
 
 test: $(OBJ_ROOT) $(OBJ)
 	$(CC) -g $(TEST_SRC) $(OBJ) -I src -o ./test_bin -lm -L$(LIBFT_DIR) -lft

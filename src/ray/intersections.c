@@ -130,3 +130,23 @@ t_intersection	*hit(t_intersections *inters)
 	}
 	return (NULL);
 }
+
+t_intersections *new_intersections_list(void)
+{
+	t_intersections	*intersections;
+
+	intersections = malloc(sizeof(t_intersections));
+	intersections->count = 0;
+	intersections->size = 50;
+	intersections->is_sorted = 0;
+	intersections->intersections = malloc(sizeof(t_intersection *) * 50);
+	return (intersections);
+}
+
+void	destroy_intersections_list(t_intersections *inters)
+{
+	while (inters->count--)
+		free(inters->intersections[inters->count]);
+	free(inters->intersections);
+	free(inters);
+}
