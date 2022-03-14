@@ -69,8 +69,7 @@ MunitResult ray_test3(const MunitParameter params[], void *fixture)
 	free(r->origin);
 	free(r->direction);
 	free(r);
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -88,8 +87,7 @@ MunitResult ray_test4(const MunitParameter params[], void *fixture)
 	free(r->origin);
 	free(r->direction);
 	free(r);
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -106,8 +104,7 @@ MunitResult ray_test5(const MunitParameter params[], void *fixture)
 	free(r->origin);
 	free(r->direction);
 	free(r);
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -126,8 +123,7 @@ MunitResult ray_test6(const MunitParameter params[], void *fixture)
 	free(r->origin);
 	free(r->direction);
 	free(r);
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -146,8 +142,7 @@ MunitResult ray_test7(const MunitParameter params[], void *fixture)
 	free(r->origin);
 	free(r->direction);
 	free(r);
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -160,8 +155,7 @@ MunitResult ray_test8(const MunitParameter params[], void *fixture)
 	munit_assert_float(intersection->t, ==, 3.5);
 	munit_assert_ptr_equal(intersection->object, s);
 	munit_assert_int(intersection->object_type, ==, OBJ_SPHERE);
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	free(intersection);
 	return (MUNIT_OK);
 }
@@ -178,8 +172,7 @@ MunitResult ray_test9(const MunitParameter params[], void *fixture)
 	munit_assert_int(xs->count, ==, 2);
 	munit_assert_ptr_equal(xs->intersections[0]->object, s);
 	munit_assert_ptr_equal(xs->intersections[1]->object, s);
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -197,8 +190,7 @@ MunitResult ray_test10(const MunitParameter params[], void *fixture)
 	t_intersection *result = hit(xs);
 	munit_assert_ptr_equal(result, i1);
 
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -216,8 +208,7 @@ MunitResult ray_test11(const MunitParameter params[], void *fixture)
 	t_intersection *result = hit(xs);
 	munit_assert_ptr_equal(result, i2);
 
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -235,8 +226,7 @@ MunitResult ray_test12(const MunitParameter params[], void *fixture)
 	t_intersection *result = hit(xs);
 	munit_assert_ptr_equal(result, NULL);
 
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
@@ -258,8 +248,7 @@ MunitResult ray_test13(const MunitParameter params[], void *fixture)
 	t_intersection *result = hit(xs);
 	munit_assert_ptr_equal(result, i4);
 
-	free(s->position);
-	free(s);
+	destroy_sphere(s);
 	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }

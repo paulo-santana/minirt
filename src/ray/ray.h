@@ -41,6 +41,7 @@ typedef struct s_intersections {
 }	t_intersections;
 
 t_ray			*new_ray(t_tuple *origin, t_tuple *direction);
+void			destroy_ray(t_ray *ray);
 
 t_tuple			*position(t_ray *ray, float t);
 void			intersect(

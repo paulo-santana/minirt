@@ -26,6 +26,7 @@ MunitResult sphere_test2(const MunitParameter params[], void *fixture)
 	set_transform(sphere, t);
 	munit_assert_ptr_equal(sphere->transform, t);
 	destroy_sphere(sphere);
+	destroy_ray(ray);
 	return (MUNIT_OK);
 }
 
@@ -42,8 +43,8 @@ MunitResult sphere_test3(const MunitParameter params[], void *fixture)
 	munit_assert_int(xs->count, ==, 2);
 	munit_assert_float(xs->intersections[0]->t, ==, 3);
 	munit_assert_float(xs->intersections[1]->t, ==, 7);
-	free(t);
 	destroy_sphere(sphere);
 	destroy_intersections_list(xs);
+	destroy_ray(ray);
 	return (MUNIT_OK);
 }

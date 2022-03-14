@@ -23,3 +23,10 @@ t_tuple	*position(t_ray *ray, float t)
 	free(distance);
 	return (new_pos);
 }
+
+void	destroy_ray(t_ray *ray)
+{
+	free(ray->direction);
+	free(ray->origin);
+	free(ray);
+}
