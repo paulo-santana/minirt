@@ -79,6 +79,7 @@ MunitResult ray_test12(PARAMS);
 MunitResult ray_test13(PARAMS);
 MunitResult ray_test14(PARAMS);
 MunitResult ray_test15(PARAMS);
+MunitResult sphere_test1(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -171,6 +172,12 @@ int main(int argc, char **argv) {
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
+	MunitTest sphere_tests[] = {
+		{ "/new_sphere() has a transform matrix", ray_test1, NULL, NULL, 0, NULL },
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
+
 	MunitSuite tuple_suite = {
 		"/tuples",
 		tuple_tests,
@@ -203,11 +210,20 @@ int main(int argc, char **argv) {
 		MUNIT_SUITE_OPTION_NONE,
 	};
 
+	MunitSuite sphere_suite = {
+		"/shperes",
+		sphere_tests,
+		NULL,
+		1,
+		MUNIT_SUITE_OPTION_NONE,
+	};
+
 	MunitSuite suites[] = {
 		tuple_suite,
 		matrix_suite,
 		matrix_transform_suite,
 		ray_suite,
+		sphere_suite,
 		NULL,
 	};
 

@@ -17,5 +17,6 @@
 # include <structures.h>
 
 t_sphere	*new_sphere(t_tuple *position, float radius);
+void		destroy_sphere(t_sphere *sphere);
 
 #endif /* !SHAPES_H */

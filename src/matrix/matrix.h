@@ -16,11 +16,6 @@
 # include <math.h>
 # include "../structures.h"
 
-typedef struct s_matrix {
-	int		size;
-	float	data[4][4];
-}	t_matrix;
-
 t_matrix	*identity_matrix(void);
 t_matrix	*new_matrix(int size, float initial_values[4][4]);
 

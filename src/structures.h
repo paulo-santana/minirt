@@ -26,9 +26,15 @@ typedef struct s_color {
 	float	blue;
 }	t_color;
 
+typedef struct s_matrix {
+	int		size;
+	float	data[4][4];
+}	t_matrix;
+
 typedef struct s_sphere {
-	t_tuple	*position;
-	float	radius;
+	t_tuple		*position;
+	float		radius;
+	t_matrix	*transform;
 }	t_sphere;
 
 #endif /* !STRUCTURES_H */
