@@ -6,7 +6,7 @@
 #include "shapes/shapes.h"
 #include <stdlib.h>
 
-MunitResult test60(const MunitParameter params[], void *fixture)
+MunitResult ray_test1(const MunitParameter params[], void *fixture)
 {
 	t_tuple	*origin = new_point(1, 2, 3);
 	t_tuple *direction = new_vector(4, 5, 6);
@@ -20,7 +20,7 @@ MunitResult test60(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test61(const MunitParameter params[], void *fixture)
+MunitResult ray_test2(const MunitParameter params[], void *fixture)
 {
 	t_tuple *expected;
 	t_tuple	*origin = new_point(2, 3, 4);
@@ -76,7 +76,7 @@ void	destroy_intersections_list(t_intersections *inters)
 	free(inters);
 }
 
-MunitResult test62(const MunitParameter params[], void *fixture)
+MunitResult ray_test3(const MunitParameter params[], void *fixture)
 {
 	t_intersections	*xs;
 
@@ -97,7 +97,7 @@ MunitResult test62(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test63(const MunitParameter params[], void *fixture)
+MunitResult ray_test4(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 1, -5), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
@@ -116,7 +116,7 @@ MunitResult test63(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test64(const MunitParameter params[], void *fixture)
+MunitResult ray_test5(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 2, -5), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
@@ -134,7 +134,7 @@ MunitResult test64(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test65(const MunitParameter params[], void *fixture)
+MunitResult ray_test6(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
@@ -154,7 +154,7 @@ MunitResult test65(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test66(const MunitParameter params[], void *fixture)
+MunitResult ray_test7(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 0, 5), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
@@ -174,7 +174,7 @@ MunitResult test66(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test67(const MunitParameter params[], void *fixture)
+MunitResult ray_test8(const MunitParameter params[], void *fixture)
 {
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
 	t_intersection *intersection = new_intersection(3.5, s, OBJ_SPHERE);
@@ -188,7 +188,7 @@ MunitResult test67(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test68(const MunitParameter params[], void *fixture)
+MunitResult ray_test9(const MunitParameter params[], void *fixture)
 {
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
 	t_intersection *i1 = new_intersection(1, s, OBJ_SPHERE);
@@ -206,7 +206,7 @@ MunitResult test68(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test69(const MunitParameter params[], void *fixture)
+MunitResult ray_test10(const MunitParameter params[], void *fixture)
 {
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
 	t_intersection *i1 = new_intersection(1, s, OBJ_SPHERE);
@@ -225,7 +225,7 @@ MunitResult test69(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test70(const MunitParameter params[], void *fixture)
+MunitResult ray_test11(const MunitParameter params[], void *fixture)
 {
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
 	t_intersection *i1 = new_intersection(-1, s, OBJ_SPHERE);
@@ -244,7 +244,7 @@ MunitResult test70(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test71(const MunitParameter params[], void *fixture)
+MunitResult ray_test12(const MunitParameter params[], void *fixture)
 {
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
 	t_intersection *i1 = new_intersection(-2, s, OBJ_SPHERE);
@@ -263,7 +263,7 @@ MunitResult test71(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test72(const MunitParameter params[], void *fixture)
+MunitResult ray_test13(const MunitParameter params[], void *fixture)
 {
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
 	t_intersection *i1 = new_intersection(5, s, OBJ_SPHERE);
@@ -286,7 +286,7 @@ MunitResult test72(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test73(const MunitParameter params[], void *fixture)
+MunitResult ray_test14(const MunitParameter params[], void *fixture)
 {
 	t_ray *ray = new_ray(new_point(1, 2, 3), new_vector(0, 1, 0));
 	t_matrix *mat_translation = translation(3, 4, 5);
@@ -309,7 +309,7 @@ MunitResult test73(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test74(const MunitParameter params[], void *fixture)
+MunitResult ray_test15(const MunitParameter params[], void *fixture)
 {
 	t_ray *ray = new_ray(new_point(1, 2, 3), new_vector(0, 1, 0));
 	t_matrix *mat_translation = scaling(2, 3, 4);

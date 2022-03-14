@@ -3,7 +3,7 @@
 #include "../src/minirt.h"
 #include <math.h>
 
-MunitResult test24(const MunitParameter params[], void *fixture)
+MunitResult matrix_test1(const MunitParameter params[], void *fixture)
 {
 	float	initial[4][4] = {
 		{    1,    2,    3,    4 },
@@ -24,7 +24,7 @@ MunitResult test24(const MunitParameter params[], void *fixture)
 }
 
 
-MunitResult test25(const MunitParameter params[], void *fixture)
+MunitResult matrix_test2(const MunitParameter params[], void *fixture)
 {
 	float	same[4][4] = {
 		{    1,    2,    3,    4 },
@@ -51,7 +51,7 @@ MunitResult test25(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test26(const MunitParameter params[], void *fixture)
+MunitResult matrix_test3(const MunitParameter params[], void *fixture)
 {
 	float	same[4][4] = {
 		{ 1, 2, 3 },
@@ -76,7 +76,7 @@ MunitResult test26(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test27(const MunitParameter params[], void *fixture)
+MunitResult matrix_test4(const MunitParameter params[], void *fixture)
 {
 	float	same[4][4] = {
 		{ 1, 2 },
@@ -100,7 +100,7 @@ MunitResult test27(const MunitParameter params[], void *fixture)
 }
 
 
-MunitResult test28(const MunitParameter params[], void *fixture)
+MunitResult matrix_test5(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]) {
 			{ 1 , 2 , 3 , 4 },
@@ -130,7 +130,7 @@ MunitResult test28(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test29(const MunitParameter params[], void *fixture)
+MunitResult matrix_test6(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]) {
 			{ 1 , 2 , 3 , 4 },
@@ -150,7 +150,7 @@ MunitResult test29(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test30(const MunitParameter params[], void *fixture)
+MunitResult matrix_test7(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]) {
 			{ 0 , 1 , 2 , 3 },
@@ -168,7 +168,7 @@ MunitResult test30(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test31(const MunitParameter params[], void *fixture)
+MunitResult matrix_test8(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = identity_matrix();
 	t_tuple *b = new_tuple(1, 2, 3, 4);
@@ -181,7 +181,7 @@ MunitResult test31(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test32(const MunitParameter params[], void *fixture)
+MunitResult matrix_test9(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float [4][4]) {
 		{ 0 , 9 , 3 , 0 },
@@ -203,7 +203,7 @@ MunitResult test32(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test33(const MunitParameter params[], void *fixture)
+MunitResult matrix_test10(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = identity_matrix();
 	t_matrix *b = identity_matrix();
@@ -214,7 +214,7 @@ MunitResult test33(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test34(const MunitParameter params[], void *fixture)
+MunitResult matrix_test11(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(2, (float [4][4]){
 			{ 1, 5},
@@ -226,7 +226,7 @@ MunitResult test34(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test35(const MunitParameter params[], void *fixture)
+MunitResult matrix_test12(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(3, (float[4][4]) {
 			{ 1 , 5 , 0 },
@@ -246,7 +246,7 @@ MunitResult test35(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test36(const MunitParameter params[], void *fixture)
+MunitResult matrix_test13(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]) {
 			{ -6 , 1 , 1 , 6 },
@@ -268,7 +268,7 @@ MunitResult test36(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test37(const MunitParameter params[], void *fixture)
+MunitResult matrix_test14(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(3, (float[4][4]) {
 			{ 3 , 5 , 0 },
@@ -282,7 +282,7 @@ MunitResult test37(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test38(const MunitParameter params[], void *fixture)
+MunitResult matrix_test15(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(3, (float[4][4]){
 		{ 3 ,  5 ,  0 },
@@ -298,7 +298,7 @@ MunitResult test38(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test39(const MunitParameter params[], void *fixture)
+MunitResult matrix_test16(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(3, (float[4][4]) {
 			{ 1 , 2 , 6 },
@@ -313,7 +313,7 @@ MunitResult test39(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test40(const MunitParameter params[], void *fixture)
+MunitResult matrix_test17(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]){
 			{ -2, -8,  3,  5 },
@@ -331,7 +331,7 @@ MunitResult test40(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test41(const MunitParameter params[], void *fixture)
+MunitResult matrix_test18(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]){
 			{ 6 , 4 , 4 , 4 },
@@ -345,7 +345,7 @@ MunitResult test41(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test42(const MunitParameter params[], void *fixture)
+MunitResult matrix_test19(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]){
 			{ -4, 2 ,-2 , -3},
@@ -360,7 +360,7 @@ MunitResult test42(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test43(const MunitParameter params[], void *fixture)
+MunitResult matrix_test20(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]){
 			{-5 ,  2 ,  6 , -8 },
@@ -388,7 +388,7 @@ MunitResult test43(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test44(const MunitParameter params[], void *fixture)
+MunitResult matrix_test21(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]){
 			{  8, -5,  9,  2 },
@@ -410,7 +410,7 @@ MunitResult test44(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test45(const MunitParameter params[], void *fixture)
+MunitResult matrix_test22(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]){
 			{  9 ,  3 ,  0 ,  9 },
@@ -432,7 +432,7 @@ MunitResult test45(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test46(const MunitParameter params[], void *fixture)
+MunitResult matrix_test23(const MunitParameter params[], void *fixture)
 {
 	t_matrix *a = new_matrix(4, (float[4][4]){
 			{  3 , -9 ,  7 ,  3 },

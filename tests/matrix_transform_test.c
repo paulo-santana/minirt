@@ -6,7 +6,7 @@
 #include "tuple/tuple.h"
 #include <math.h>
 
-MunitResult test47(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test1(const MunitParameter params[], void *fixture)
 {
 	t_matrix *transform = translation(5, -3, 2);
 	t_tuple *p = new_point(-3, 4, 5);
@@ -23,7 +23,7 @@ MunitResult test47(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test48(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test2(const MunitParameter params[], void *fixture)
 {
 	t_matrix *transform = translation(5, -3, 2);
 	t_matrix *inv = inverse(transform);
@@ -42,7 +42,7 @@ MunitResult test48(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test49(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test3(const MunitParameter params[], void *fixture)
 {
 	t_matrix *transform = translation(5, -3, 2);
 	t_tuple *p = new_vector(-3, 4, 5);
@@ -59,7 +59,7 @@ MunitResult test49(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test50(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test4(const MunitParameter params[], void *fixture)
 {
 	t_matrix *transform = scaling(2, 3, 4);
 	t_tuple *p = new_point(-4, 6, 8);
@@ -76,7 +76,7 @@ MunitResult test50(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test51(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test5(const MunitParameter params[], void *fixture)
 {
 	t_matrix *transform = scaling(2, 3, 4);
 	t_tuple *v = new_vector(-4, 6, 8);
@@ -93,7 +93,7 @@ MunitResult test51(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test52(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test6(const MunitParameter params[], void *fixture)
 {
 	t_matrix *transform = scaling(2, 3, 4);
 	t_matrix *inv = inverse(transform);
@@ -112,7 +112,7 @@ MunitResult test52(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test53(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test7(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(0, 1, 0);
 	t_matrix *half_quarter = rotation_x(M_PI_4);
@@ -137,7 +137,7 @@ MunitResult test53(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test54(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test8(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(0, 1, 0);
 	t_matrix *half_quarter = rotation_x(M_PI_4);
@@ -157,7 +157,7 @@ MunitResult test54(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test55(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test9(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(0, 0, 1);
 	t_matrix *half_quarter = rotation_y(M_PI_4);
@@ -182,7 +182,7 @@ MunitResult test55(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test56(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test10(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(0, 1, 0);
 	t_matrix *half_quarter = rotation_z(M_PI_4);
@@ -207,7 +207,7 @@ MunitResult test56(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test57(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test11(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(1, 0, 1);
 	t_matrix *A = rotation_x(M_PI_2);
@@ -239,7 +239,7 @@ MunitResult test57(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test58(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test12(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(1, 0, 1);
 	t_matrix *A = rotation_x(M_PI_2);
@@ -263,7 +263,7 @@ MunitResult test58(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-MunitResult test59(const MunitParameter params[], void *fixture)
+MunitResult matrix_transform_test13(const MunitParameter params[], void *fixture)
 {
 	t_tuple *p = new_point(1, 0, 1);
 	t_matrix *A = rotation_x(M_PI_2);

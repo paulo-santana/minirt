@@ -5,169 +5,169 @@
 
 #define PARAMS const MunitParameter params[], void *fixture
 
-MunitResult test1(PARAMS);
-MunitResult test2(PARAMS);
-MunitResult test3(PARAMS);
-MunitResult test4(PARAMS);
-MunitResult test5(PARAMS);
-MunitResult test6(PARAMS);
-MunitResult test7(PARAMS);
-MunitResult test8(PARAMS);
-MunitResult test9(PARAMS);
-MunitResult test10(PARAMS);
-MunitResult test11(PARAMS);
-MunitResult test12(PARAMS);
-MunitResult test13(PARAMS);
-MunitResult test14(PARAMS);
-MunitResult test15(PARAMS);
-MunitResult test16(PARAMS);
-MunitResult test17(PARAMS);
-MunitResult test18(PARAMS);
-MunitResult test19(PARAMS);
-MunitResult test20(PARAMS);
-MunitResult test21(PARAMS);
-MunitResult test22(PARAMS);
-MunitResult test23(PARAMS);
-MunitResult test24(PARAMS);
-MunitResult test25(PARAMS);
-MunitResult test26(PARAMS);
-MunitResult test27(PARAMS);
-MunitResult test28(PARAMS);
-MunitResult test29(PARAMS);
-MunitResult test30(PARAMS);
-MunitResult test31(PARAMS);
-MunitResult test32(PARAMS);
-MunitResult test33(PARAMS);
-MunitResult test34(PARAMS);
-MunitResult test35(PARAMS);
-MunitResult test36(PARAMS);
-MunitResult test37(PARAMS);
-MunitResult test38(PARAMS);
-MunitResult test39(PARAMS);
-MunitResult test40(PARAMS);
-MunitResult test41(PARAMS);
-MunitResult test42(PARAMS);
-MunitResult test43(PARAMS);
-MunitResult test44(PARAMS);
-MunitResult test45(PARAMS);
-MunitResult test46(PARAMS);
-MunitResult test47(PARAMS);
-MunitResult test48(PARAMS);
-MunitResult test49(PARAMS);
-MunitResult test50(PARAMS);
-MunitResult test51(PARAMS);
-MunitResult test52(PARAMS);
-MunitResult test53(PARAMS);
-MunitResult test54(PARAMS);
-MunitResult test55(PARAMS);
-MunitResult test56(PARAMS);
-MunitResult test57(PARAMS);
-MunitResult test58(PARAMS);
-MunitResult test59(PARAMS);
-MunitResult test60(PARAMS);
-MunitResult test61(PARAMS);
-MunitResult test62(PARAMS);
-MunitResult test63(PARAMS);
-MunitResult test64(PARAMS);
-MunitResult test65(PARAMS);
-MunitResult test66(PARAMS);
-MunitResult test67(PARAMS);
-MunitResult test68(PARAMS);
-MunitResult test69(PARAMS);
-MunitResult test70(PARAMS);
-MunitResult test71(PARAMS);
-MunitResult test72(PARAMS);
-MunitResult test73(PARAMS);
-MunitResult test74(PARAMS);
+MunitResult matrix_test1(PARAMS);
+MunitResult matrix_test2(PARAMS);
+MunitResult matrix_test3(PARAMS);
+MunitResult matrix_test4(PARAMS);
+MunitResult matrix_test5(PARAMS);
+MunitResult matrix_test6(PARAMS);
+MunitResult matrix_test7(PARAMS);
+MunitResult matrix_test8(PARAMS);
+MunitResult matrix_test9(PARAMS);
+MunitResult matrix_test10(PARAMS);
+MunitResult matrix_test11(PARAMS);
+MunitResult matrix_test12(PARAMS);
+MunitResult matrix_test13(PARAMS);
+MunitResult matrix_test14(PARAMS);
+MunitResult matrix_test15(PARAMS);
+MunitResult matrix_test16(PARAMS);
+MunitResult matrix_test17(PARAMS);
+MunitResult matrix_test18(PARAMS);
+MunitResult matrix_test19(PARAMS);
+MunitResult matrix_test20(PARAMS);
+MunitResult matrix_test21(PARAMS);
+MunitResult matrix_test22(PARAMS);
+MunitResult matrix_test23(PARAMS);
+MunitResult tuple_test1(PARAMS);
+MunitResult tuple_test2(PARAMS);
+MunitResult tuple_test3(PARAMS);
+MunitResult tuple_test4(PARAMS);
+MunitResult tuple_test5(PARAMS);
+MunitResult tuple_test6(PARAMS);
+MunitResult tuple_test7(PARAMS);
+MunitResult tuple_test8(PARAMS);
+MunitResult tuple_test9(PARAMS);
+MunitResult tuple_test10(PARAMS);
+MunitResult tuple_test11(PARAMS);
+MunitResult tuple_test12(PARAMS);
+MunitResult tuple_test13(PARAMS);
+MunitResult tuple_test14(PARAMS);
+MunitResult tuple_test15(PARAMS);
+MunitResult tuple_test16(PARAMS);
+MunitResult tuple_test17(PARAMS);
+MunitResult tuple_test18(PARAMS);
+MunitResult tuple_test19(PARAMS);
+MunitResult tuple_test20(PARAMS);
+MunitResult tuple_test21(PARAMS);
+MunitResult tuple_test22(PARAMS);
+MunitResult tuple_test23(PARAMS);
+MunitResult matrix_transform_test1(PARAMS);
+MunitResult matrix_transform_test2(PARAMS);
+MunitResult matrix_transform_test3(PARAMS);
+MunitResult matrix_transform_test4(PARAMS);
+MunitResult matrix_transform_test5(PARAMS);
+MunitResult matrix_transform_test6(PARAMS);
+MunitResult matrix_transform_test7(PARAMS);
+MunitResult matrix_transform_test8(PARAMS);
+MunitResult matrix_transform_test9(PARAMS);
+MunitResult matrix_transform_test10(PARAMS);
+MunitResult matrix_transform_test11(PARAMS);
+MunitResult matrix_transform_test12(PARAMS);
+MunitResult matrix_transform_test13(PARAMS);
+MunitResult ray_test1(PARAMS);
+MunitResult ray_test2(PARAMS);
+MunitResult ray_test3(PARAMS);
+MunitResult ray_test4(PARAMS);
+MunitResult ray_test5(PARAMS);
+MunitResult ray_test6(PARAMS);
+MunitResult ray_test7(PARAMS);
+MunitResult ray_test8(PARAMS);
+MunitResult ray_test9(PARAMS);
+MunitResult ray_test10(PARAMS);
+MunitResult ray_test11(PARAMS);
+MunitResult ray_test12(PARAMS);
+MunitResult ray_test13(PARAMS);
+MunitResult ray_test14(PARAMS);
+MunitResult ray_test15(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
-		{ "/is_point() and is_vector()", test1, NULL, NULL, 0, NULL },
-		{ "/is_point() and is_vector()", test2, NULL, NULL, 0, NULL },
-		{ "/new_point() creates a point", test3, NULL, NULL, 0, NULL },
-		{ "/new_vector() creates a vector", test4, NULL, NULL, 0, NULL },
-		{ "/add_tuples() point + vector", test5, NULL, NULL, 0, NULL },
-		{ "/add_tuples() vector + vector", test6, NULL, NULL, 0, NULL },
-		{ "/add_tuples() point + point makes no sense", test7, NULL, NULL, 0, NULL },
-		{ "/subtract_tuples() point - point = vector", test8, NULL, NULL, 0, NULL },
-		{ "/subtract_tuples() point - vector = point", test9, NULL, NULL, 0, NULL },
-		{ "/negate_tuple() neagtes a vector", test10, NULL, NULL, 0, NULL },
-		{ "/multiply_scalar() multplies a tuple by a scalar value", test11, NULL, NULL, 0, NULL },
-		{ "/multiply_scalar() multplies a tuple by a fraction", test12, NULL, NULL, 0, NULL },
-		{ "/divide_scalar() divides a tuple by a scalar value", test13, NULL, NULL, 0, NULL },
-		{ "/magnitude() calculates correctly", test14, NULL, NULL, 0, NULL },
-		{ "/normalize() does what it says", test15, NULL, NULL, 0, NULL },
-		{ "/the magnitude of a normalized vector is 1", test16, NULL, NULL, 0, NULL },
-		{ "/dot()", test17, NULL, NULL, 0, NULL },
-		{ "/cross()", test18, NULL, NULL, 0, NULL },
-		{ "/new_color()", test19, NULL, NULL, 0, NULL },
-		{ "/add_colors()", test20, NULL, NULL, 0, NULL },
-		{ "/subtract_colors()", test21, NULL, NULL, 0, NULL },
-		{ "/multiply_scalar_color()", test22, NULL, NULL, 0, NULL },
-		{ "/multiply_colors()", test23, NULL, NULL, 0, NULL },
+		{ "/is_point() and is_vector()", tuple_test1, NULL, NULL, 0, NULL },
+		{ "/is_point() and is_vector()", tuple_test2, NULL, NULL, 0, NULL },
+		{ "/new_point() creates a point", tuple_test3, NULL, NULL, 0, NULL },
+		{ "/new_vector() creates a vector", tuple_test4, NULL, NULL, 0, NULL },
+		{ "/add_tuples() point + vector", tuple_test5, NULL, NULL, 0, NULL },
+		{ "/add_tuples() vector + vector", tuple_test6, NULL, NULL, 0, NULL },
+		{ "/add_tuples() point + point makes no sense", tuple_test7, NULL, NULL, 0, NULL },
+		{ "/subtract_tuples() point - point = vector", tuple_test8, NULL, NULL, 0, NULL },
+		{ "/subtract_tuples() point - vector = point", tuple_test9, NULL, NULL, 0, NULL },
+		{ "/negate_tuple() neagtes a vector", tuple_test10, NULL, NULL, 0, NULL },
+		{ "/multiply_scalar() multplies a tuple by a scalar value", tuple_test11, NULL, NULL, 0, NULL },
+		{ "/multiply_scalar() multplies a tuple by a fraction", tuple_test12, NULL, NULL, 0, NULL },
+		{ "/divide_scalar() divides a tuple by a scalar value", tuple_test13, NULL, NULL, 0, NULL },
+		{ "/magnitude() calculates correctly", tuple_test14, NULL, NULL, 0, NULL },
+		{ "/normalize() does what it says", tuple_test15, NULL, NULL, 0, NULL },
+		{ "/the magnitude of a normalized vector is 1", tuple_test16, NULL, NULL, 0, NULL },
+		{ "/dot()", tuple_test17, NULL, NULL, 0, NULL },
+		{ "/cross()", tuple_test18, NULL, NULL, 0, NULL },
+		{ "/new_color()", tuple_test19, NULL, NULL, 0, NULL },
+		{ "/add_colors()", tuple_test20, NULL, NULL, 0, NULL },
+		{ "/subtract_colors()", tuple_test21, NULL, NULL, 0, NULL },
+		{ "/multiply_scalar_color()", tuple_test22, NULL, NULL, 0, NULL },
+		{ "/multiply_colors()", tuple_test23, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
 	MunitTest matrix_tests[] = {
-		{ "/new_matrix(size, initial_values)", test24, NULL, NULL, 0, NULL },
-		{ "/matrix_equals(4x4, 4x4)", test25, NULL, NULL, 0, NULL },
-		{ "/matrix_equals(3x3, 3x3)", test26, NULL, NULL, 0, NULL },
-		{ "/matrix_equals(2x2, 2x2)", test27, NULL, NULL, 0, NULL },
-		{ "/matrix_multiply(4x4, 4x4)", test28, NULL, NULL, 0, NULL },
-		{ "/matrix_multiply_tuple(4x4, tuple)", test29, NULL, NULL, 0, NULL },
-		{ "/identity_matrix()", test30, NULL, NULL, 0, NULL },
-		{ "/identity_matrix() multiply a tuple", test31, NULL, NULL, 0, NULL },
-		{ "/transponse()", test32, NULL, NULL, 0, NULL },
-		{ "/transponse(identity_matrix)", test33, NULL, NULL, 0, NULL },
-		{ "/determinant(2x2)", test34, NULL, NULL, 0, NULL },
-		{ "/submatrix(3x3) == 2x2", test35, NULL, NULL, 0, NULL },
-		{ "/submatrix(4x4) == 3x3", test36, NULL, NULL, 0, NULL },
-		{ "/minor(3x3)", test37, NULL, NULL, 0, NULL },
-		{ "/cofactor(3x3)", test38, NULL, NULL, 0, NULL },
-		{ "/determinant(3x3)", test39, NULL, NULL, 0, NULL },
-		{ "/determinant(4x4)", test40, NULL, NULL, 0, NULL },
-		{ "/is_invertible(4x4)", test41, NULL, NULL, 0, NULL },
-		{ "/is_invertible(4x4) returns false", test42, NULL, NULL, 0, NULL },
-		{ "/inverse() works", test43, NULL, NULL, 0, NULL },
-		{ "/inverse() works again", test44, NULL, NULL, 0, NULL },
-		{ "/inverse() works again again", test45, NULL, NULL, 0, NULL },
-		{ "/multiplying by the inverse() is the same as dividing", test46, NULL, NULL, 0, NULL },
+		{ "/new_matrix(size, initial_values)", matrix_test1, NULL, NULL, 0, NULL },
+		{ "/matrix_equals(4x4, 4x4)", matrix_test2, NULL, NULL, 0, NULL },
+		{ "/matrix_equals(3x3, 3x3)", matrix_test3, NULL, NULL, 0, NULL },
+		{ "/matrix_equals(2x2, 2x2)", matrix_test4, NULL, NULL, 0, NULL },
+		{ "/matrix_multiply(4x4, 4x4)", matrix_test5, NULL, NULL, 0, NULL },
+		{ "/matrix_multiply_tuple(4x4, tuple)", matrix_test6, NULL, NULL, 0, NULL },
+		{ "/identity_matrix()", matrix_test7, NULL, NULL, 0, NULL },
+		{ "/identity_matrix() multiply a tuple", matrix_test8, NULL, NULL, 0, NULL },
+		{ "/transponse()", matrix_test9, NULL, NULL, 0, NULL },
+		{ "/transponse(identity_matrix)", matrix_test10, NULL, NULL, 0, NULL },
+		{ "/determinant(2x2)", matrix_test11, NULL, NULL, 0, NULL },
+		{ "/submatrix(3x3) == 2x2", matrix_test12, NULL, NULL, 0, NULL },
+		{ "/submatrix(4x4) == 3x3", matrix_test13, NULL, NULL, 0, NULL },
+		{ "/minor(3x3)", matrix_test14, NULL, NULL, 0, NULL },
+		{ "/cofactor(3x3)", matrix_test15, NULL, NULL, 0, NULL },
+		{ "/determinant(3x3)", matrix_test16, NULL, NULL, 0, NULL },
+		{ "/determinant(4x4)", matrix_test17, NULL, NULL, 0, NULL },
+		{ "/is_invertible(4x4)", matrix_test18, NULL, NULL, 0, NULL },
+		{ "/is_invertible(4x4) returns false", matrix_test19, NULL, NULL, 0, NULL },
+		{ "/inverse() works", matrix_test20, NULL, NULL, 0, NULL },
+		{ "/inverse() works again", matrix_test21, NULL, NULL, 0, NULL },
+		{ "/inverse() works again again", matrix_test22, NULL, NULL, 0, NULL },
+		{ "/multiplying by the inverse() is the same as dividing", matrix_test23, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
 	MunitTest matrix_transform_tests[] = {
-		{ "/translation() moves a point", test47, NULL, NULL, 0, NULL },
-		{ "/invserse(translation()) moves a point to the oposite direction", test48, NULL, NULL, 0, NULL },
-		{ "/translation() * a vector doesn't change it", test49, NULL, NULL, 0, NULL },
-		{ "/scaling() scales a point", test50, NULL, NULL, 0, NULL },
-		{ "/scaling() scales a vector", test51, NULL, NULL, 0, NULL },
-		{ "/inverse(scaling()) inverts the scaling", test52, NULL, NULL, 0, NULL },
-		{ "/rotation_x()", test53, NULL, NULL, 0, NULL },
-		{ "/inverse(rotation_x())", test54, NULL, NULL, 0, NULL },
-		{ "/rotation_y()", test55, NULL, NULL, 0, NULL },
-		{ "/rotation_z()", test56, NULL, NULL, 0, NULL },
-		{ "/individual transformations", test57, NULL, NULL, 0, NULL },
-		{ "/chained transformations", test58, NULL, NULL, 0, NULL },
-		{ "/chained n transformations", test59, NULL, NULL, 0, NULL },
+		{ "/translation() moves a point", matrix_transform_test1, NULL, NULL, 0, NULL },
+		{ "/invserse(translation()) moves a point to the oposite direction", matrix_transform_test2, NULL, NULL, 0, NULL },
+		{ "/translation() * a vector doesn't change it", matrix_transform_test3, NULL, NULL, 0, NULL },
+		{ "/scaling() scales a point", matrix_transform_test4, NULL, NULL, 0, NULL },
+		{ "/scaling() scales a vector", matrix_transform_test5, NULL, NULL, 0, NULL },
+		{ "/inverse(scaling()) inverts the scaling", matrix_transform_test6, NULL, NULL, 0, NULL },
+		{ "/rotation_x()", matrix_transform_test7, NULL, NULL, 0, NULL },
+		{ "/inverse(rotation_x())", matrix_transform_test8, NULL, NULL, 0, NULL },
+		{ "/rotation_y()", matrix_transform_test9, NULL, NULL, 0, NULL },
+		{ "/rotation_z()", matrix_transform_test10, NULL, NULL, 0, NULL },
+		{ "/individual transformations", matrix_transform_test11, NULL, NULL, 0, NULL },
+		{ "/chained transformations", matrix_transform_test12, NULL, NULL, 0, NULL },
+		{ "/chained n transformations", matrix_transform_test13, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
 	MunitTest ray_tests[] = {
-		{ "/new_ray()", test60, NULL, NULL, 0, NULL },
-		{ "/position()", test61, NULL, NULL, 0, NULL },
-		{ "/a ray intersect() a sphere at two points", test62, NULL, NULL, 0, NULL },
-		{ "/a ray intersect() a sphere at a tangent", test63, NULL, NULL, 0, NULL },
-		{ "/a ray misses the sphere", test64, NULL, NULL, 0, NULL },
-		{ "/a ray originates inside a sphere", test65, NULL, NULL, 0, NULL },
-		{ "/a sphere is behind a ray", test66, NULL, NULL, 0, NULL },
-		{ "/an intersection encapsulates t and object", test67, NULL, NULL, 0, NULL },
-		{ "/intersect() sets the object on the intersection", test68, NULL, NULL, 0, NULL },
-		{ "/hit() when all inters are positive", test69, NULL, NULL, 0, NULL },
-		{ "/hit() when some are negative", test70, NULL, NULL, 0, NULL },
-		{ "/hit() when all inters are negative", test71, NULL, NULL, 0, NULL },
-		{ "/hit() with a scrambled order", test72, NULL, NULL, 0, NULL },
-		{ "/tranform() a ray with a translation matrix", test73, NULL, NULL, 0, NULL },
-		{ "/tranform() a ray with a scaling matrix", test74, NULL, NULL, 0, NULL },
+		{ "/new_ray()", ray_test1, NULL, NULL, 0, NULL },
+		{ "/position()", ray_test2, NULL, NULL, 0, NULL },
+		{ "/a ray intersect() a sphere at two points", ray_test3, NULL, NULL, 0, NULL },
+		{ "/a ray intersect() a sphere at a tangent", ray_test4, NULL, NULL, 0, NULL },
+		{ "/a ray misses the sphere", ray_test5, NULL, NULL, 0, NULL },
+		{ "/a ray originates inside a sphere", ray_test6, NULL, NULL, 0, NULL },
+		{ "/a sphere is behind a ray", ray_test7, NULL, NULL, 0, NULL },
+		{ "/an intersection encapsulates t and object", ray_test8, NULL, NULL, 0, NULL },
+		{ "/intersect() sets the object on the intersection", ray_test9, NULL, NULL, 0, NULL },
+		{ "/hit() when all inters are positive", ray_test10, NULL, NULL, 0, NULL },
+		{ "/hit() when some are negative", ray_test11, NULL, NULL, 0, NULL },
+		{ "/hit() when all inters are negative", ray_test12, NULL, NULL, 0, NULL },
+		{ "/hit() with a scrambled order", ray_test13, NULL, NULL, 0, NULL },
+		{ "/tranform() a ray with a translation matrix", ray_test14, NULL, NULL, 0, NULL },
+		{ "/tranform() a ray with a scaling matrix", ray_test15, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
