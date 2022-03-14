@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "matrix/matrix.h"
 #include "ray.h"
 #include <libft.h>
 #include <stdlib.h>
@@ -52,21 +53,24 @@ void	intersect(
 	float			abc[3];
 	float			discriminant;
 	float			result;
-	t_intersection	*inter;
 	t_ray			*transformed_ray;
+	t_matrix		*sphere_transform;
 
-	transformed_ray = transform(ray, inverse(sphere->transform));
+	sphere_transform = inverse(sphere->transform);
+	transformed_ray = transform(ray, sphere_transform);
 	discriminant = get_discriminant(sphere, transformed_ray, abc);
+	destroy_ray(transformed_ray);
+	free(sphere_transform);
 	if (discriminant < 0)
 		return ;
 	result = (-abc[1] - sqrtf(discriminant)) / (2 * abc[0]);
-	inter = new_intersection(result, sphere, OBJ_SPHERE);
-	add_intersection(intersections, inter);
+	add_intersection(intersections,
+		new_intersection(result, sphere, OBJ_SPHERE));
 	if (fequals(discriminant, 0))
 		return ;
 	result = (-abc[1] + sqrtf(discriminant)) / (2 * abc[0]);
-	inter = new_intersection(result, sphere, OBJ_SPHERE);
-	add_intersection(intersections, inter);
+	add_intersection(intersections,
+		new_intersection(result, sphere, OBJ_SPHERE));
 	return ;
 }
 
