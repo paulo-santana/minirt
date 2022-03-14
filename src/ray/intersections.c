@@ -30,6 +30,7 @@ void	add_intersection(t_intersections *intersections, t_intersection *new)
 	}
 	intersections->intersections[intersections->count] = new;
 	intersections->count++;
+	intersections->is_sorted = 0;
 }
 
 void	intersect(
@@ -85,4 +86,47 @@ t_intersection	**intersection_arr(t_list *list)
 		list = list->next;
 	}
 	return (inters);
+}
+
+void	sort_intersections(t_intersections *inters)
+{
+	int				i;
+	int				j;
+	t_intersection	*tmp;
+
+	if (inters->is_sorted)
+		return ;
+	i = 0;
+	while (i < inters->count)
+	{
+		j = i;
+		while (j < inters->count)
+		{
+			if (inters->intersections[i]->t > inters->intersections[j]->t)
+			{
+				tmp = inters->intersections[i];
+				inters->intersections[i] = inters->intersections[j];
+				inters->intersections[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+	inters->is_sorted = 1;
+}
+
+t_intersection	*hit(t_intersections *inters)
+{
+	int				i;
+
+	if (!inters->is_sorted)
+		sort_intersections(inters);
+	i = 0;
+	while (i < inters->count)
+	{
+		if (inters->intersections[i]->t > 0)
+			return (inters->intersections[i]);
+		i++;
+	}
+	return (NULL);
 }

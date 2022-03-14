@@ -35,6 +35,7 @@ typedef struct s_intersection {
 typedef struct s_intersections {
 	int				count;
 	int				size;
+	int				is_sorted;
 	t_intersection	**intersections;
 }	t_intersections;
 
@@ -46,5 +47,10 @@ void			intersect(
 					t_sphere *sphere,
 					t_ray *ray);
 t_intersection	*new_intersection(float t, void *obj, t_object_types obj_type);
+t_intersection	*hit(t_intersections *inters);
+
+void			add_intersection(
+					t_intersections *intersections,
+					t_intersection *new);
 
 #endif /* !RAY_H */

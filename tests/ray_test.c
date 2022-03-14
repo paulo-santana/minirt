@@ -71,6 +71,7 @@ t_intersections *new_intersections_list(void)
 	intersections = malloc(sizeof(t_intersections));
 	intersections->count = 0;
 	intersections->size = 50;
+	intersections->is_sorted = 0;
 	intersections->intersections = malloc(sizeof(t_intersection *) * 50);
 	return (intersections);
 }
@@ -192,5 +193,103 @@ MunitResult test67(const MunitParameter params[], void *fixture)
 	free(s->position);
 	free(s);
 	free(intersection);
+	return (MUNIT_OK);
+}
+
+MunitResult test68(const MunitParameter params[], void *fixture)
+{
+	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_intersection *i1 = new_intersection(1, s, OBJ_SPHERE);
+	t_intersection *i2 = new_intersection(2, s, OBJ_SPHERE);
+	t_intersections *xs = new_intersections_list();
+
+	add_intersection(xs, i1);
+	add_intersection(xs, i2);
+	munit_assert_int(xs->count, ==, 2);
+	munit_assert_ptr_equal(xs->intersections[0]->object, s);
+	munit_assert_ptr_equal(xs->intersections[1]->object, s);
+	free(s->position);
+	free(s);
+	destroy_intersections_list(xs);
+	return (MUNIT_OK);
+}
+
+MunitResult test69(const MunitParameter params[], void *fixture)
+{
+	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_intersection *i1 = new_intersection(1, s, OBJ_SPHERE);
+	t_intersection *i2 = new_intersection(2, s, OBJ_SPHERE);
+	t_intersections *xs = new_intersections_list();
+
+	add_intersection(xs, i1);
+	add_intersection(xs, i2);
+
+	t_intersection *result = hit(xs);
+	munit_assert_ptr_equal(result, i1);
+
+	free(s->position);
+	free(s);
+	destroy_intersections_list(xs);
+	return (MUNIT_OK);
+}
+
+MunitResult test70(const MunitParameter params[], void *fixture)
+{
+	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_intersection *i1 = new_intersection(-1, s, OBJ_SPHERE);
+	t_intersection *i2 = new_intersection(1, s, OBJ_SPHERE);
+	t_intersections *xs = new_intersections_list();
+
+	add_intersection(xs, i2);
+	add_intersection(xs, i1);
+
+	t_intersection *result = hit(xs);
+	munit_assert_ptr_equal(result, i2);
+
+	free(s->position);
+	free(s);
+	destroy_intersections_list(xs);
+	return (MUNIT_OK);
+}
+
+MunitResult test71(const MunitParameter params[], void *fixture)
+{
+	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_intersection *i1 = new_intersection(-2, s, OBJ_SPHERE);
+	t_intersection *i2 = new_intersection(-1, s, OBJ_SPHERE);
+	t_intersections *xs = new_intersections_list();
+
+	add_intersection(xs, i2);
+	add_intersection(xs, i1);
+
+	t_intersection *result = hit(xs);
+	munit_assert_ptr_equal(result, NULL);
+
+	free(s->position);
+	free(s);
+	destroy_intersections_list(xs);
+	return (MUNIT_OK);
+}
+
+MunitResult test72(const MunitParameter params[], void *fixture)
+{
+	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_intersection *i1 = new_intersection(5, s, OBJ_SPHERE);
+	t_intersection *i2 = new_intersection(7, s, OBJ_SPHERE);
+	t_intersection *i3 = new_intersection(-3, s, OBJ_SPHERE);
+	t_intersection *i4 = new_intersection(2, s, OBJ_SPHERE);
+	t_intersections *xs = new_intersections_list();
+
+	add_intersection(xs, i1);
+	add_intersection(xs, i2);
+	add_intersection(xs, i3);
+	add_intersection(xs, i4);
+
+	t_intersection *result = hit(xs);
+	munit_assert_ptr_equal(result, i4);
+
+	free(s->position);
+	free(s);
+	destroy_intersections_list(xs);
 	return (MUNIT_OK);
 }
