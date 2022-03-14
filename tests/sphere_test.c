@@ -34,10 +34,10 @@ MunitResult sphere_test3(const MunitParameter params[], void *fixture)
 {
 	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
 	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	t_matrix *t = translation(2, 3, 4);
+	t_matrix *s = scaling(2, 2, 2);
 	t_intersections *xs;
 
-	set_transform(sphere, t);
+	set_transform(sphere, s);
 	xs = new_intersections_list();
 	intersect(xs, sphere, ray);
 	munit_assert_int(xs->count, ==, 2);

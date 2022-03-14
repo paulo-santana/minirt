@@ -177,7 +177,7 @@ int main(int argc, char **argv) {
 	MunitTest sphere_tests[] = {
 		{ "/new_sphere() has a transform matrix", sphere_test1, NULL, NULL, 0, NULL },
 		{ "/set_transform() sets a new sphere transform matrix", sphere_test2, NULL, NULL, 0, NULL },
-		{ "/intersect() uses the sphere transform matrix", sphere_test2, NULL, NULL, 0, NULL },
+		{ "/intersect() uses the sphere transform matrix", sphere_test3, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
