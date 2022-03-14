@@ -13,6 +13,7 @@
 #include "ray.h"
 #include <libft.h>
 #include <stdlib.h>
+#include "structures.h"
 #include "tuple/tuple.h"
 #include "utils/utils.h"
 
@@ -33,6 +34,18 @@ void	add_intersection(t_intersections *intersections, t_intersection *new)
 	intersections->is_sorted = 0;
 }
 
+float	get_discriminant(t_sphere *sphere, t_ray *ray, float abc[3])
+{
+	t_tuple		*sphere_to_ray;
+
+	sphere_to_ray = subtract_tuples(ray->origin, sphere->position);
+	abc[0] = dot(ray->direction, ray->direction);
+	abc[1] = 2 * dot(ray->direction, sphere_to_ray);
+	abc[2] = dot(sphere_to_ray, sphere_to_ray) - 1;
+	free(sphere_to_ray);
+	return ((abc[1] * abc[1]) - (4 * abc[0] * abc[2]));
+}
+
 void	intersect(
 		t_intersections *intersections, t_sphere *sphere, t_ray *ray)
 {
@@ -40,24 +53,21 @@ void	intersect(
 	float			discriminant;
 	float			result;
 	t_intersection	*inter;
-	t_tuple			*sphere_to_ray;
+	t_ray			*transformed_ray;
 
-	sphere_to_ray = subtract_tuples(ray->origin, sphere->position);
-	abc[0] = dot(ray->direction, ray->direction);
-	abc[1] = 2 * dot(ray->direction, sphere_to_ray);
-	abc[2] = dot(sphere_to_ray, sphere_to_ray) - 1;
-	discriminant = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
+	transformed_ray = transform(ray, inverse(sphere->transform));
+	discriminant = get_discriminant(sphere, transformed_ray, abc);
 	if (discriminant < 0)
-		return (free(sphere_to_ray));
+		return ;
 	result = (-abc[1] - sqrtf(discriminant)) / (2 * abc[0]);
 	inter = new_intersection(result, sphere, OBJ_SPHERE);
 	add_intersection(intersections, inter);
 	if (fequals(discriminant, 0))
-		return (free(sphere_to_ray));
+		return ;
 	result = (-abc[1] + sqrtf(discriminant)) / (2 * abc[0]);
 	inter = new_intersection(result, sphere, OBJ_SPHERE);
 	add_intersection(intersections, inter);
-	return (free(sphere_to_ray));
+	return ;
 }
 
 t_intersection	*new_intersection(float t, void *obj, t_object_types obj_type)
