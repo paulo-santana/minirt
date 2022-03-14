@@ -27,6 +27,7 @@ SRC_FILES += matrix/transform.c
 SRC_FILES += ray/ray.c
 SRC_FILES += ray/creation.c
 SRC_FILES += ray/intersections.c
+SRC_FILES += ray/transform.c
 SRC_FILES += utils/float_comparison.c
 SRC_FILES += debug.c
 

@@ -1,3 +1,4 @@
+#include "matrix/matrix.h"
 #include "munit/munit.h"
 #include "structures.h"
 #include "tuple/tuple.h"
@@ -291,5 +292,51 @@ MunitResult test72(const MunitParameter params[], void *fixture)
 	free(s->position);
 	free(s);
 	destroy_intersections_list(xs);
+	return (MUNIT_OK);
+}
+
+MunitResult test73(const MunitParameter params[], void *fixture)
+{
+	t_ray *ray = new_ray(new_point(1, 2, 3), new_vector(0, 1, 0));
+	t_matrix *mat_translation = translation(3, 4, 5);
+
+	t_ray *result = transform(ray, mat_translation);
+	t_tuple *expected_origin = new_point(4, 6, 8);
+	t_tuple *expected_diretction = new_vector(0, 1, 0);
+	munit_assert_true(tuple_equals(result->origin, expected_origin));
+	munit_assert_true(tuple_equals(result->direction, expected_diretction));
+
+	free(ray->origin);
+	free(ray->direction);
+	free(ray);
+	free(mat_translation);
+	free(result->origin);
+	free(result->direction);
+	free(result);
+	free(expected_diretction);
+	free(expected_origin);
+	return (MUNIT_OK);
+}
+
+MunitResult test74(const MunitParameter params[], void *fixture)
+{
+	t_ray *ray = new_ray(new_point(1, 2, 3), new_vector(0, 1, 0));
+	t_matrix *mat_translation = scaling(2, 3, 4);
+
+	t_ray *result = transform(ray, mat_translation);
+	t_tuple *expected_origin = new_point(2, 6, 12);
+	t_tuple *expected_diretction = new_vector(0, 3, 0);
+	munit_assert_true(tuple_equals(result->origin, expected_origin));
+	munit_assert_true(tuple_equals(result->direction, expected_diretction));
+
+	free(ray->origin);
+	free(ray->direction);
+	free(ray);
+	free(mat_translation);
+	free(result->origin);
+	free(result->direction);
+	free(result);
+	free(expected_diretction);
+	free(expected_origin);
 	return (MUNIT_OK);
 }

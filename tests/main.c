@@ -77,6 +77,8 @@ MunitResult test69(PARAMS);
 MunitResult test70(PARAMS);
 MunitResult test71(PARAMS);
 MunitResult test72(PARAMS);
+MunitResult test73(PARAMS);
+MunitResult test74(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -164,6 +166,8 @@ int main(int argc, char **argv) {
 		{ "/hit() when some are negative", test70, NULL, NULL, 0, NULL },
 		{ "/hit() when all inters are negative", test71, NULL, NULL, 0, NULL },
 		{ "/hit() with a scrambled order", test72, NULL, NULL, 0, NULL },
+		{ "/tranform() a ray with a translation matrix", test73, NULL, NULL, 0, NULL },
+		{ "/tranform() a ray with a scaling matrix", test74, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

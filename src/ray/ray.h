@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 13:04:58 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/13 13:30:06 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/14 11:04:34 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RAY_H
 
 # include <stdlib.h>
+# include "matrix/matrix.h"
 # include "structures.h"
 
 typedef struct s_ray {
@@ -52,5 +53,7 @@ t_intersection	*hit(t_intersections *inters);
 void			add_intersection(
 					t_intersections *intersections,
 					t_intersection *new);
+
+t_ray			*transform(t_ray *ray, t_matrix *matrix);
 
 #endif /* !RAY_H */
