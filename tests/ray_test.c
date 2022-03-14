@@ -75,20 +75,23 @@ t_intersections *new_intersections_list(void)
 	return (intersections);
 }
 
-void	destroy_intersections_list(t_intersections *intersections)
+void	destroy_intersections_list(t_intersections *inters)
 {
-	free(intersections->intersections);
-	free(intersections);
+	while (inters->count--)
+		free(inters->intersections[inters->count]);
+	free(inters->intersections);
+	free(inters);
 }
 
 MunitResult test62(const MunitParameter params[], void *fixture)
 {
-	t_intersections	*intersections;
+	t_intersections	*xs;
 
-	intersections = new_intersections_list();
+	xs = new_intersections_list();
 	t_ray *r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
-	t_intersections *xs = intersect(intersections, s, r);
+
+	intersect(xs, s, r);
 	munit_assert_int(xs->count, ==, 2);
 	munit_assert_float(xs->intersections[0]->t, ==, 4.0);
 	munit_assert_float(xs->intersections[1]->t, ==, 6.0);
@@ -105,10 +108,10 @@ MunitResult test63(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 1, -5), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
-	t_intersections *inters;
+	t_intersections *xs;
 
-	inters = new_intersections_list();
-	t_intersections *xs = intersect(inters, s, r);
+	xs = new_intersections_list();
+	intersect(xs, s, r);
 	munit_assert_int(xs->count, ==, 1);
 	munit_assert_float(xs->intersections[0]->t, ==, 5.0);
 	free(r->origin);
@@ -124,10 +127,10 @@ MunitResult test64(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 2, -5), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
-	t_intersections *inters;
+	t_intersections *xs;
 
-	inters = new_intersections_list();
-	t_intersections *xs = intersect(inters, s, r);
+	xs = new_intersections_list();
+	intersect(xs, s, r);
 	munit_assert_int(xs->count, ==, 0);
 	free(r->origin);
 	free(r->direction);
@@ -142,10 +145,10 @@ MunitResult test65(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
-	t_intersections *inters;
+	t_intersections *xs;
 
-	inters = new_intersections_list();
-	t_intersections *xs = intersect(inters, s, r);
+	xs = new_intersections_list();
+	intersect(xs, s, r);
 	munit_assert_int(xs->count, ==, 2);
 	munit_assert_float(xs->intersections[0]->t, ==, -1.0);
 	munit_assert_float(xs->intersections[1]->t, ==, 1.0);
@@ -162,10 +165,10 @@ MunitResult test66(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 0, 5), new_vector(0, 0, 1));
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
-	t_intersections *inters;
+	t_intersections *xs;
 
-	inters = new_intersections_list();
-	t_intersections *xs = intersect(inters, s, r);
+	xs = new_intersections_list();
+	intersect(xs, s, r);
 	munit_assert_int(xs->count, ==, 2);
 	munit_assert_float(xs->intersections[0]->t, ==, -6.0);
 	munit_assert_float(xs->intersections[1]->t, ==, -4.0);
@@ -182,9 +185,7 @@ MunitResult test67(const MunitParameter params[], void *fixture)
 {
 	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
 	t_intersection *intersection = new_intersection(3.5, s, OBJ_SPHERE);
-	t_intersections *inters;
 
-	inters = new_intersections_list();
 	munit_assert_float(intersection->t, ==, 3.5);
 	munit_assert_ptr_equal(intersection->object, s);
 	munit_assert_int(intersection->object_type, ==, OBJ_SPHERE);

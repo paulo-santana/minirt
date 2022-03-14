@@ -32,7 +32,7 @@ void	add_intersection(t_intersections *intersections, t_intersection *new)
 	intersections->count++;
 }
 
-t_intersections	*intersect(
+void	intersect(
 		t_intersections *intersections, t_sphere *sphere, t_ray *ray)
 {
 	float			abc[3];
@@ -47,16 +47,16 @@ t_intersections	*intersect(
 	abc[2] = dot(sphere_to_ray, sphere_to_ray) - 1;
 	discriminant = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (discriminant < 0)
-		return (intersections);
+		return (free(sphere_to_ray));
 	result = (-abc[1] - sqrtf(discriminant)) / (2 * abc[0]);
 	inter = new_intersection(result, sphere, OBJ_SPHERE);
 	add_intersection(intersections, inter);
 	if (fequals(discriminant, 0))
-		return (intersections);
+		return (free(sphere_to_ray));
 	result = (-abc[1] + sqrtf(discriminant)) / (2 * abc[0]);
 	inter = new_intersection(result, sphere, OBJ_SPHERE);
 	add_intersection(intersections, inter);
-	return (intersections);
+	return (free(sphere_to_ray));
 }
 
 t_intersection	*new_intersection(float t, void *obj, t_object_types obj_type)

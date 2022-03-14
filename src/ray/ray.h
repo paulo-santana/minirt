@@ -41,7 +41,7 @@ typedef struct s_intersections {
 t_ray			*new_ray(t_tuple *origin, t_tuple *direction);
 
 t_tuple			*position(t_ray *ray, float t);
-t_intersections	*intersect(
+void			intersect(
 					t_intersections *current_intersections,
 					t_sphere *sphere,
 					t_ray *ray);
