@@ -28,6 +28,7 @@ SRC_FILES += ray/ray.c
 SRC_FILES += ray/creation.c
 SRC_FILES += ray/intersections.c
 SRC_FILES += ray/transform.c
+SRC_FILES += shapes/sphere.c
 SRC_FILES += utils/float_comparison.c
 SRC_FILES += debug.c
 
@@ -37,6 +38,7 @@ OBJ_DIRS += $(OBJ_ROOT)/tuple
 OBJ_DIRS += $(OBJ_ROOT)/utils
 OBJ_DIRS += $(OBJ_ROOT)/matrix
 OBJ_DIRS += $(OBJ_ROOT)/ray
+OBJ_DIRS += $(OBJ_ROOT)/shapes
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))

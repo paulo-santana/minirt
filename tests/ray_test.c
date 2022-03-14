@@ -3,6 +3,7 @@
 #include "structures.h"
 #include "tuple/tuple.h"
 #include "ray/ray.h"
+#include "shapes/shapes.h"
 #include <stdlib.h>
 
 MunitResult test60(const MunitParameter params[], void *fixture)
@@ -54,16 +55,6 @@ MunitResult test61(const MunitParameter params[], void *fixture)
 }
 
 // sphere util
-
-t_sphere	*new_sphere(t_tuple *position, float radius)
-{
-	t_sphere	*sphere;
-
-	sphere = malloc(sizeof(t_sphere));
-	sphere->position = position;
-	sphere->radius = radius;
-	return (sphere);
-}
 
 t_intersections *new_intersections_list(void)
 {
