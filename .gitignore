@@ -3,3 +3,4 @@
 /test_bin
 .cache/
 compile_commands.json
+vgcore.*
