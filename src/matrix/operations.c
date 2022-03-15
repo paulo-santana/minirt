@@ -125,10 +125,10 @@ t_matrix	*inverse(t_matrix *matrix)
 	float		cofact;
 	float		determn;
 
-	if (!is_invertible(matrix))
+	determn = determinant(matrix);
+	if (determn == 0)
 		return (NULL);
 	inversed = new_matrix(matrix->size, NULL);
-	determn = determinant(matrix);
 	row = 0;
 	while (row < matrix->size)
 	{
