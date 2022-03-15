@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 20:45:51 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 22:16:45 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:02:44 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,17 @@ t_tuple	*cross(t_tuple *a, t_tuple *b)
 			a->z * b->x - a->x * b->z,
 			a->x * b->y - a->y * b->x
 		));
+}
+
+t_tuple	*reflect(t_tuple *vector, t_tuple *normal)
+{
+	float	product;
+	t_tuple	*doubled;
+	t_tuple	*result;
+
+	product = dot(vector, normal);
+	doubled = multiply_scalar(normal, 2 * product);
+	result = subtract_tuples(vector, doubled);
+	free(doubled);
+	return (result);
 }

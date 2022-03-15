@@ -381,19 +381,6 @@ MunitResult tuple_test23(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-t_tuple	*reflect(t_tuple *vector, t_tuple *normal)
-{
-	float	product;
-	t_tuple	*doubled;
-	t_tuple	*result;
-
-	product = dot(vector, normal);
-	doubled = multiply_scalar(normal, 2 * product);
-	result = subtract_tuples(vector, doubled);
-	free(doubled);
-	return (result);
-}
-
 // reflecting a vector approaching at 45º
 MunitResult tuple_test24(const MunitParameter params[], void *fixture)
 {

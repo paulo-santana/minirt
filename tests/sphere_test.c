@@ -53,29 +53,6 @@ MunitResult sphere_test3(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-t_tuple	*normal_at(t_sphere *sphere, t_tuple *world_point)
-{
-	t_tuple		*object_normal;
-	t_tuple		*tmp;
-	t_tuple		*world_normal;
-	t_tuple		*object_point;
-	t_matrix	*transposed;
-
-	object_point = matrix_multiply_tuple(sphere->inverse_transform, world_point);
-	tmp = new_point(0, 0, 0);
-	object_normal = subtract_tuples(object_point, tmp);
-	free(object_point);
-	free(tmp);
-	transposed = transpose(sphere->inverse_transform);
-	tmp = matrix_multiply_tuple(transposed, object_normal);
-	free(transposed);
-	tmp->w = 0;
-	world_normal = normalize(tmp);
-	free(tmp);
-	free(object_normal);
-	return (world_normal);
-}
-
 MunitResult sphere_test4(const MunitParameter params[], void *fixture)
 {
 	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);

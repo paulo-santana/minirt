@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:17:07 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 10:27:55 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/15 14:32:43 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TUPLE_H
 
 # include <math.h>
+# include <stdlib.h>
 # include "../structures.h"
 
 int		is_point(t_tuple *tuple);
@@ -40,5 +41,8 @@ t_color	*subtract_colors(t_color *a, t_color *b);
 t_color	*multiply_scalar_color(t_color *tuple, float value);
 t_color	*multiply_colors(t_color *a, t_color *b);
 float	dot(t_tuple *a, t_tuple *b);
+
+t_tuple	*normal_at(t_sphere *sphere, t_tuple *world_point);
+t_tuple	*reflect(t_tuple *vector, t_tuple *normal);
 
 #endif
