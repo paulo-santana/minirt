@@ -1,10 +1,15 @@
+#include "libft.h"
 #include "matrix/matrix.h"
 #include "minirt.h"
+#include "ray/ray.h"
+#include "shapes/shapes.h"
 #include "structures.h"
 #include "tuple/tuple.h"
 #include "debug.h"
 #include <math.h>
 #include <mlx.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct s_projectile {
 	t_tuple	*position;
@@ -16,7 +21,6 @@ typedef struct s_environment {
 	t_tuple	*wind;
 } t_environment;
 
-
 typedef struct s_image {
 	void	*ptr;
 	char	*data;
@@ -25,14 +29,21 @@ typedef struct s_image {
 	int		endian;
 } t_image;
 
+typedef struct s_canvas {
+	unsigned int	*data;
+	int				width;
+	int				height;
+}	t_canvas;
+
 typedef struct s_data {
-	void	*mlx;
-	void	*window;
-	t_image	canvas;
+	void		*mlx;
+	void		*window;
+	t_image		mlx_img;
+	t_canvas	*canvas;
 } t_data;
 
-#define WIN_WIDTH 900
-#define WIN_HEIGHT 550
+#define WIN_WIDTH 120
+#define WIN_HEIGHT 80
 
 t_projectile	*tick(t_environment *environment, t_projectile *projectile)
 {
@@ -67,12 +78,9 @@ unsigned int color_to_int(t_color *color)
 		);
 }
 
-void put_pixel(t_image *img, t_color *color, int x, int y)
+void put_pixel(t_canvas *img, t_color *color, int x, int y)
 {
-	unsigned int	*addr;
-
-	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
-	*addr = color_to_int(color);
+	img->data[y * img->width + x] = color_to_int(color);
 }
 
 void	test_projectile(t_data *data)
@@ -102,7 +110,7 @@ void	test_projectile(t_data *data)
 	while (proj->position->y > 0)
 	{
 		tmp_proj = tick(env, proj);
-		put_pixel(&data->canvas, &color, proj->position->x, WIN_HEIGHT - proj->position->y);
+		put_pixel(data->canvas, &color, proj->position->x, WIN_HEIGHT - proj->position->y);
 		free(proj->position);
 		free(proj->velocity);
 		free(proj);
@@ -153,7 +161,7 @@ void	draw_clock(t_data *data)
 		int size = 4;
 		for (int i = x- size; i < x +  size; i++)
 			for (int j = y- size; j < y +  size; j++)
-				put_pixel(&data->canvas, color, i, j);
+				put_pixel(data->canvas, color, i, j);
 
 		tmp = point;
 		point = matrix_multiply_tuple(rot, tmp);
@@ -161,17 +169,174 @@ void	draw_clock(t_data *data)
 	}
 }
 
+void	reset_intersections(t_intersections *xs)
+{
+	while (xs->count--)
+		free(xs->intersections[xs->count]);
+	xs->count = 0;
+	xs->is_sorted = 0;
+}
+
+t_canvas	*new_canvas(int width, int height)
+{
+	t_canvas	*canvas;
+	int			size;
+
+	canvas = malloc(sizeof(t_canvas));
+	size = sizeof(canvas->data) * width * height;
+	canvas->data = malloc(size);
+	ft_bzero(canvas->data, size);
+	canvas->width = width;
+	canvas->height = height;
+	return (canvas);
+}
+
+void	my_mlx_put_pixel(t_image *img, unsigned int color, int x, int y)
+{
+	unsigned int	*addr;
+
+	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
+	*addr = color;
+}
+
+void	draw_canvas_mlx(t_canvas *canvas, t_image *mlx_img)
+{
+	int		i;
+	int 	j;
+	int		pixel_x;
+	int		pixel_y;
+
+	i = 0;
+	int width = mlx_img->size_line / (mlx_img->bpp / 8);
+// -	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
+	while (i < width)
+	{
+		j = 0;
+		int height = WIN_HEIGHT;
+		while (j < height)
+		{
+			int limit = WIN_HEIGHT > WIN_WIDTH ? WIN_WIDTH : WIN_HEIGHT;
+			pixel_x = (i * canvas->width) / limit;
+			pixel_y = (j * canvas->height) / limit;
+			if (pixel_x > canvas->width || pixel_y > canvas->height)
+				return ;
+			unsigned int color = canvas->data[pixel_y * canvas->width + pixel_x];
+			my_mlx_put_pixel(mlx_img, color, i, j);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_canvas_ascii(t_canvas *canvas)
+{
+	int		i;
+	int 	j;
+	int		pixel_x;
+	int		pixel_y;
+	unsigned int color;
+	unsigned int red;
+	char	*palette = " .-~:+*%YOHSDNM";
+
+	i = 0;
+	// int width = mlx_img->size_line / (mlx_img->bpp / 8);
+	int width = 100;
+	int height = 50;
+// -	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
+	while (i < height)
+	{
+		j = 0;
+		// int height = WIN_HEIGHT;
+		while (j < width)
+		{
+			// int limit = height > width ? width : height;
+			pixel_x = (j * canvas->width) / width;
+			pixel_y = (i * canvas->height) / height;
+			// if (pixel_x > canvas->width || pixel_y > canvas->height)
+			// 	return ;
+			color = canvas->data[pixel_y * canvas->width + pixel_x];
+			// my_mlx_put_pixel(mlx_img, color, i, j);
+			red = (color & 0xff00) >> 8;
+			char c = palette[(int)(red / 255. * strlen(palette))];
+			ft_putchar_fd(c, 1);
+			j++;
+		}
+		ft_putchar_fd('\n', 1);
+		i++;
+	}
+}
+
+void	draw_sphere(t_data *data)
+{
+	float wall_z = 10;
+	float wall_size = 7;
+	float canvas_pixels = 500;
+
+	float pixel_size = wall_size / canvas_pixels;
+	float half = wall_size / 2;
+
+	data->canvas = new_canvas(canvas_pixels, canvas_pixels);
+	t_matrix *trans = translation(0, 0, 0);
+	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	set_transform(sphere, trans);
+	t_tuple *direction = new_vector(0, 0, 1);
+	t_tuple *target = new_point(0, 0, 0);
+	t_ray *ray = new_ray(new_point(0, 0, -5), NULL);
+	t_intersections *xs = new_intersections_list();
+	t_color *color = new_color(0, 0, 0);
+	t_intersection *surface;
+	// "#######$$$$$%%%%%%*******--------........        "
+
+	int i;
+	int j;
+
+	i = 0;
+	while (i < data->canvas->width)
+	{
+		float world_y = half - pixel_size * i;
+		j = 0;
+		while (j < data->canvas->height)
+		{
+			float world_x = -half + pixel_size * j;
+			target->x = world_x;
+			target->y = world_y;
+			target->z = wall_z;
+			direction = subtract_tuples(target, ray->origin);
+			free(ray->direction);
+			t_tuple *norm_direction = normalize(direction);
+			ray->direction = norm_direction;
+			free(direction);
+			intersect(xs, sphere, ray);
+			surface = hit(xs);
+			if (surface != NULL)
+			{
+				float dz = sphere->position->z - ray->origin->z;
+				color->red = dz - surface->t;
+				color->green = powf((dz - surface->t) * .99, 2);
+				put_pixel(data->canvas, color, i, j);
+				// color->blue = 0.4;
+			}
+			reset_intersections(xs);
+			j++;
+		}
+		i++;
+	}
+	// draw_canvas_mlx(data->canvas, &data->mlx_img);
+	draw_canvas_ascii(data->canvas);
+}
+
 int	main(void)
 {
 	t_data data;
 
-	data.mlx = mlx_init();
-	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
-	init_mlx_image(&data.canvas, WIN_WIDTH, WIN_HEIGHT, &data);
+	// data.mlx = mlx_init();
+	// data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
+	// init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
 	// test_projectile(&data);
-	draw_clock(&data);
-	mlx_put_image_to_window(data.mlx, data.window, data.canvas.ptr, 0, 0);
-	mlx_hook(data.window, 2, 1, exit_hook, &data);
-	mlx_loop(data.mlx);
+	// draw_clock(&data);
+	draw_sphere(&data);
+	// mlx_put_image_to_window(data.mlx, data.window, data.mlx_img.ptr, 0, 0);
+	// mlx_hook(data.window, 2, 1, exit_hook, &data);
+	// mlx_loop(data.mlx);
 	return (0);
 }
