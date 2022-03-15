@@ -22,6 +22,7 @@ t_sphere	*new_sphere(t_tuple *position, float radius)
 	sphere->position = position;
 	sphere->radius = radius;
 	sphere->transform = identity_matrix();
+	sphere->inverse_transform = inverse(sphere->transform);
 	return (sphere);
 }
 
@@ -29,6 +30,7 @@ void	destroy_sphere(t_sphere *sphere)
 {
 	free(sphere->position);
 	free(sphere->transform);
+	free(sphere->inverse_transform);
 	free(sphere);
 }
 
@@ -36,4 +38,6 @@ void	set_transform(t_sphere *sphere, t_matrix *t)
 {
 	free(sphere->transform);
 	sphere->transform = t;
+	free(sphere->inverse_transform);
+	sphere->inverse_transform = inverse(t);
 }

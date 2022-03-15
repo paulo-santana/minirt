@@ -35,6 +35,7 @@ typedef struct s_sphere {
 	t_tuple		*position;
 	float		radius;
 	t_matrix	*transform;
+	t_matrix	*inverse_transform;
 }	t_sphere;
 
 #endif /* !STRUCTURES_H */

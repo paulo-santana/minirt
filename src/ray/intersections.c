@@ -58,11 +58,10 @@ void	intersect(
 	t_ray			*transformed_ray;
 	t_matrix		*sphere_transform;
 
-	sphere_transform = inverse(sphere->transform);
+	sphere_transform = sphere->inverse_transform;
 	transformed_ray = transform(ray, sphere_transform);
 	discriminant = get_discriminant(sphere, transformed_ray, abc);
 	destroy_ray(transformed_ray);
-	free(sphere_transform);
 	if (discriminant < 0)
 		return ;
 	result = (-abc[1] - sqrtf(discriminant)) / (2 * abc[0]);
