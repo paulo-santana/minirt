@@ -82,6 +82,11 @@ MunitResult ray_test15(PARAMS);
 MunitResult sphere_test1(PARAMS);
 MunitResult sphere_test2(PARAMS);
 MunitResult sphere_test3(PARAMS);
+MunitResult sphere_test4(PARAMS);
+MunitResult sphere_test5(PARAMS);
+MunitResult sphere_test6(PARAMS);
+MunitResult sphere_test7(PARAMS);
+MunitResult sphere_test8(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -178,6 +183,10 @@ int main(int argc, char **argv) {
 		{ "/new_sphere() has a transform matrix", sphere_test1, NULL, NULL, 0, NULL },
 		{ "/set_transform() sets a new sphere transform matrix", sphere_test2, NULL, NULL, 0, NULL },
 		{ "/intersect() uses the sphere transform matrix", sphere_test3, NULL, NULL, 0, NULL },
+		{ "/normal_at() at a point on the x axis", sphere_test4, NULL, NULL, 0, NULL },
+		{ "/normal_at() at a point on the y axis", sphere_test5, NULL, NULL, 0, NULL },
+		{ "/normal_at() at a point on the z axis", sphere_test6, NULL, NULL, 0, NULL },
+		{ "/normal_at() at a nonaxial point", sphere_test7, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
