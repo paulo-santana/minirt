@@ -13,7 +13,7 @@
 #include "ray.h"
 #include "tuple/tuple.h"
 
-t_tuple	*position(t_ray *ray, float t)
+t_tuple	*get_position(t_ray *ray, float t)
 {
 	t_tuple	*distance;
 	t_tuple	*new_pos;

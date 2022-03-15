@@ -27,23 +27,23 @@ MunitResult ray_test2(const MunitParameter params[], void *fixture)
 	t_tuple *direction = new_vector(1, 0, 0);
 
 	t_ray *r = new_ray(origin, direction);
-	t_tuple *pos = position(r, 0);
+	t_tuple *pos = get_position(r, 0);
 	munit_assert_true(tuple_equals(pos, origin));
 	free(pos);
 
-	pos = position(r, 1);
+	pos = get_position(r, 1);
 	expected = new_point(3, 3, 4);
 	munit_assert_true(tuple_equals(pos, expected));
 	free(pos);
 	free(expected);
 
-	pos = position(r, -1);
+	pos = get_position(r, -1);
 	expected = new_point(1, 3, 4);
 	munit_assert_true(tuple_equals(pos, expected));
 	free(pos);
 	free(expected);
 
-	pos = position(r, 2.5);
+	pos = get_position(r, 2.5);
 	expected = new_point(4.5, 3, 4);
 	munit_assert_true(tuple_equals(pos, expected));
 	free(pos);
