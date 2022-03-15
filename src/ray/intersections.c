@@ -13,6 +13,7 @@
 #include "matrix/matrix.h"
 #include "ray.h"
 #include <libft.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "structures.h"
 #include "tuple/tuple.h"
@@ -24,11 +25,12 @@ void	add_intersection(t_intersections *intersections, t_intersection *new)
 
 	if (intersections->count >= intersections->size)
 	{
-		arr = malloc(sizeof(t_intersection **) * intersections->size + 50);
+		arr = malloc(sizeof(t_intersection *) * (intersections->size + 50));
 		ft_memmove(arr, intersections->intersections, sizeof(t_intersection *)
-			* intersections->size + 50);
+			* (intersections->size));
 		free(intersections->intersections);
 		intersections->intersections = arr;
+		intersections->size += 50;
 	}
 	intersections->intersections[intersections->count] = new;
 	intersections->count++;
@@ -113,7 +115,7 @@ void	sort_intersections(t_intersections *inters)
 	i = 0;
 	while (i < inters->count)
 	{
-		j = i;
+		j = i + 1;
 		while (j < inters->count)
 		{
 			if (inters->intersections[i]->t > inters->intersections[j]->t)
