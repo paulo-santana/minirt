@@ -95,6 +95,11 @@ MunitResult sphere_test10(PARAMS);
 MunitResult light_test1(PARAMS);
 
 MunitResult material_test1(PARAMS);
+MunitResult material_test2(PARAMS);
+MunitResult material_test3(PARAMS);
+MunitResult material_test4(PARAMS);
+MunitResult material_test5(PARAMS);
+MunitResult material_test6(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -210,6 +215,11 @@ int main(int argc, char **argv) {
 
 	MunitTest material_tests[] = {
 		{ "/new_material() returns a default material", material_test1, NULL, NULL, 0, NULL },
+		{ "/lighting() calculates the shade of a point", material_test2, NULL, NULL, 0, NULL },
+		{ "/lighting() with the eye offseted 45º", material_test3, NULL, NULL, 0, NULL },
+		{ "/lighting() with the light offseted 45º", material_test4, NULL, NULL, 0, NULL },
+		{ "/lighting() with the eye in the path of the reflection", material_test5, NULL, NULL, 0, NULL },
+		{ "/lighting() with the light behind the surface", material_test6, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

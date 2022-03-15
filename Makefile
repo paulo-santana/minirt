@@ -32,6 +32,7 @@ SRC_FILES += ray/intersections.c
 SRC_FILES += ray/transform.c
 SRC_FILES += shapes/material.c
 SRC_FILES += shapes/sphere.c
+SRC_FILES += lights/lighting.c
 SRC_FILES += lights/point_light.c
 SRC_FILES += utils/float_comparison.c
 SRC_FILES += debug.c

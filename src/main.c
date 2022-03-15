@@ -1,4 +1,5 @@
 #include "libft.h"
+#include "lights/lights.h"
 #include "matrix/matrix.h"
 #include "minirt.h"
 #include "ray/ray.h"
@@ -39,10 +40,12 @@ typedef struct s_canvas {
 }	t_canvas;
 
 typedef struct s_data {
-	void		*mlx;
-	void		*window;
-	t_image		mlx_img;
-	t_canvas	*canvas;
+	void			*mlx;
+	void			*window;
+	t_sphere		*sphere;
+	t_point_light	*light;
+	t_image			mlx_img;
+	t_canvas		*canvas;
 } t_data;
 
 t_projectile	*tick(t_environment *environment, t_projectile *projectile)
@@ -62,20 +65,22 @@ t_projectile	*tick(t_environment *environment, t_projectile *projectile)
 	return (new_proj);
 }
 
-int	exit_hook(int key)
-{
-	if (key == 'a' || key == 'q')
-		exit(0);
-	return (1);
-}
-
 unsigned int color_to_int(t_color *color)
 {
-	return (
-			((unsigned int)(color->red * 255) << 16)
-			+ ((unsigned int)(color->green * 255) << 8)
-			+ (color->blue * 255)
-		);
+	unsigned int	red;
+	unsigned int	green;
+	unsigned int	blue;
+
+	red = color->red * 255;
+	green = color->green * 255;
+	blue = color->blue * 255;
+	if (red > 255)
+		red = 255;
+	if (green > 255)
+		green = 255;
+	if (blue > 255)
+		blue = 255;
+	return (red << 16 | green << 8 | blue);
 }
 
 void put_pixel(t_canvas *img, t_color *color, int x, int y)
@@ -236,12 +241,15 @@ void	draw_canvas_ascii(t_canvas *canvas)
 	int		pixel_y;
 	unsigned int color;
 	unsigned int blue;
-	char	*palette = " .-~:+*%YOSHDNM";
+	char	*buffer;
+	char	*palette = " .-~:+*%YOSHD#NM";
+
 
 	i = 0;
 	// int width = mlx_img->size_line / (mlx_img->bpp / 8);
 	int width = 100;
 	int height = 50;
+	buffer = malloc((width + 1) * height + 1);
 // -	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
 	while (i < height)
 	{
@@ -257,34 +265,37 @@ void	draw_canvas_ascii(t_canvas *canvas)
 			color = canvas->data[pixel_y * canvas->width + pixel_x];
 			// my_mlx_put_pixel(mlx_img, color, i, j);
 			blue = (color & 0xff) >> 0;
-			char c = palette[(int)(blue / 255. * strlen(palette))];
-			ft_putchar_fd(c, 1);
+			char c = palette[(int)(blue / 256. * strlen(palette))];
+			buffer[i * (width + 1) + j] = c;
 			j++;
 		}
-		ft_putchar_fd('\n', 1);
+		buffer[i * (width + 1) + j] = '\n';
 		i++;
 	}
+	buffer[i * (width + 1) + j + 1] = '\0';
+	ft_putstr_fd(buffer, 1);
 }
 
 void	draw_sphere(t_data *data)
 {
 	float wall_z = 10;
 	float wall_size = 7;
-	float canvas_pixels = 200;
 
-	float pixel_size = wall_size / canvas_pixels;
+	float pixel_size = wall_size / data->canvas->width;
 	float half = wall_size / 2;
 
-	data->canvas = new_canvas(canvas_pixels, canvas_pixels);
-	t_matrix *trans = translation(0, 0, 0);
-	t_sphere *sphere = new_sphere(new_point(0, 0, 3), 1);
-	set_transform(sphere, trans);
+	t_sphere *sphere = data->sphere;
 	t_tuple *direction = new_vector(0, 0, 1);
 	t_tuple *target = new_point(0, 0, 0);
 	t_ray *ray = new_ray(new_point(0, 0, -5), NULL);
 	t_intersections *xs = new_intersections_list();
-	t_color *color = new_color(0, 0, 0);
+	t_color *color = NULL;
 	t_intersection *surface;
+
+	// sphere->material->color->red = 0.3;
+
+	t_point_light *light = data->light;
+	t_lighting_args args;
 
 	int i;
 	int j;
@@ -309,12 +320,19 @@ void	draw_sphere(t_data *data)
 			surface = hit(xs);
 			if (surface != NULL)
 			{
-				float dz = sphere->position->z - ray->origin->z;
-				color->blue = dz - surface->t;
-				color->green = powf((dz - surface->t) * .99, 2);
-				color->red = powf((dz - surface->t) * .99, 2);
+				t_tuple *point = get_position(ray, surface->t);
+				t_tuple *normal = normal_at(((t_sphere *)surface->object), point);
+				t_tuple *eye = negate_tuple(ray->direction);
+				args.material = ((t_sphere *)surface->object)->material;
+				args.light = light;
+				args.position = point;
+				args.normal_vector = normal;
+				args.eye_vector = eye;
+				color = lighting(&args);
 				put_pixel(data->canvas, color, i, j);
-				// color->blue = 0.4;
+				free(point);
+				free(normal);
+				free(eye);
 			}
 			reset_intersections(xs);
 			j++;
@@ -322,12 +340,45 @@ void	draw_sphere(t_data *data)
 		i++;
 	}
 	draw_canvas_mlx(data->canvas, &data->mlx_img);
+	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
 	draw_canvas_ascii(data->canvas);
+}
+
+void	rotate_light(t_data *data, float deg)
+{
+	t_matrix	*rot;
+	t_tuple		*position;
+
+	rot = rotation_y(deg);
+	position = data->light->position;
+	data->light->position = matrix_multiply_tuple(rot, position);
+	// print_tuple(position);
+	free(position);
+	draw_sphere(data);
+}
+
+int	exit_hook(int key, t_data *data)
+{
+	if (key == 'q')
+		exit(0);
+	else if (key == 'a')
+		rotate_light(data, -.1);
+	else if (key == 'd')
+		rotate_light(data, .1);
+	return (1);
 }
 
 int	main(void)
 {
 	t_data data;
+	float canvas_pixels = 400;
+
+	data.canvas = new_canvas(canvas_pixels, canvas_pixels);
+	data.light = new_point_light(new_point(-10, 10, -10), new_color(1, 1, 1));
+	data.sphere = new_sphere(new_point(0, 0, 0), 1);
+	set_transform(data.sphere, translation(0, -1, 4));
+	free(data.sphere->material->color);
+	data.sphere->material->color = new_color(0.1, 0.4, 1);
 
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
