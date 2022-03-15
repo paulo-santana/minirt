@@ -51,6 +51,8 @@ MunitResult tuple_test20(PARAMS);
 MunitResult tuple_test21(PARAMS);
 MunitResult tuple_test22(PARAMS);
 MunitResult tuple_test23(PARAMS);
+MunitResult tuple_test24(PARAMS);
+MunitResult tuple_test25(PARAMS);
 MunitResult matrix_transform_test1(PARAMS);
 MunitResult matrix_transform_test2(PARAMS);
 MunitResult matrix_transform_test3(PARAMS);
@@ -87,6 +89,7 @@ MunitResult sphere_test5(PARAMS);
 MunitResult sphere_test6(PARAMS);
 MunitResult sphere_test7(PARAMS);
 MunitResult sphere_test8(PARAMS);
+MunitResult sphere_test9(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -113,6 +116,8 @@ int main(int argc, char **argv) {
 		{ "/subtract_colors()", tuple_test21, NULL, NULL, 0, NULL },
 		{ "/multiply_scalar_color()", tuple_test22, NULL, NULL, 0, NULL },
 		{ "/multiply_colors()", tuple_test23, NULL, NULL, 0, NULL },
+		{ "/reflect() a point approaching at 45º", tuple_test24, NULL, NULL, 0, NULL },
+		{ "/reflect() a point off a slanted surface", tuple_test25, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
@@ -187,6 +192,8 @@ int main(int argc, char **argv) {
 		{ "/normal_at() at a point on the y axis", sphere_test5, NULL, NULL, 0, NULL },
 		{ "/normal_at() at a point on the z axis", sphere_test6, NULL, NULL, 0, NULL },
 		{ "/normal_at() at a nonaxial point", sphere_test7, NULL, NULL, 0, NULL },
+		{ "/normal_at() with a translated sphere", sphere_test8, NULL, NULL, 0, NULL },
+		{ "/normal_at() with a scaled and rotated sphere", sphere_test9, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

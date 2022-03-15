@@ -200,6 +200,7 @@ MunitResult matrix_test9(const MunitParameter params[], void *fixture)
 	munit_assert_true(matrix_equals(result, expected));
 	free(expected);
 	free(a);
+	free(result);
 	return (MUNIT_OK);
 }
 
@@ -211,6 +212,7 @@ MunitResult matrix_test10(const MunitParameter params[], void *fixture)
 	munit_assert_true(matrix_equals(result, b));
 	free(a);
 	free(b);
+	free(result);
 	return (MUNIT_OK);
 }
 

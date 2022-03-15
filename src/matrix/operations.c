@@ -97,24 +97,23 @@ t_tuple	*matrix_multiply_tuple(t_matrix *a, t_tuple *b)
 
 t_matrix	*transpose(t_matrix *matrix)
 {
-	int		i;
-	int		j;
-	float	tmp;
+	int			i;
+	int			j;
+	t_matrix	*transposed;
 
+	transposed = new_matrix(4, NULL);
 	i = 0;
 	while (i < matrix->size)
 	{
-		j = i;
+		j = 0;
 		while (j < matrix->size)
 		{
-			tmp = matrix->data[i][j];
-			matrix->data[i][j] = matrix->data[j][i];
-			matrix->data[j][i] = tmp;
+			transposed->data[i][j] = matrix->data[j][i];
 			j++;
 		}
 		i++;
 	}
-	return (matrix);
+	return (transposed);
 }
 
 t_matrix	*inverse(t_matrix *matrix)

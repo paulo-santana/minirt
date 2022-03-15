@@ -1,6 +1,7 @@
 #include "munit/munit.h"
 #include "../src/structures.h"
 #include "../src/minirt.h"
+#include "tuple/tuple.h"
 #include <math.h>
 
 MunitResult tuple_test1(const MunitParameter params[], void *fixture)
@@ -375,6 +376,59 @@ MunitResult tuple_test23(const MunitParameter params[], void *fixture)
 	munit_assert_true(fequals(result->blue, expected->blue));
 	free(a);
 	free(b);
+	free(result);
+	free(expected);
+	return (MUNIT_OK);
+}
+
+t_tuple	*reflect(t_tuple *vector, t_tuple *normal)
+{
+	float	product;
+	t_tuple	*doubled;
+	t_tuple	*result;
+
+	product = dot(vector, normal);
+	doubled = multiply_scalar(normal, 2 * product);
+	result = subtract_tuples(vector, doubled);
+	free(doubled);
+	return (result);
+}
+
+// reflecting a vector approaching at 45º
+MunitResult tuple_test24(const MunitParameter params[], void *fixture)
+{
+	t_tuple *v, *n, *result, *expected;
+
+	v = new_vector(1, -1, 0);
+	n = new_vector(0, 1, 0);
+	expected = new_vector(1, 1, 0);
+
+	result = reflect(v, n);
+
+	munit_assert_true(tuple_equals(result, expected));
+
+	free(v);
+	free(n);
+	free(result);
+	free(expected);
+	return (MUNIT_OK);
+}
+
+// reflecting a vector off a slanted surface
+MunitResult tuple_test25(const MunitParameter params[], void *fixture)
+{
+	t_tuple *v, *n, *result, *expected;
+
+	v = new_vector(0, -1, 0);
+	n = new_vector(M_SQRT2 / 2, M_SQRT2 / 2, 0);
+	expected = new_vector(1, 0, 0);
+
+	result = reflect(v, n);
+
+	munit_assert_true(tuple_equals(result, expected));
+
+	free(v);
+	free(n);
 	free(result);
 	free(expected);
 	return (MUNIT_OK);

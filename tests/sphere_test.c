@@ -4,7 +4,11 @@
 #include "structures.h"
 #include "tuple/tuple.h"
 #include "ray/ray.h"
+#include <math.h>
+#include <stddef.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include "../libft/libft.h"
 
 MunitResult sphere_test1(const MunitParameter params[], void *fixture)
 {
@@ -49,18 +53,27 @@ MunitResult sphere_test3(const MunitParameter params[], void *fixture)
 	return (MUNIT_OK);
 }
 
-t_tuple	*normal_at(t_sphere *sphere, t_tuple *point)
+t_tuple	*normal_at(t_sphere *sphere, t_tuple *world_point)
 {
-	t_tuple	*diff;
-	t_tuple	*null_point;
-	t_tuple	*normal;
+	t_tuple		*object_normal;
+	t_tuple		*tmp;
+	t_tuple		*world_normal;
+	t_tuple		*object_point;
+	t_matrix	*transposed;
 
-	null_point = new_point(0, 0, 0);
-	diff = subtract_tuples(point, null_point);
-	normal = normalize(diff);
-	free(diff);
-	free(null_point);
-	return (normal);
+	object_point = matrix_multiply_tuple(sphere->inverse_transform, world_point);
+	tmp = new_point(0, 0, 0);
+	object_normal = subtract_tuples(object_point, tmp);
+	free(object_point);
+	free(tmp);
+	transposed = transpose(sphere->inverse_transform);
+	tmp = matrix_multiply_tuple(transposed, object_normal);
+	free(transposed);
+	tmp->w = 0;
+	world_normal = normalize(tmp);
+	free(tmp);
+	free(object_normal);
+	return (world_normal);
 }
 
 MunitResult sphere_test4(const MunitParameter params[], void *fixture)
@@ -126,18 +139,39 @@ MunitResult sphere_test7(const MunitParameter params[], void *fixture)
 
 MunitResult sphere_test8(const MunitParameter params[], void *fixture)
 {
-	float value = sqrtf(3) / 3;
 	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
-	t_tuple *point = new_point(value, value, value);
-	t_tuple *expected_vect = new_vector(value, value, value);
-	t_tuple *expected = normalize(expected_vect);
+	set_transform(sphere, translation(0, 1, 0));
 
+	t_tuple *point = new_point(0, 1.70711, -0.70711);
 	t_tuple *normal = normal_at(sphere, point);
+	t_tuple *expected = new_vector(0, 0.70711, -0.70711);
+
 	munit_assert_true(tuple_equals(normal, expected));
 	free(normal);
 	free(expected);
-	free(expected_vect);
 	free(point);
+	destroy_sphere(sphere);
+	return (MUNIT_OK);
+}
+
+MunitResult sphere_test9(const MunitParameter params[], void *fixture)
+{
+	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_matrix *scale = scaling(1, 0.5, 1);
+	t_matrix *rot = rotation_z(M_PI / 5);
+	t_matrix *tr = matrix_multiply(scale, rot);
+	set_transform(sphere, tr);
+
+	t_tuple *point = new_point(0, sqrtf(M_PI) / 2, -sqrtf(M_PI) / 2);
+	t_tuple *normal = normal_at(sphere, point);
+	t_tuple *expected = new_vector(0, 0.97014, -0.24254);
+
+	munit_assert_true(tuple_equals(normal, expected));
+	free(point);
+	free(normal);
+	free(expected);
+	free(rot);
+	free(scale);
 	destroy_sphere(sphere);
 	return (MUNIT_OK);
 }
