@@ -10,6 +10,8 @@ IFLAGS = -I ./src
 
 HEADERS =  src/minirt.h
 HEADERS += src/tuple/tuple.h
+HEADERS += src/shapes/shapes.h
+HEADERS += src/lights/lights.h
 HEADERS += src/utils/utils.h
 HEADERS += libft/libft.h
 
@@ -28,7 +30,9 @@ SRC_FILES += ray/ray.c
 SRC_FILES += ray/creation.c
 SRC_FILES += ray/intersections.c
 SRC_FILES += ray/transform.c
+SRC_FILES += shapes/material.c
 SRC_FILES += shapes/sphere.c
+SRC_FILES += lights/point_light.c
 SRC_FILES += utils/float_comparison.c
 SRC_FILES += debug.c
 
@@ -39,6 +43,7 @@ OBJ_DIRS += $(OBJ_ROOT)/utils
 OBJ_DIRS += $(OBJ_ROOT)/matrix
 OBJ_DIRS += $(OBJ_ROOT)/ray
 OBJ_DIRS += $(OBJ_ROOT)/shapes
+OBJ_DIRS += $(OBJ_ROOT)/lights
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
@@ -76,8 +81,10 @@ TEST_SRC += tests/matrix_test.c
 TEST_SRC += tests/matrix_transform_test.c
 TEST_SRC += tests/ray_test.c
 TEST_SRC += tests/sphere_test.c
+TEST_SRC += tests/lights_test.c
+TEST_SRC += tests/materials_test.c
 
-test: $(OBJ_ROOT) $(OBJ)
+test: $(LIBFT) $(OBJ_DIRS) $(OBJ)
 	$(CC) -g $(TEST_SRC) $(OBJ) -I src -o ./test_bin -lm -L$(LIBFT_DIR) -lft
 	./test_bin
 
@@ -88,6 +95,7 @@ clean:
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	$(RM) $(OBJ_ROOT)
+	$(RM) ./vgcore.*
 	$(RM) $(NAME)
 
 re: fclean all

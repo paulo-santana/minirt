@@ -90,6 +90,11 @@ MunitResult sphere_test6(PARAMS);
 MunitResult sphere_test7(PARAMS);
 MunitResult sphere_test8(PARAMS);
 MunitResult sphere_test9(PARAMS);
+MunitResult sphere_test10(PARAMS);
+
+MunitResult light_test1(PARAMS);
+
+MunitResult material_test1(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -194,6 +199,17 @@ int main(int argc, char **argv) {
 		{ "/normal_at() at a nonaxial point", sphere_test7, NULL, NULL, 0, NULL },
 		{ "/normal_at() with a translated sphere", sphere_test8, NULL, NULL, 0, NULL },
 		{ "/normal_at() with a scaled and rotated sphere", sphere_test9, NULL, NULL, 0, NULL },
+		{ "/a new sphere has a default material", sphere_test10, NULL, NULL, 0, NULL },
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
+	MunitTest light_tests[] = {
+		{ "/new_point_light() returns a light", light_test1, NULL, NULL, 0, NULL },
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
+	MunitTest material_tests[] = {
+		{ "/new_material() returns a default material", material_test1, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
@@ -238,12 +254,30 @@ int main(int argc, char **argv) {
 		MUNIT_SUITE_OPTION_NONE,
 	};
 
+	MunitSuite light_suite = {
+		"/lights",
+		light_tests,
+		NULL,
+		1,
+		MUNIT_SUITE_OPTION_NONE,
+	};
+
+	MunitSuite material_suite = {
+		"/materials",
+		material_tests,
+		NULL,
+		1,
+		MUNIT_SUITE_OPTION_NONE,
+	};
+
 	MunitSuite suites[] = {
 		tuple_suite,
 		matrix_suite,
 		matrix_transform_suite,
 		ray_suite,
 		sphere_suite,
+		light_suite,
+		material_suite,
 		NULL,
 	};
 

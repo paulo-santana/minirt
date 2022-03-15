@@ -175,3 +175,19 @@ MunitResult sphere_test9(const MunitParameter params[], void *fixture)
 	destroy_sphere(sphere);
 	return (MUNIT_OK);
 }
+
+// a sphere has a default material
+MunitResult sphere_test10(const MunitParameter params[], void *fixture)
+{
+	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_material *material = new_material();
+
+	munit_assert_float(sphere->material->ambient, ==, material->ambient);
+	munit_assert_float(sphere->material->diffuse, ==, material->diffuse);
+	munit_assert_float(sphere->material->specular, ==, material->specular);
+	munit_assert_float(sphere->material->shininess, ==, material->shininess);
+	munit_assert_float(sphere->material->color->red, ==, material->color->red);
+	munit_assert_float(sphere->material->color->green, ==, material->color->green);
+	munit_assert_float(sphere->material->color->blue, ==, material->color->blue);
+	return (MUNIT_OK);
+}

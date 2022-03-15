@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shapes.h                                           :+:      :+:    :+:   */
+/*   lights.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 12:05:36 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 12:50:26 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/15 12:59:14 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/15 13:01:53 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPES_H
-# define SHAPES_H
+#ifndef LIGHTS_H
+# define LIGHTS_H
 
-# include <minirt.h>
-# include <structures.h>
+# include <stdlib.h>
+# include "structures.h"
 
-t_sphere	*new_sphere(t_tuple *position, float radius);
-void		destroy_sphere(t_sphere *sphere);
-void		set_transform(t_sphere *sphere, t_matrix *t);
+t_point_light	*new_point_light(t_tuple *pos, t_color *intensity);
+void			destroy_point_light(t_point_light *light);
 
-t_material	*new_material(void);
-
-#endif /* !SHAPES_H */
+#endif /* !LIGHT_H */

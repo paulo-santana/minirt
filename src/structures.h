@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 10:01:49 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/15 12:58:54 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,25 @@ typedef struct s_matrix {
 	float	data[4][4];
 }	t_matrix;
 
+typedef struct s_material {
+	t_color	*color;
+	float	ambient;
+	float	diffuse;
+	float	specular;
+	float	shininess;
+}	t_material;
+
 typedef struct s_sphere {
 	t_tuple		*position;
 	float		radius;
 	t_matrix	*transform;
 	t_matrix	*inverse_transform;
+	t_material	*material;
 }	t_sphere;
+
+typedef struct s_point_light {
+	t_color	*intensity;
+	t_tuple	*position;
+}	t_point_light;
 
 #endif /* !STRUCTURES_H */

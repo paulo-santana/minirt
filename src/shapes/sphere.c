@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:04:46 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/14 12:06:11 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:15:17 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_sphere	*new_sphere(t_tuple *position, float radius)
 	sphere->radius = radius;
 	sphere->transform = identity_matrix();
 	sphere->inverse_transform = inverse(sphere->transform);
+	sphere->material = new_material();
 	return (sphere);
 }
 

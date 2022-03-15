@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shapes.h                                           :+:      :+:    :+:   */
+/*   material.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 12:05:36 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 12:50:26 by psergio-         ###   ########.fr       */
+/*   Created: 2022/03/15 12:49:08 by psergio-          #+#    #+#             */
+/*   Updated: 2022/03/15 12:49:26 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPES_H
-# define SHAPES_H
+#include "shapes.h"
 
-# include <minirt.h>
-# include <structures.h>
+t_material	*new_material(void)
+{
+	t_material	*material;
 
-t_sphere	*new_sphere(t_tuple *position, float radius);
-void		destroy_sphere(t_sphere *sphere);
-void		set_transform(t_sphere *sphere, t_matrix *t);
-
-t_material	*new_material(void);
-
-#endif /* !SHAPES_H */
+	material = malloc(sizeof(t_material));
+	material->color = new_color(1, 1, 1);
+	material->ambient = 0.1;
+	material->diffuse = 0.9;
+	material->specular = 0.9;
+	material->shininess = 200;
+	return (material);
+}
