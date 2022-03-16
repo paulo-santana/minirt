@@ -304,3 +304,16 @@ MunitResult world_test9(const MunitParameter params[], void *fixture)
 	munit_assert_true(color_equals(color, expected));
 	return (MUNIT_OK);
 }
+
+// the color when a ray hits
+MunitResult world_test10(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+	t_color *expected = new_color(.38066, .47583, .2855);
+
+	t_color *color = color_at(world, ray);
+
+	munit_assert_true(color_equals(color, expected));
+	return (MUNIT_OK);
+}
