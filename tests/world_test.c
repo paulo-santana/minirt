@@ -3,6 +3,7 @@
 #include "munit/munit.h"
 #include "../src/structures.h"
 #include "../src/minirt.h"
+#include "ray/ray.h"
 #include "shapes/shapes.h"
 #include "tuple/tuple.h"
 #include "../libft/libft.h"
@@ -89,5 +90,37 @@ MunitResult world_test2(const MunitParameter params[], void *fixture)
 	munit_assert_true(world_equals(expected, world));
 	munit_assert_true(world->objects.total == 2);
 	munit_assert_true(world->objects.sphere_count == 2);
+	return (MUNIT_OK);
+}
+
+t_intersections *intersect_world(t_world *world, t_ray *ray)
+{
+	t_intersections	*xs;
+	t_list			*spheres;
+
+	xs = new_intersections_list();
+	spheres = world->objects.spheres;
+	while (spheres)
+	{
+		intersect(xs, spheres->content, ray);
+		spheres = spheres->next;
+	}
+	sort_intersections(xs);
+	return (xs);
+}
+
+// intersect a world with a ray
+MunitResult world_test3(const MunitParameter params[], void *fixture)
+{
+	t_world *w = default_world();
+	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+
+	t_intersections *xs = intersect_world(w, ray);
+
+	munit_assert_int(xs->count, ==, 4);
+	munit_assert_float(xs->intersections[0]->t, ==, 4);
+	munit_assert_float(xs->intersections[1]->t, ==, 4.5);
+	munit_assert_float(xs->intersections[2]->t, ==, 5.5);
+	munit_assert_float(xs->intersections[3]->t, ==, 6);
 	return (MUNIT_OK);
 }

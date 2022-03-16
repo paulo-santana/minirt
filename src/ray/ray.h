@@ -55,6 +55,8 @@ void			add_intersection(
 					t_intersections *intersections,
 					t_intersection *new);
 
+void			sort_intersections(t_intersections *inters);
+
 t_ray			*transform(t_ray *ray, t_matrix *matrix);
 
 t_intersections	*new_intersections_list(void);
