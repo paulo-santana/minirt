@@ -7,6 +7,7 @@
 #include "structures.h"
 #include "tuple/tuple.h"
 #include "debug.h"
+#include "world/world.h"
 #include <math.h>
 #include <mlx.h>
 #include <stdlib.h>
@@ -46,6 +47,7 @@ typedef struct s_data {
 	t_point_light	*light;
 	t_image			mlx_img;
 	t_canvas		*canvas;
+	t_world			*world;
 } t_data;
 
 t_projectile	*tick(t_environment *environment, t_projectile *projectile)
@@ -251,7 +253,7 @@ void	draw_canvas_ascii(t_canvas *canvas)
 	unsigned int color;
 	unsigned int blue;
 	char	*buffer;
-	char	*palette = " .-~:+*%YOSHD#NM";
+	char	*palette = " .-:~+*%YOSHD#NM";
 
 
 	i = 0;
@@ -287,24 +289,19 @@ void	draw_canvas_ascii(t_canvas *canvas)
 
 void	draw_sphere(t_data *data)
 {
-	float wall_z = 10;
+	float wall_z = 1;
 	float wall_size = 7;
 
 	float pixel_size = wall_size / data->canvas->width;
 	float half = wall_size / 2;
 
-	t_sphere *sphere = data->sphere;
-	t_tuple *direction = new_vector(0, 0, 1);
+	t_tuple *direction = NULL;
 	t_tuple *target = new_point(0, 0, 0);
 	t_ray *ray = new_ray(new_point(0, 0, -5), NULL);
-	t_intersections *xs = new_intersections_list();
 	t_color *color = NULL;
-	t_intersection *surface;
 
 	// sphere->material->color->red = 0.3;
 
-	t_point_light *light = data->light;
-	t_lighting_args args;
 
 	int i;
 	int j;
@@ -321,29 +318,13 @@ void	draw_sphere(t_data *data)
 			target->y = world_y;
 			target->z = wall_z;
 			direction = subtract_tuples(target, ray->origin);
-			free(ray->direction);
 			t_tuple *norm_direction = normalize(direction);
+			free(ray->direction);
 			ray->direction = norm_direction;
+			free(color);
+			color = color_at(data->world, ray);
+			put_pixel(data->canvas, color, i, j);
 			free(direction);
-			intersect(xs, sphere, ray);
-			surface = hit(xs);
-			if (surface != NULL)
-			{
-				t_tuple *point = get_position(ray, surface->t);
-				t_tuple *normal = normal_at(((t_sphere *)surface->object), point);
-				t_tuple *eye = negate_tuple(ray->direction);
-				args.material = ((t_sphere *)surface->object)->material;
-				args.light = light;
-				args.position = point;
-				args.normal_vector = normal;
-				args.eye_vector = eye;
-				color = lighting(&args);
-				put_pixel(data->canvas, color, i, j);
-				free(point);
-				free(normal);
-				free(eye);
-			}
-			reset_intersections(xs);
 			j++;
 		}
 		i++;
@@ -380,14 +361,15 @@ int	exit_hook(int key, t_data *data)
 int	main(void)
 {
 	t_data data;
-	float canvas_pixels = 100;
+	float canvas_pixels = 200;
 
 	data.canvas = new_canvas(canvas_pixels, canvas_pixels);
-	data.light = new_point_light(new_point(-10, 10, -10), new_color(1, 1, 1));
+	data.light = new_point_light(new_point(-10, 10, -10), new_color(.3, 1, .1));
 	data.sphere = new_sphere();
+	data.world = default_world();
 	set_transform(data.sphere, translation(0, -1, 4));
 	free(data.sphere->material->color);
-	data.sphere->material->color = new_color(0.1, 0.4, 1);
+	data.sphere->material->color = new_color(0.1, 0.0, 1);
 
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
