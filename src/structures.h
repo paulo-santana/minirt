@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 12:58:54 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:24:59 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,38 @@ typedef struct s_world {
 	t_point_light	*light;
 	t_objects		objects;
 }	t_world;
+
+typedef enum e_object_types {
+	OBJ_SPHERE,
+	OBJ_MAX,
+}	t_object_types;
+
+typedef struct s_computations {
+	float			t;
+	void			*object;
+	t_object_types	object_type;
+	t_tuple			*point;
+	t_tuple			*eyev;
+	t_tuple			*normalv;
+	int				inside;
+}	t_computations;
+
+typedef struct s_ray {
+	t_tuple	*origin;
+	t_tuple	*direction;
+}	t_ray;
+
+typedef struct s_intersection {
+	float			t;
+	void			*object;
+	t_object_types	object_type;
+}	t_intersection;
+
+typedef struct s_intersections {
+	int				count;
+	int				size;
+	int				is_sorted;
+	t_intersection	**intersections;
+}	t_intersections;
 
 #endif /* !STRUCTURES_H */

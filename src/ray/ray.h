@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 13:04:58 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/14 11:04:34 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:56:41 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,10 @@
 # define RAY_H
 
 # include <stdlib.h>
-# include "matrix/matrix.h"
-# include "structures.h"
-
-typedef struct s_ray {
-	t_tuple	*origin;
-	t_tuple	*direction;
-}	t_ray;
-
-typedef enum e_object_types {
-	OBJ_SPHERE,
-	OBJ_MAX,
-}	t_object_types;
-
-typedef struct s_intersection {
-	float			t;
-	void			*object;
-	t_object_types	object_type;
-}	t_intersection;
-
-typedef struct s_intersections {
-	int				count;
-	int				size;
-	int				is_sorted;
-	t_intersection	**intersections;
-}	t_intersections;
+# include <matrix/matrix.h>
+# include <tuple/tuple.h>
+# include <structures.h>
+# include "lights/lights.h"
 
 t_ray			*new_ray(t_tuple *origin, t_tuple *direction);
 void			destroy_ray(t_ray *ray);
@@ -55,11 +34,17 @@ void			add_intersection(
 					t_intersections *intersections,
 					t_intersection *new);
 
+t_intersections	*intersect_world(t_world *world, t_ray *ray);
 void			sort_intersections(t_intersections *inters);
 
 t_ray			*transform(t_ray *ray, t_matrix *matrix);
 
 t_intersections	*new_intersections_list(void);
 void			destroy_intersections_list(t_intersections *inters);
+
+t_computations	*prepare_computations(t_intersection *intersection, t_ray *ray);
+t_intersections	*intersect_world(t_world *world, t_ray *ray);
+t_color			*shade_hit(t_world *world, t_computations *comps);
+t_color			*color_at(t_world *world, t_ray *ray);
 
 #endif /* !RAY_H */

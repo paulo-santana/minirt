@@ -88,12 +88,55 @@ void put_pixel(t_canvas *img, t_color *color, int x, int y)
 	img->data[y * img->width + x] = color_to_int(color);
 }
 
+void	my_mlx_put_pixel(t_image *img, unsigned int color, int x, int y)
+{
+	unsigned int	*addr;
+
+	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
+	*addr = color;
+}
+
+void	draw_canvas_mlx(t_canvas *canvas, t_image *mlx_img)
+{
+	int		i;
+	int 	j;
+	int		pixel_x;
+	int		pixel_y;
+
+	i = 0;
+	int width = mlx_img->size_line / (mlx_img->bpp / 8);
+// -	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
+	while (i < width)
+	{
+		j = 0;
+		int height = WIN_HEIGHT;
+		while (j < height)
+		{
+			int limit = WIN_HEIGHT > WIN_WIDTH ? WIN_WIDTH : WIN_HEIGHT;
+			pixel_x = (i * canvas->width) / limit;
+			pixel_y = (j * canvas->height) / limit;
+			if (pixel_x > canvas->width || pixel_y > canvas->height)
+				return ;
+			unsigned int color = canvas->data[pixel_y * canvas->width + pixel_x];
+			my_mlx_put_pixel(mlx_img, color, i, j);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	test_projectile(t_data *data)
 {
 	t_projectile *proj;
 	t_projectile *tmp_proj;
 	t_environment *env;
 	t_tuple *tmp;
+
+	float plane_x = 100;
+	float plane_y = 100;
+
+	float pixel_width = plane_x / data->canvas->width;
+	float pixel_height = plane_y / data->canvas->height;
 
 	proj = malloc(sizeof(t_projectile));
 	proj->position = new_point(0, 1, 0);
@@ -115,12 +158,15 @@ void	test_projectile(t_data *data)
 	while (proj->position->y > 0)
 	{
 		tmp_proj = tick(env, proj);
-		put_pixel(data->canvas, &color, proj->position->x, WIN_HEIGHT - proj->position->y);
+		int pixel_x = proj->position->x * pixel_width;
+		int pixel_y = proj->position->y * pixel_height;
+		put_pixel(data->canvas, &color, pixel_x, data->canvas->height - pixel_y);
 		free(proj->position);
 		free(proj->velocity);
 		free(proj);
 		proj = tmp_proj;
 	}
+	draw_canvas_mlx(data->canvas, &data->mlx_img);
 	free(proj->position);
 	free(proj->velocity);
 	free(proj);
@@ -194,43 +240,6 @@ t_canvas	*new_canvas(int width, int height)
 	canvas->width = width;
 	canvas->height = height;
 	return (canvas);
-}
-
-void	my_mlx_put_pixel(t_image *img, unsigned int color, int x, int y)
-{
-	unsigned int	*addr;
-
-	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
-	*addr = color;
-}
-
-void	draw_canvas_mlx(t_canvas *canvas, t_image *mlx_img)
-{
-	int		i;
-	int 	j;
-	int		pixel_x;
-	int		pixel_y;
-
-	i = 0;
-	int width = mlx_img->size_line / (mlx_img->bpp / 8);
-// -	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
-	while (i < width)
-	{
-		j = 0;
-		int height = WIN_HEIGHT;
-		while (j < height)
-		{
-			int limit = WIN_HEIGHT > WIN_WIDTH ? WIN_WIDTH : WIN_HEIGHT;
-			pixel_x = (i * canvas->width) / limit;
-			pixel_y = (j * canvas->height) / limit;
-			if (pixel_x > canvas->width || pixel_y > canvas->height)
-				return ;
-			unsigned int color = canvas->data[pixel_y * canvas->width + pixel_x];
-			my_mlx_put_pixel(mlx_img, color, i, j);
-			j++;
-		}
-		i++;
-	}
 }
 
 void	draw_canvas_ascii(t_canvas *canvas)
@@ -371,7 +380,7 @@ int	exit_hook(int key, t_data *data)
 int	main(void)
 {
 	t_data data;
-	float canvas_pixels = 200;
+	float canvas_pixels = 100;
 
 	data.canvas = new_canvas(canvas_pixels, canvas_pixels);
 	data.light = new_point_light(new_point(-10, 10, -10), new_color(1, 1, 1));

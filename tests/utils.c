@@ -2,6 +2,31 @@
 #include "matrix/matrix.h"
 #include "tuple/tuple.h"
 #include "../src/utils/utils.h"
+#include "debug.h"
+#include <stdio.h>
+
+void print_color(t_color *color)
+{
+	printf("\n");
+	printf("red: %f\n", color->red);
+	printf("green: %f\n", color->green);
+	printf("blue: %f\n", color->blue);
+}
+
+void print_world(t_world *world)
+{
+	int i;
+	printf("world:\n");
+
+	i = 0;
+	while (i < world->objects.sphere_count)
+	{
+		printf("  sphere %d\n", i);
+		printf("    position: ");
+		print_tuple(world->objects.spheres->content);
+		i++;
+	}
+}
 
 int color_equals(t_color *c1, t_color *c2)
 {

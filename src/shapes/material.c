@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:49:08 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 21:05:47 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:09:57 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ t_material	*new_material(void)
 	return (material);
 }
 
-void	destroy_material(t_material *mat)
+void	destroy_material(void *data)
 {
+	t_material	*mat;
+
+	mat = data;
 	free(mat->color);
 	free(mat);
 }

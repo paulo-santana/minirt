@@ -6,12 +6,12 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:04:46 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 21:06:25 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:09:23 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "matrix/matrix.h"
 #include "shapes.h"
+#include "matrix/matrix.h"
 #include "structures.h"
 #include "tuple/tuple.h"
 
@@ -28,8 +28,11 @@ t_sphere	*new_sphere(void)
 	return (sphere);
 }
 
-void	destroy_sphere(t_sphere *sphere)
+void	destroy_sphere(void *data)
 {
+	t_sphere	*sphere;
+
+	sphere = data;
 	free(sphere->position);
 	free(sphere->transform);
 	free(sphere->inverse_transform);

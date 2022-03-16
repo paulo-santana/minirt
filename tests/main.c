@@ -115,6 +115,7 @@ MunitResult world_test7(PARAMS);
 MunitResult world_test8(PARAMS);
 MunitResult world_test9(PARAMS);
 MunitResult world_test10(PARAMS);
+MunitResult world_test11(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -249,6 +250,7 @@ int main(int argc, char **argv) {
 		{ "/shading an intersection from the inside", world_test8, NULL, NULL, 0, NULL },
 		{ "/the color when a ray misses", world_test9, NULL, NULL, 0, NULL },
 		{ "/the color when a ray hits", world_test10, NULL, NULL, 0, NULL },
+		{ "/the color with an intersection behind the ray", world_test11, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
