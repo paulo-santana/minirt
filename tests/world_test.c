@@ -20,6 +20,7 @@ MunitResult world_test1(const MunitParameter params[], void *fixture)
 	munit_assert_true(world->light == NULL);
 	munit_assert_true(world->objects.total == 0);
 	munit_assert_true(world->objects.sphere_count == 0);
+	destroy_world(world);
 	return (MUNIT_OK);
 }
 
@@ -50,6 +51,8 @@ MunitResult world_test2(const MunitParameter params[], void *fixture)
 	munit_assert_true(world_equals(expected, world));
 	munit_assert_true(world->objects.total == 2);
 	munit_assert_true(world->objects.sphere_count == 2);
+	destroy_world(expected);
+	destroy_world(world);
 	return (MUNIT_OK);
 }
 
@@ -66,6 +69,9 @@ MunitResult world_test3(const MunitParameter params[], void *fixture)
 	munit_assert_float(xs->intersections[1]->t, ==, 4.5);
 	munit_assert_float(xs->intersections[2]->t, ==, 5.5);
 	munit_assert_float(xs->intersections[3]->t, ==, 6);
+	destroy_intersections_list(xs);
+	destroy_ray(ray);
+	destroy_world(w);
 	return (MUNIT_OK);
 }
 
@@ -87,6 +93,13 @@ MunitResult world_test4(const MunitParameter params[], void *fixture)
 	munit_assert_true(tuple_equals(comps->point, expected_point));
 	munit_assert_true(tuple_equals(comps->eyev, expected_eyev));
 	munit_assert_true(tuple_equals(comps->normalv, expected_normalv));
+	destroy_ray(ray);
+	destroy_sphere(sphere);
+	destroy_computations(comps);
+	free(i);
+	free(expected_point);
+	free(expected_eyev);
+	free(expected_normalv);
 	return (MUNIT_OK);
 }
 
@@ -99,6 +112,10 @@ MunitResult world_test5(const MunitParameter params[], void *fixture)
 	t_computations *comps = prepare_computations(i, ray);
 
 	munit_assert_true(comps->inside == 0);
+	destroy_computations(comps);
+	free(i);
+	destroy_sphere(sphere);
+	destroy_ray(ray);
 	return (MUNIT_OK);
 }
 
@@ -114,6 +131,11 @@ MunitResult world_test6(const MunitParameter params[], void *fixture)
 
 	munit_assert_true(comps->inside == 1);
 	munit_assert_true(tuple_equals(comps->normalv, expected_normalv));
+	free(i);
+	destroy_sphere(sphere);
+	destroy_ray(ray);
+	destroy_computations(comps);
+	free(expected_normalv);
 	return (MUNIT_OK);
 }
 
@@ -123,14 +145,20 @@ MunitResult world_test7(const MunitParameter params[], void *fixture)
 	t_world *world = default_world();
 	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
 	t_sphere *sphere = world->objects.spheres->content;
-	t_intersection *i = new_intersection(4, sphere, OBJ_SPHERE);
-	t_computations *comps = prepare_computations(i, ray);
+	t_intersection *intersection = new_intersection(4, sphere, OBJ_SPHERE);
+	t_computations *comps = prepare_computations(intersection, ray);
 
 
 	t_color *color = shade_hit(world, comps);
 	t_color *expected_color = new_color(0.38066, 0.47583, 0.2855);
 
 	munit_assert_true(color_equals(color, expected_color));
+	destroy_ray(ray);
+	destroy_world(world);
+	free(color);
+	free(expected_color);
+	free(intersection);
+	destroy_computations(comps);
 	return (MUNIT_OK);
 }
 
@@ -149,6 +177,12 @@ MunitResult world_test8(const MunitParameter params[], void *fixture)
 
 	t_color *expected_color = new_color(0.90498, 0.90498, 0.90498);
 	munit_assert_true(color_equals(color, expected_color));
+	destroy_ray(ray);
+	destroy_world(world);
+	free(color);
+	free(expected_color);
+	free(intersection);
+	destroy_computations(comps);
 	return (MUNIT_OK);
 }
 
@@ -162,6 +196,10 @@ MunitResult world_test9(const MunitParameter params[], void *fixture)
 	t_color *color = color_at(world, ray);
 
 	munit_assert_true(color_equals(color, expected));
+	destroy_ray(ray);
+	destroy_world(world);
+	free(color);
+	free(expected);
 	return (MUNIT_OK);
 }
 
@@ -175,6 +213,10 @@ MunitResult world_test10(const MunitParameter params[], void *fixture)
 	t_color *color = color_at(world, ray);
 
 	munit_assert_true(color_equals(color, expected));
+	destroy_ray(ray);
+	destroy_world(world);
+	free(color);
+	free(expected);
 	return (MUNIT_OK);
 }
 
@@ -195,6 +237,5 @@ MunitResult world_test11(const MunitParameter params[], void *fixture)
 	destroy_ray(ray);
 	destroy_world(world);
 	free(color);
-	free(expected);
 	return (MUNIT_OK);
 }

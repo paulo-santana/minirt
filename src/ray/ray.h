@@ -43,6 +43,7 @@ t_intersections	*new_intersections_list(void);
 void			destroy_intersections_list(t_intersections *inters);
 
 t_computations	*prepare_computations(t_intersection *intersection, t_ray *ray);
+void			destroy_computations(t_computations *comps);
 t_intersections	*intersect_world(t_world *world, t_ray *ray);
 t_color			*shade_hit(t_world *world, t_computations *comps);
 t_color			*color_at(t_world *world, t_ray *ray);

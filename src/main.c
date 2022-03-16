@@ -43,8 +43,6 @@ typedef struct s_canvas {
 typedef struct s_data {
 	void			*mlx;
 	void			*window;
-	t_sphere		*sphere;
-	t_point_light	*light;
 	t_image			mlx_img;
 	t_canvas		*canvas;
 	t_world			*world;
@@ -253,7 +251,7 @@ void	draw_canvas_ascii(t_canvas *canvas)
 	unsigned int color;
 	unsigned int blue;
 	char	*buffer;
-	char	*palette = " .-:~+*%YOSHD#NM";
+	char	*palette = " .:-~+*%YOSHD#NM";
 
 
 	i = 0;
@@ -285,6 +283,7 @@ void	draw_canvas_ascii(t_canvas *canvas)
 	}
 	buffer[i * (width + 1) + j + 1] = '\0';
 	ft_putstr_fd(buffer, 1);
+	free(buffer);
 }
 
 void	draw_sphere(t_data *data)
@@ -332,6 +331,8 @@ void	draw_sphere(t_data *data)
 	draw_canvas_mlx(data->canvas, &data->mlx_img);
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
 	draw_canvas_ascii(data->canvas);
+	destroy_ray(ray);
+	free(color);
 }
 
 void	rotate_light(t_data *data, float deg)
@@ -340,8 +341,8 @@ void	rotate_light(t_data *data, float deg)
 	t_tuple		*position;
 
 	rot = rotation_y(deg);
-	position = data->light->position;
-	data->light->position = matrix_multiply_tuple(rot, position);
+	position = data->world->light->position;
+	data->world->light->position = matrix_multiply_tuple(rot, position);
 	// print_tuple(position);
 	free(position);
 	draw_sphere(data);
@@ -364,12 +365,7 @@ int	main(void)
 	float canvas_pixels = 200;
 
 	data.canvas = new_canvas(canvas_pixels, canvas_pixels);
-	data.light = new_point_light(new_point(-10, 10, -10), new_color(.3, 1, .1));
-	data.sphere = new_sphere();
 	data.world = default_world();
-	set_transform(data.sphere, translation(0, -1, 4));
-	free(data.sphere->material->color);
-	data.sphere->material->color = new_color(0.1, 0.0, 1);
 
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");

@@ -47,6 +47,8 @@ t_world *default_world(void)
 
 void	destroy_world(t_world *world)
 {
-	destroy_point_light(world->light);
+	if (world->light)
+		destroy_point_light(world->light);
 	ft_lstclear(&world->objects.spheres, destroy_sphere);
+	free(world);
 }

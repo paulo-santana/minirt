@@ -62,6 +62,14 @@ t_color	*shade_hit(t_world *world, t_computations *comps)
 	return (lighting(&args));
 }
 
+void	destroy_computations(t_computations *comps)
+{
+	free(comps->eyev);
+	free(comps->normalv);
+	free(comps->point);
+	free(comps);
+}
+
 t_color	*color_at(t_world *world, t_ray *ray)
 {
 	t_computations	*comps;
@@ -72,8 +80,16 @@ t_color	*color_at(t_world *world, t_ray *ray)
 	xs = intersect_world(world, ray);
 	intersection = hit(xs);
 	if (intersection == NULL)
+	{
+		destroy_intersections_list(xs);
 		return (new_color(0, 0, 0));
+	}
 	comps = prepare_computations(intersection, ray);
 	color = shade_hit(world, comps);
+	destroy_intersections_list(xs);
+	free(comps->eyev);
+	free(comps->normalv);
+	free(comps->point);
+	free(comps);
 	return (color);
 }
