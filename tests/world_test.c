@@ -275,3 +275,32 @@ MunitResult world_test8(const MunitParameter params[], void *fixture)
 	munit_assert_true(color_equals(color, expected_color));
 	return (MUNIT_OK);
 }
+
+t_color *color_at(t_world *world, t_ray *ray)
+{
+	t_computations	*comps;
+	t_intersection	*intersection;
+	t_intersections	*xs;
+	t_color			*color;
+
+	xs = intersect_world(world, ray);
+	intersection = hit(xs);
+	if (intersection == NULL)
+		return (new_color(0, 0, 0));
+	comps = prepare_computations(intersection, ray);
+	color = shade_hit(world, comps);
+	return (color);
+}
+
+// the color when a ray misses
+MunitResult world_test9(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 1, 0));
+	t_color *expected = new_color(0, 0, 0);
+
+	t_color *color = color_at(world, ray);
+
+	munit_assert_true(color_equals(color, expected));
+	return (MUNIT_OK);
+}
