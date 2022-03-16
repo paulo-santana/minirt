@@ -371,7 +371,7 @@ int	exit_hook(int key, t_data *data)
 int	main(void)
 {
 	t_data data;
-	float canvas_pixels = 400;
+	float canvas_pixels = 200;
 
 	data.canvas = new_canvas(canvas_pixels, canvas_pixels);
 	data.light = new_point_light(new_point(-10, 10, -10), new_color(1, 1, 1));

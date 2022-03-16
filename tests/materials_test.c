@@ -18,6 +18,8 @@ MunitResult material_test1(const MunitParameter params[], void *fixture)
 	munit_assert_float(m->diffuse, ==, 0.9);
 	munit_assert_float(m->specular, ==, 0.9);
 	munit_assert_float(m->shininess, ==, 200.0);
+	free(m->color);
+	free(m);
 	return (MUNIT_OK);
 }
 
@@ -46,6 +48,13 @@ MunitResult material_test2(const MunitParameter params[], void *fixture)
 
 	free(m->color);
 	free(m);
+	free(light->intensity);
+	free(light->position);
+	free(light);
+	free(position);
+	free(eyev);
+	free(normalv);
+	free(result);
 	return (MUNIT_OK);
 }
 
@@ -74,6 +83,13 @@ MunitResult material_test3(const MunitParameter params[], void *fixture)
 
 	free(m->color);
 	free(m);
+	free(light->intensity);
+	free(light->position);
+	free(light);
+	free(position);
+	free(eyev);
+	free(normalv);
+	free(result);
 	return (MUNIT_OK);
 }
 
@@ -102,6 +118,13 @@ MunitResult material_test4(const MunitParameter params[], void *fixture)
 
 	free(m->color);
 	free(m);
+	free(light->intensity);
+	free(light->position);
+	free(light);
+	free(position);
+	free(eyev);
+	free(normalv);
+	free(result);
 	return (MUNIT_OK);
 }
 
@@ -130,6 +153,13 @@ MunitResult material_test5(const MunitParameter params[], void *fixture)
 
 	free(m->color);
 	free(m);
+	free(light->intensity);
+	free(light->position);
+	free(light);
+	free(position);
+	free(eyev);
+	free(normalv);
+	free(result);
 	return (MUNIT_OK);
 }
 
@@ -158,5 +188,12 @@ MunitResult material_test6(const MunitParameter params[], void *fixture)
 
 	free(m->color);
 	free(m);
+	free(light->position);
+	free(light->intensity);
+	free(light);
+	free(position);
+	free(eyev);
+	free(normalv);
+	free(result);
 	return (MUNIT_OK);
 }

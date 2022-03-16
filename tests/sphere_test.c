@@ -166,5 +166,8 @@ MunitResult sphere_test10(const MunitParameter params[], void *fixture)
 	munit_assert_float(sphere->material->color->red, ==, material->color->red);
 	munit_assert_float(sphere->material->color->green, ==, material->color->green);
 	munit_assert_float(sphere->material->color->blue, ==, material->color->blue);
+	destroy_sphere(sphere);
+	free(material->color);
+	free(material);
 	return (MUNIT_OK);
 }

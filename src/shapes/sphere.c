@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:04:46 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 13:15:17 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/15 21:06:25 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	destroy_sphere(t_sphere *sphere)
 	free(sphere->position);
 	free(sphere->transform);
 	free(sphere->inverse_transform);
+	destroy_material(sphere->material);
 	free(sphere);
 }
 

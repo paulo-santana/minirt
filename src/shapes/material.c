@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:49:08 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 12:49:26 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/15 21:05:47 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,10 @@ t_material	*new_material(void)
 	material->specular = 0.9;
 	material->shininess = 200;
 	return (material);
+}
+
+void	destroy_material(t_material *mat)
+{
+	free(mat->color);
+	free(mat);
 }
