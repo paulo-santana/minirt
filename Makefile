@@ -84,6 +84,7 @@ TEST_SRC += tests/ray_test.c
 TEST_SRC += tests/sphere_test.c
 TEST_SRC += tests/lights_test.c
 TEST_SRC += tests/materials_test.c
+TEST_SRC += tests/world_test.c
 
 test: $(LIBFT) $(OBJ_DIRS) $(OBJ)
 	$(CC) -g $(TEST_SRC) $(OBJ) -I src -o ./test_bin -lm -L$(LIBFT_DIR) -lft

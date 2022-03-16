@@ -28,6 +28,7 @@ MunitResult matrix_test20(PARAMS);
 MunitResult matrix_test21(PARAMS);
 MunitResult matrix_test22(PARAMS);
 MunitResult matrix_test23(PARAMS);
+
 MunitResult tuple_test1(PARAMS);
 MunitResult tuple_test2(PARAMS);
 MunitResult tuple_test3(PARAMS);
@@ -53,6 +54,7 @@ MunitResult tuple_test22(PARAMS);
 MunitResult tuple_test23(PARAMS);
 MunitResult tuple_test24(PARAMS);
 MunitResult tuple_test25(PARAMS);
+
 MunitResult matrix_transform_test1(PARAMS);
 MunitResult matrix_transform_test2(PARAMS);
 MunitResult matrix_transform_test3(PARAMS);
@@ -66,6 +68,7 @@ MunitResult matrix_transform_test10(PARAMS);
 MunitResult matrix_transform_test11(PARAMS);
 MunitResult matrix_transform_test12(PARAMS);
 MunitResult matrix_transform_test13(PARAMS);
+
 MunitResult ray_test1(PARAMS);
 MunitResult ray_test2(PARAMS);
 MunitResult ray_test3(PARAMS);
@@ -81,6 +84,7 @@ MunitResult ray_test12(PARAMS);
 MunitResult ray_test13(PARAMS);
 MunitResult ray_test14(PARAMS);
 MunitResult ray_test15(PARAMS);
+
 MunitResult sphere_test1(PARAMS);
 MunitResult sphere_test2(PARAMS);
 MunitResult sphere_test3(PARAMS);
@@ -100,6 +104,8 @@ MunitResult material_test3(PARAMS);
 MunitResult material_test4(PARAMS);
 MunitResult material_test5(PARAMS);
 MunitResult material_test6(PARAMS);
+
+MunitResult world_test1(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -223,6 +229,11 @@ int main(int argc, char **argv) {
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
+	MunitTest world_tests[] = {
+		{ "/new_world() creates a world", world_test1, NULL, NULL, 0, NULL },
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
 
 	MunitSuite tuple_suite = {
 		"/tuples",
@@ -280,6 +291,14 @@ int main(int argc, char **argv) {
 		MUNIT_SUITE_OPTION_NONE,
 	};
 
+	MunitSuite world_suite = {
+		"/world",
+		world_tests,
+		NULL,
+		1,
+		MUNIT_SUITE_OPTION_NONE,
+	};
+
 	MunitSuite suites[] = {
 		tuple_suite,
 		matrix_suite,
@@ -288,6 +307,7 @@ int main(int argc, char **argv) {
 		sphere_suite,
 		light_suite,
 		material_suite,
+		world_suite,
 		NULL,
 	};
 
