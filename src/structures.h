@@ -13,6 +13,8 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
+# include "../libft/libft.h"
+
 typedef struct s_tuple {
 	float	x;
 	float	y;
@@ -51,5 +53,16 @@ typedef struct s_point_light {
 	t_color	*intensity;
 	t_tuple	*position;
 }	t_point_light;
+
+typedef struct s_objects {
+	int		total;
+	int		sphere_count;
+	t_list	*spheres;
+}	t_objects;
+
+typedef struct s_world {
+	t_point_light	*light;
+	t_objects		objects;
+}	t_world;
 
 #endif /* !STRUCTURES_H */

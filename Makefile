@@ -20,12 +20,14 @@ SRC_FILES += tuple/tuple_creation.c
 SRC_FILES += tuple/tuple_operations.c
 SRC_FILES += tuple/vector_utils.c
 SRC_FILES += tuple/color_utils.c
+
 SRC_FILES += matrix/creation.c
 SRC_FILES += matrix/check.c
 SRC_FILES += matrix/operations.c
 SRC_FILES += matrix/determinant.c
 SRC_FILES += matrix/submatrix.c
 SRC_FILES += matrix/transform.c
+
 SRC_FILES += ray/ray.c
 SRC_FILES += ray/creation.c
 SRC_FILES += ray/intersections.c
@@ -57,7 +59,7 @@ RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MLX) $(OBJ_DIRS) $(OBJ) $(OBJ_ROOT)/main.o
+$(NAME): $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(OBJ) $(OBJ_ROOT)/main.o
 	$(CC) $(OBJ) $(OBJ_ROOT)/main.o -o $(NAME) $(LFLAGS)
 
 $(LIBFT):
@@ -85,6 +87,7 @@ TEST_SRC += tests/sphere_test.c
 TEST_SRC += tests/lights_test.c
 TEST_SRC += tests/materials_test.c
 TEST_SRC += tests/world_test.c
+TEST_SRC += tests/utils.c
 
 test: $(LIBFT) $(OBJ_DIRS) $(OBJ)
 	$(CC) -g $(TEST_SRC) $(OBJ) -I src -o ./test_bin -lm -L$(LIBFT_DIR) -lft

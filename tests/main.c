@@ -106,6 +106,7 @@ MunitResult material_test5(PARAMS);
 MunitResult material_test6(PARAMS);
 
 MunitResult world_test1(PARAMS);
+MunitResult world_test2(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -231,6 +232,7 @@ int main(int argc, char **argv) {
 
 	MunitTest world_tests[] = {
 		{ "/new_world() creates a world", world_test1, NULL, NULL, 0, NULL },
+		{ "/default_world() might be a useless function", world_test2, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
