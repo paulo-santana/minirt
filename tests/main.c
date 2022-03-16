@@ -111,6 +111,8 @@ MunitResult world_test3(PARAMS);
 MunitResult world_test4(PARAMS);
 MunitResult world_test5(PARAMS);
 MunitResult world_test6(PARAMS);
+MunitResult world_test7(PARAMS);
+MunitResult world_test8(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -241,6 +243,8 @@ int main(int argc, char **argv) {
 		{ "/precomputing the state of an intersection", world_test4, NULL, NULL, 0, NULL },
 		{ "/the hit, eye outside", world_test5, NULL, NULL, 0, NULL },
 		{ "/the hit, eye inside", world_test6, NULL, NULL, 0, NULL },
+		{ "/shading an intersection", world_test7, NULL, NULL, 0, NULL },
+		{ "/shading an intersection from the inside", world_test8, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

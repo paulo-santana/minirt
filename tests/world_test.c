@@ -9,6 +9,7 @@
 #include "../libft/libft.h"
 #include "utils.h"
 #include <math.h>
+#include "debug.h"
 
 t_world	*new_world(void)
 {
@@ -31,7 +32,7 @@ MunitResult world_test1(const MunitParameter params[], void *fixture)
 
 void	add_sphere(t_world *world, t_sphere *sphere)
 {
-	ft_lstadd_front(&world->objects.spheres, ft_lstnew(sphere));
+	ft_lstadd_back(&world->objects.spheres, ft_lstnew(sphere));
 	world->objects.total++;
 	world->objects.sphere_count++;
 }
@@ -143,7 +144,7 @@ t_computations *prepare_computations(t_intersection *intersection, t_ray *ray)
 	comps = malloc(sizeof(t_computations));
 	comps->t = intersection->t;
 	comps->object = intersection->object;
-	comps->point = get_position(ray, intersection->t);
+	comps->point = get_position(ray, comps->t);
 	comps->eyev = negate_tuple(ray->direction);
 	comps->normalv = normal_at(comps->object, comps->point);
 	comps->inside = 0;
@@ -202,5 +203,75 @@ MunitResult world_test6(const MunitParameter params[], void *fixture)
 
 	munit_assert_true(comps->inside == 1);
 	munit_assert_true(tuple_equals(comps->normalv, expected_normalv));
+	return (MUNIT_OK);
+}
+
+t_color *shade_hit(t_world *world, t_computations *comps)
+{
+	t_lighting_args args;
+
+	args.material = ((t_sphere*)comps->object)->material;
+	args.light = world->light;
+	args.position = comps->point;
+	args.eye_vector = comps->eyev;
+	args.normal_vector = comps->normalv;
+	return (lighting(&args));
+}
+
+void print_color(t_color *color)
+{
+	printf("\n");
+	printf("red: %f\n", color->red);
+	printf("green: %f\n", color->green);
+	printf("blue: %f\n", color->blue);
+}
+
+void print_world(t_world *world)
+{
+	int i;
+	printf("world:\n");
+
+	i = 0;
+	while (i < world->objects.sphere_count)
+	{
+		printf("  sphere %d\n", i);
+		printf("    position: ");
+		print_tuple(world->objects.spheres->content);
+		i++;
+	}
+}
+
+// shading an intersection
+MunitResult world_test7(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+	t_sphere *sphere = world->objects.spheres->content;
+	t_intersection *i = new_intersection(4, sphere, OBJ_SPHERE);
+	t_computations *comps = prepare_computations(i, ray);
+
+
+	t_color *color = shade_hit(world, comps);
+	t_color *expected_color = new_color(0.38066, 0.47583, 0.2855);
+
+	munit_assert_true(color_equals(color, expected_color));
+	return (MUNIT_OK);
+}
+
+// shading an intersection from the inside
+MunitResult world_test8(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	destroy_point_light(world->light);
+	world->light = new_point_light(new_point(0, 0.25, 0), new_color(1, 1, 1));
+	t_ray *ray = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
+	t_sphere *sphere = world->objects.spheres->next->content;
+	t_intersection *intersection = new_intersection(0.5, sphere, OBJ_SPHERE);
+
+	t_computations *comps = prepare_computations(intersection, ray);
+	t_color *color = shade_hit(world, comps);
+
+	t_color *expected_color = new_color(0.90498, 0.90498, 0.90498);
+	munit_assert_true(color_equals(color, expected_color));
 	return (MUNIT_OK);
 }
