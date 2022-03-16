@@ -124,3 +124,83 @@ MunitResult world_test3(const MunitParameter params[], void *fixture)
 	munit_assert_float(xs->intersections[3]->t, ==, 6);
 	return (MUNIT_OK);
 }
+
+typedef struct s_computations {
+	float			t;
+	void			*object;
+	t_object_types	object_type;
+	t_tuple			*point;
+	t_tuple			*eyev;
+	t_tuple			*normalv;
+	int				inside;
+}	t_computations;
+
+t_computations *prepare_computations(t_intersection *intersection, t_ray *ray)
+{
+	t_computations	*comps;
+	t_tuple			*tmp;
+
+	comps = malloc(sizeof(t_computations));
+	comps->t = intersection->t;
+	comps->object = intersection->object;
+	comps->point = get_position(ray, intersection->t);
+	comps->eyev = negate_tuple(ray->direction);
+	comps->normalv = normal_at(comps->object, comps->point);
+	comps->inside = 0;
+	if (dot(comps->normalv, comps->eyev) < 0)
+	{
+		comps->inside = 1;
+		tmp = comps->normalv;
+		comps->normalv = negate_tuple(comps->normalv);
+		free(tmp);
+	}
+	return (comps);
+}
+
+// intersect a world with a ray
+MunitResult world_test4(const MunitParameter params[], void *fixture)
+{
+	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+	t_sphere *sphere = new_sphere();
+	t_intersection *i = new_intersection(4, sphere, OBJ_SPHERE);
+
+	t_computations *comps = prepare_computations(i, ray);
+
+	t_tuple *expected_point = new_point(0, 0, -1);
+	t_tuple *expected_eyev = new_vector(0, 0, -1);
+	t_tuple *expected_normalv = new_vector(0, 0, -1);
+
+	munit_assert_float(comps->t, ==, i->t);
+	munit_assert_ptr_equal(comps->object, i->object);
+	munit_assert_true(tuple_equals(comps->point, expected_point));
+	munit_assert_true(tuple_equals(comps->eyev, expected_eyev));
+	munit_assert_true(tuple_equals(comps->normalv, expected_normalv));
+	return (MUNIT_OK);
+}
+
+// the hit, when an intersection occurs on the outside
+MunitResult world_test5(const MunitParameter params[], void *fixture)
+{
+	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+	t_sphere *sphere = new_sphere();
+	t_intersection *i = new_intersection(4, sphere, OBJ_SPHERE);
+	t_computations *comps = prepare_computations(i, ray);
+
+	munit_assert_true(comps->inside == 0);
+	return (MUNIT_OK);
+}
+
+// the hit, when an intersection occurs on the inside
+MunitResult world_test6(const MunitParameter params[], void *fixture)
+{
+	t_ray *ray = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
+	t_sphere *sphere = new_sphere();
+	t_intersection *i = new_intersection(1, sphere, OBJ_SPHERE);
+	t_computations *comps = prepare_computations(i, ray);
+
+	t_tuple *expected_normalv = new_vector(0, 0, -1);
+
+	munit_assert_true(comps->inside == 1);
+	munit_assert_true(tuple_equals(comps->normalv, expected_normalv));
+	return (MUNIT_OK);
+}

@@ -108,6 +108,9 @@ MunitResult material_test6(PARAMS);
 MunitResult world_test1(PARAMS);
 MunitResult world_test2(PARAMS);
 MunitResult world_test3(PARAMS);
+MunitResult world_test4(PARAMS);
+MunitResult world_test5(PARAMS);
+MunitResult world_test6(PARAMS);
 
 int main(int argc, char **argv) {
 	MunitTest tuple_tests[] = {
@@ -235,6 +238,9 @@ int main(int argc, char **argv) {
 		{ "/new_world() creates a world", world_test1, NULL, NULL, 0, NULL },
 		{ "/default_world() might be a useless function", world_test2, NULL, NULL, 0, NULL },
 		{ "/intersect_world() intersect a world with a ray", world_test3, NULL, NULL, 0, NULL },
+		{ "/precomputing the state of an intersection", world_test4, NULL, NULL, 0, NULL },
+		{ "/the hit, eye outside", world_test5, NULL, NULL, 0, NULL },
+		{ "/the hit, eye inside", world_test6, NULL, NULL, 0, NULL },
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
