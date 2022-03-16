@@ -13,14 +13,15 @@
 #include "matrix/matrix.h"
 #include "shapes.h"
 #include "structures.h"
+#include "tuple/tuple.h"
 
-t_sphere	*new_sphere(t_tuple *position, float radius)
+t_sphere	*new_sphere(void)
 {
 	t_sphere	*sphere;
 
 	sphere = malloc(sizeof(t_sphere));
-	sphere->position = position;
-	sphere->radius = radius;
+	sphere->position = new_point(0, 0, 0);
+	sphere->radius = 1;
 	sphere->transform = identity_matrix();
 	sphere->inverse_transform = inverse(sphere->transform);
 	sphere->material = new_material();

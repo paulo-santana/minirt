@@ -16,7 +16,7 @@
 # include <minirt.h>
 # include <structures.h>
 
-t_sphere	*new_sphere(t_tuple *position, float radius);
+t_sphere	*new_sphere(void);
 void		destroy_sphere(t_sphere *sphere);
 void		set_transform(t_sphere *sphere, t_matrix *t);
 

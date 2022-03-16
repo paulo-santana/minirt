@@ -12,7 +12,7 @@
 
 MunitResult sphere_test1(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_matrix *identity = identity_matrix();
 
 	munit_assert_true(matrix_equals(sphere->transform, identity));
@@ -23,7 +23,7 @@ MunitResult sphere_test1(const MunitParameter params[], void *fixture)
 
 MunitResult sphere_test2(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
 	t_matrix *t = translation(2, 3, 4);
 
@@ -36,7 +36,7 @@ MunitResult sphere_test2(const MunitParameter params[], void *fixture)
 
 MunitResult sphere_test3(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
 	t_matrix *s = scaling(2, 2, 2);
 	t_intersections *xs;
@@ -55,7 +55,7 @@ MunitResult sphere_test3(const MunitParameter params[], void *fixture)
 
 MunitResult sphere_test4(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_tuple *point = new_point(1, 0, 0);
 	t_tuple *expected = new_vector(1, 0, 0);
 
@@ -70,7 +70,7 @@ MunitResult sphere_test4(const MunitParameter params[], void *fixture)
 
 MunitResult sphere_test5(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_tuple *point = new_point(0, 1, 0);
 	t_tuple *expected = new_vector(0, 1, 0);
 
@@ -85,7 +85,7 @@ MunitResult sphere_test5(const MunitParameter params[], void *fixture)
 
 MunitResult sphere_test6(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_tuple *point = new_point(0, 0, 1);
 	t_tuple *expected = new_vector(0, 0, 1);
 
@@ -101,7 +101,7 @@ MunitResult sphere_test6(const MunitParameter params[], void *fixture)
 MunitResult sphere_test7(const MunitParameter params[], void *fixture)
 {
 	float value = sqrtf(3) / 3;
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_tuple *point = new_point(value, value, value);
 	t_tuple *expected = new_vector(value, value, value);
 
@@ -116,7 +116,7 @@ MunitResult sphere_test7(const MunitParameter params[], void *fixture)
 
 MunitResult sphere_test8(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	set_transform(sphere, translation(0, 1, 0));
 
 	t_tuple *point = new_point(0, 1.70711, -0.70711);
@@ -133,7 +133,7 @@ MunitResult sphere_test8(const MunitParameter params[], void *fixture)
 
 MunitResult sphere_test9(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_matrix *scale = scaling(1, 0.5, 1);
 	t_matrix *rot = rotation_z(M_PI / 5);
 	t_matrix *tr = matrix_multiply(scale, rot);
@@ -156,7 +156,7 @@ MunitResult sphere_test9(const MunitParameter params[], void *fixture)
 // a sphere has a default material
 MunitResult sphere_test10(const MunitParameter params[], void *fixture)
 {
-	t_sphere *sphere = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *sphere = new_sphere();
 	t_material *material = new_material();
 
 	munit_assert_float(sphere->material->ambient, ==, material->ambient);

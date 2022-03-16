@@ -60,7 +60,7 @@ MunitResult ray_test3(const MunitParameter params[], void *fixture)
 
 	xs = new_intersections_list();
 	t_ray *r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 
 	intersect(xs, s, r);
 	munit_assert_int(xs->count, ==, 2);
@@ -77,7 +77,7 @@ MunitResult ray_test3(const MunitParameter params[], void *fixture)
 MunitResult ray_test4(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 1, -5), new_vector(0, 0, 1));
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersections *xs;
 
 	xs = new_intersections_list();
@@ -95,7 +95,7 @@ MunitResult ray_test4(const MunitParameter params[], void *fixture)
 MunitResult ray_test5(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 2, -5), new_vector(0, 0, 1));
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersections *xs;
 
 	xs = new_intersections_list();
@@ -112,7 +112,7 @@ MunitResult ray_test5(const MunitParameter params[], void *fixture)
 MunitResult ray_test6(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersections *xs;
 
 	xs = new_intersections_list();
@@ -131,7 +131,7 @@ MunitResult ray_test6(const MunitParameter params[], void *fixture)
 MunitResult ray_test7(const MunitParameter params[], void *fixture)
 {
 	t_ray *r = new_ray(new_point(0, 0, 5), new_vector(0, 0, 1));
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersections *xs;
 
 	xs = new_intersections_list();
@@ -149,7 +149,7 @@ MunitResult ray_test7(const MunitParameter params[], void *fixture)
 
 MunitResult ray_test8(const MunitParameter params[], void *fixture)
 {
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersection *intersection = new_intersection(3.5, s, OBJ_SPHERE);
 
 	munit_assert_float(intersection->t, ==, 3.5);
@@ -162,7 +162,7 @@ MunitResult ray_test8(const MunitParameter params[], void *fixture)
 
 MunitResult ray_test9(const MunitParameter params[], void *fixture)
 {
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersection *i1 = new_intersection(1, s, OBJ_SPHERE);
 	t_intersection *i2 = new_intersection(2, s, OBJ_SPHERE);
 	t_intersections *xs = new_intersections_list();
@@ -179,7 +179,7 @@ MunitResult ray_test9(const MunitParameter params[], void *fixture)
 
 MunitResult ray_test10(const MunitParameter params[], void *fixture)
 {
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersection *i1 = new_intersection(1, s, OBJ_SPHERE);
 	t_intersection *i2 = new_intersection(2, s, OBJ_SPHERE);
 	t_intersections *xs = new_intersections_list();
@@ -197,7 +197,7 @@ MunitResult ray_test10(const MunitParameter params[], void *fixture)
 
 MunitResult ray_test11(const MunitParameter params[], void *fixture)
 {
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersection *i1 = new_intersection(-1, s, OBJ_SPHERE);
 	t_intersection *i2 = new_intersection(1, s, OBJ_SPHERE);
 	t_intersections *xs = new_intersections_list();
@@ -215,7 +215,7 @@ MunitResult ray_test11(const MunitParameter params[], void *fixture)
 
 MunitResult ray_test12(const MunitParameter params[], void *fixture)
 {
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersection *i1 = new_intersection(-2, s, OBJ_SPHERE);
 	t_intersection *i2 = new_intersection(-1, s, OBJ_SPHERE);
 	t_intersections *xs = new_intersections_list();
@@ -233,7 +233,7 @@ MunitResult ray_test12(const MunitParameter params[], void *fixture)
 
 MunitResult ray_test13(const MunitParameter params[], void *fixture)
 {
-	t_sphere *s = new_sphere(new_point(0, 0, 0), 1);
+	t_sphere *s = new_sphere();
 	t_intersection *i1 = new_intersection(5, s, OBJ_SPHERE);
 	t_intersection *i2 = new_intersection(7, s, OBJ_SPHERE);
 	t_intersection *i3 = new_intersection(-3, s, OBJ_SPHERE);

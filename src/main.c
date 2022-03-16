@@ -375,7 +375,7 @@ int	main(void)
 
 	data.canvas = new_canvas(canvas_pixels, canvas_pixels);
 	data.light = new_point_light(new_point(-10, 10, -10), new_color(1, 1, 1));
-	data.sphere = new_sphere(new_point(0, 0, 0), 1);
+	data.sphere = new_sphere();
 	set_transform(data.sphere, translation(0, -1, 4));
 	free(data.sphere->material->color);
 	data.sphere->material->color = new_color(0.1, 0.4, 1);
