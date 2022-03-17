@@ -104,7 +104,7 @@ TEST_SRC += tests/utils.c
 
 test: $(LIBFT) $(OBJ_DIRS) $(OBJ)
 	$(CC) -g $(TEST_SRC) $(OBJ) -I src -o ./test_bin -lm -L$(LIBFT_DIR) -lft
-	./test_bin || ./test_bin --no-fork
+	./test_bin # || ./test_bin --no-fork
 
 clean:
 	make -C $(LIBFT_DIR) clean

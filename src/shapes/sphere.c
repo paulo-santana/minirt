@@ -14,6 +14,7 @@
 #include "matrix/matrix.h"
 #include "structures.h"
 #include "tuple/tuple.h"
+#include "debug.h"
 
 t_sphere	*new_sphere(void)
 {
@@ -23,7 +24,7 @@ t_sphere	*new_sphere(void)
 	sphere->position = new_point(0, 0, 0);
 	sphere->radius = 1;
 	sphere->transform = identity_matrix();
-	sphere->inverse_transform = inverse(sphere->transform);
+	sphere->inverse_transform = identity_matrix();
 	sphere->material = new_material();
 	return (sphere);
 }
