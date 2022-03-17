@@ -75,6 +75,7 @@ t_color	*shade_hit(t_world *world, t_computations *comps)
 	t_lighting_args	args;
 	t_list			*light;
 	t_list			*colors;
+	t_color			*final_color;
 
 	light = world->lights;
 	colors = NULL;
@@ -88,7 +89,9 @@ t_color	*shade_hit(t_world *world, t_computations *comps)
 		light = light->next;
 		ft_lstadd_front(&colors, ft_lstnew(lighting(&args)));
 	}
-	return (sum_color_list(colors));
+	final_color = sum_color_list(colors);
+	ft_lstclear(&colors, free);
+	return (final_color);
 }
 
 void	destroy_computations(t_computations *comps)

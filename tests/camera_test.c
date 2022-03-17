@@ -15,6 +15,7 @@ MunitResult camera_test1(const MunitParameter params[], void *fixture)
 
 	munit_assert_float(camera->pixel_size, ==, 0.01);
 
+	destroy_camera(camera);
 	return (MUNIT_OK);
 }
 
@@ -25,6 +26,7 @@ MunitResult camera_test2(const MunitParameter params[], void *fixture)
 
 	munit_assert_float(camera->pixel_size, ==, 0.01);
 
+	destroy_camera(camera);
 	return (MUNIT_OK);
 }
 
@@ -40,6 +42,10 @@ MunitResult camera_test3(const MunitParameter params[], void *fixture)
 	munit_assert_true(tuple_equals(ray->origin, expected_origin));
 	munit_assert_true(tuple_equals(ray->direction, expected_direction));
 
+	destroy_camera(camera);
+	destroy_ray(ray);
+	free(expected_direction);
+	free(expected_origin);
 	return (MUNIT_OK);
 }
 
@@ -55,6 +61,10 @@ MunitResult camera_test4(const MunitParameter params[], void *fixture)
 	munit_assert_true(tuple_equals(ray->origin, expected_origin));
 	munit_assert_true(tuple_equals(ray->direction, expected_direction));
 
+	destroy_camera(camera);
+	destroy_ray(ray);
+	free(expected_direction);
+	free(expected_origin);
 	return (MUNIT_OK);
 }
 
@@ -72,6 +82,11 @@ MunitResult camera_test5(const MunitParameter params[], void *fixture)
 
 	munit_assert_true(tuple_equals(ray->origin, expected_origin));
 	munit_assert_true(tuple_equals(ray->direction, expected_direction));
-
+	destroy_camera(camera);
+	destroy_ray(ray);
+	free(expected_direction);
+	free(expected_origin);
+	free(rot);
+	free(trans);
 	return (MUNIT_OK);
 }

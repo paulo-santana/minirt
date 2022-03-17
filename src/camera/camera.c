@@ -89,3 +89,10 @@ t_ray	*ray_to_pixel(int x, int y, t_camera *camera)
 	free(pixel);
 	return (ray);
 }
+
+void	destroy_camera(t_camera *camera)
+{
+	free(camera->transform);
+	free(camera->inverse_transform);
+	free(camera);
+}
