@@ -121,6 +121,7 @@ MunitResult world_test10(PARAMS);
 MunitResult world_test11(PARAMS);
 
 MunitResult camera_test1(PARAMS);
+MunitResult camera_test2(PARAMS);
 
 MunitTest test(char *desc, MunitTestFunc the_test)
 {
@@ -279,6 +280,7 @@ int main(int argc, char **argv) {
 
 	MunitTest camera_tests[] = {
 		test("/new_camera() creates a camera", camera_test1),
+		test("/the pixel size for a vertical canvas", camera_test2),
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
