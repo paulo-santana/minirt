@@ -42,6 +42,8 @@ SRC_FILES += lights/point_light.c
 
 SRC_FILES += world/world.c
 
+SRC_FILES += camera/view.c
+
 SRC_FILES += utils/float_comparison.c
 
 SRC_FILES += debug.c
@@ -55,6 +57,7 @@ OBJ_DIRS += $(OBJ_ROOT)/ray
 OBJ_DIRS += $(OBJ_ROOT)/shapes
 OBJ_DIRS += $(OBJ_ROOT)/lights
 OBJ_DIRS += $(OBJ_ROOT)/world
+OBJ_DIRS += $(OBJ_ROOT)/camera
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
