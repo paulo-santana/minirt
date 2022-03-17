@@ -291,3 +291,117 @@ MunitResult matrix_transform_test13(const MunitParameter params[], void *fixture
 	free(p2_expected);
 	return (MUNIT_OK);
 }
+
+t_matrix *translate_view(t_matrix *orientation, t_tuple *from)
+{
+	t_matrix	*result;
+	t_matrix	*t;
+
+	t = translation(-from->x, -from->y, -from->z);
+	result = matrix_multiply(orientation, t);
+	free(t);
+	return (result);
+}
+
+t_matrix *view_transform(t_tuple *from, t_tuple *to, t_tuple *up)
+{
+	void		*result;
+	t_tuple		*forward;
+	t_tuple		*left;
+	t_tuple		*true_up;
+	t_matrix	*orientation;
+
+	result = subtract_tuples(to, from);
+	forward = normalize(result);
+	free(result);
+	up = normalize(up);
+	left = cross(forward, up);
+	true_up = cross(left, forward);
+	free(up);
+	orientation = new_matrix(4, (float[4][4]){
+			{left->x, left->y, left->z, 0},
+			{true_up->x, true_up->y, true_up->z, 0},
+			{-forward->x, -forward->y, -forward->z, 0},
+			{0, 0, 0, 1},
+			});
+	result = translate_view(orientation, from);
+	free(orientation);
+	return (result);
+}
+
+MunitResult matrix_transform_test14(const MunitParameter params[], void *fixture)
+{
+	t_tuple *from = new_point(0, 0, 0);
+	t_tuple *to = new_point(0, 0, -1);
+	t_tuple *up = new_vector(0, 1, 0);
+	t_matrix *t = view_transform(from, to, up);
+
+	t_matrix *identity = identity_matrix();
+
+	munit_assert_true(matrix_equals(t, identity));
+	free(identity);
+	free(t);
+	free(up);
+	free(to);
+	free(from);
+	return (MUNIT_OK);
+}
+
+MunitResult matrix_transform_test15(const MunitParameter params[], void *fixture)
+{
+	t_tuple *from = new_point(0, 0, 0);
+	t_tuple *to = new_point(0, 0, 1);
+	t_tuple *up = new_vector(0, 1, 0);
+	t_matrix *t = view_transform(from, to, up);
+
+	t_matrix *expected = scaling(-1, 1, -1);
+
+	munit_assert_true(matrix_equals(t, expected));
+	free(expected);
+	free(t);
+	free(up);
+	free(to);
+	free(from);
+	return (MUNIT_OK);
+}
+
+MunitResult matrix_transform_test16(const MunitParameter params[], void *fixture)
+{
+	t_tuple *from = new_point(0, 0, 8);
+	t_tuple *to = new_point(0, 0, 0);
+	t_tuple *up = new_vector(0, 1, 0);
+	t_matrix *t = view_transform(from, to, up);
+
+	t_matrix *expected = translation(0, 0, -8);
+
+	munit_assert_true(matrix_equals(t, expected));
+	free(expected);
+	free(t);
+	free(up);
+	free(to);
+	free(from);
+	return (MUNIT_OK);
+}
+
+MunitResult matrix_transform_test17(const MunitParameter params[], void *fixture)
+{
+	t_tuple *from = new_point(1, 3, 2);
+	t_tuple *to = new_point(4, -2, 8);
+	t_tuple *up = new_vector(1, 1, 0);
+	t_matrix *t = view_transform(from, to, up);
+
+	t_matrix *expected = new_matrix(4, (float[4][4]){
+		{ -0.50709, 0.50709,  0.67612, -2.36643},
+		{  0.76772, 0.60609,  0.12122, -2.82843},
+		{ -0.35857, 0.59761, -0.71714,  0.00000},
+		{  0.00000, 0.00000,  0.00000,  1.00000},
+	});
+
+	munit_assert_true(matrix_equals(t, expected));
+	free(expected);
+	free(t);
+	free(up);
+	free(to);
+	free(from);
+	return (MUNIT_OK);
+}
