@@ -42,6 +42,7 @@ SRC_FILES += lights/point_light.c
 
 SRC_FILES += world/world.c
 
+SRC_FILES += camera/camera.c
 SRC_FILES += camera/view.c
 
 SRC_FILES += utils/float_comparison.c
@@ -98,6 +99,7 @@ TEST_SRC += tests/sphere_test.c
 TEST_SRC += tests/lights_test.c
 TEST_SRC += tests/materials_test.c
 TEST_SRC += tests/world_test.c
+TEST_SRC += tests/camera_test.c
 TEST_SRC += tests/utils.c
 
 test: $(LIBFT) $(OBJ_DIRS) $(OBJ)
