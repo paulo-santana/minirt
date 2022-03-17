@@ -61,8 +61,8 @@ typedef struct s_objects {
 }	t_objects;
 
 typedef struct s_world {
-	t_point_light	*light;
-	t_objects		objects;
+	t_list		*lights;
+	t_objects	objects;
 }	t_world;
 
 typedef enum e_object_types {

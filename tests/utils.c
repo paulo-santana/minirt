@@ -95,8 +95,21 @@ int world_equals(t_world *w1, t_world *w2)
 		}
 	}
 
-	return (light_equals(w1->light, w2->light)
-			&& w1->objects.total == w2->objects.total
+	list = w1->lights;
+	list2 = w2->lights;
+	while (list->next)
+	{
+		if (list->content)
+		{
+			if (list2 == NULL)
+				return (0);
+			if (!light_equals(list->content, list2->content))
+				return (0);
+			list = list->next;
+			list2 = list2->next;
+		}
+	}
+	return ( w1->objects.total == w2->objects.total
 			&& w1->objects.sphere_count == w2->objects.sphere_count
 		);
 }

@@ -339,10 +339,12 @@ void	rotate_light(t_data *data, float deg)
 {
 	t_matrix	*rot;
 	t_tuple		*position;
+	t_point_light *light;
 
 	rot = rotation_y(deg);
-	position = data->world->light->position;
-	data->world->light->position = matrix_multiply_tuple(rot, position);
+	light = data->world->lights->content;
+	position = light->position;
+	light->position = matrix_multiply_tuple(rot, position);
 	// print_tuple(position);
 	free(position);
 	draw_sphere(data);
@@ -362,7 +364,7 @@ int	exit_hook(int key, t_data *data)
 int	main(void)
 {
 	t_data data;
-	float canvas_pixels = 200;
+	float canvas_pixels = 400;
 
 	data.canvas = new_canvas(canvas_pixels, canvas_pixels);
 	data.world = default_world();

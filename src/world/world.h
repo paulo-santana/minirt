@@ -17,6 +17,7 @@
 t_world	*new_world(void);
 t_world	*default_world(void);
 void	add_sphere(t_world *world, t_sphere *sphere);
+void	add_light(t_world *world, t_point_light *light);
 void	destroy_world(t_world *world);
 
 #endif /* !WORLD_H */

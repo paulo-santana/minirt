@@ -17,7 +17,7 @@ MunitResult world_test1(const MunitParameter params[], void *fixture)
 {
 	t_world	*world = new_world();
 
-	munit_assert_true(world->light == NULL);
+	munit_assert_true(world->lights == NULL);
 	munit_assert_true(world->objects.total == 0);
 	munit_assert_true(world->objects.sphere_count == 0);
 	destroy_world(world);
@@ -44,7 +44,7 @@ MunitResult world_test2(const MunitParameter params[], void *fixture)
 	t_world	*world = default_world();
 
 	t_world *expected = new_world();
-	expected->light = light;
+	add_light(expected, light);
 	add_sphere(expected, s1);
 	add_sphere(expected, s2);
 
@@ -166,8 +166,8 @@ MunitResult world_test7(const MunitParameter params[], void *fixture)
 MunitResult world_test8(const MunitParameter params[], void *fixture)
 {
 	t_world *world = default_world();
-	destroy_point_light(world->light);
-	world->light = new_point_light(new_point(0, 0.25, 0), new_color(1, 1, 1));
+	destroy_point_light(world->lights->content);
+	world->lights->content = new_point_light(new_point(0, 0.25, 0), new_color(1, 1, 1));
 	t_ray *ray = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
 	t_sphere *sphere = world->objects.spheres->next->content;
 	t_intersection *intersection = new_intersection(0.5, sphere, OBJ_SPHERE);

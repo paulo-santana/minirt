@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "lights/lights.h"
 #include "ray.h"
+#include "structures.h"
+#include "tuple/tuple.h"
 
 t_computations	*prepare_computations(t_intersection *intersection, t_ray *ray)
 {
@@ -50,16 +54,41 @@ t_intersections	*intersect_world(t_world *world, t_ray *ray)
 	return (xs);
 }
 
+t_color	*sum_color_list(t_list *colors)
+{
+	t_color	*result;
+	t_color	*tmp;
+
+	result = new_color(0, 0, 0);
+	while (colors)
+	{
+		tmp = result;
+		result = add_colors(result, colors->content);
+		free(tmp);
+		colors = colors->next;
+	}
+	return (result);
+}
+
 t_color	*shade_hit(t_world *world, t_computations *comps)
 {
 	t_lighting_args	args;
+	t_list			*light;
+	t_list			*colors;
 
-	args.material = ((t_sphere *)comps->object)->material;
-	args.light = world->light;
-	args.position = comps->point;
-	args.eye_vector = comps->eyev;
-	args.normal_vector = comps->normalv;
-	return (lighting(&args));
+	light = world->lights;
+	colors = NULL;
+	while (light)
+	{
+		args.material = ((t_sphere *)comps->object)->material;
+		args.light = light->content;
+		args.position = comps->point;
+		args.eye_vector = comps->eyev;
+		args.normal_vector = comps->normalv;
+		light = light->next;
+		ft_lstadd_front(&colors, ft_lstnew(lighting(&args)));
+	}
+	return (sum_color_list(colors));
 }
 
 void	destroy_computations(t_computations *comps)
