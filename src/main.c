@@ -38,13 +38,24 @@ typedef struct s_image {
 	int		endian;
 } t_image;
 
+typedef struct s_movement {
+	int	forward;
+	int backward;
+	int left;
+	int right;
+	int up;
+	int down;
+}	t_movement;
+
 typedef struct s_data {
 	void			*mlx;
 	void			*window;
 	t_image			mlx_img;
 	t_canvas		*canvas;
 	t_camera		*camera;
+	t_tuple			*cam_position;
 	t_world			*world;
+	t_movement		movement;
 	double			last_tick;
 } t_data;
 
@@ -249,7 +260,7 @@ void	draw_canvas_ascii(t_canvas *canvas)
 		buffer[i * (width + 1) + j] = '\n';
 		i++;
 	}
-	buffer[i * (width + 1) + j + 1] = '\0';
+	buffer[i * (width + 1)] = '\0';
 	ft_putstr_fd(buffer, 1);
 	free(buffer);
 }
@@ -298,7 +309,7 @@ void	draw_sphere(t_data *data)
 	}
 	draw_canvas_mlx(data->canvas, &data->mlx_img);
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
-	draw_canvas_ascii(data->canvas);
+	// draw_canvas_ascii(data->canvas);
 	destroy_ray(ray);
 	free(color);
 }
@@ -308,7 +319,7 @@ void draw_spheres(t_data *data)
 	free(data->canvas);
 	data->canvas = render(data->camera, data->world);
 	draw_canvas_mlx(data->canvas, &data->mlx_img);
-	// draw_canvas_ascii(data->canvas);
+	draw_canvas_ascii(data->canvas);
 	// printf("desenhando na tela...\n");
 	// sleep(1);
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
@@ -368,10 +379,10 @@ void	generate_world(t_data *data)
 
 	t_point_light *light = new_point_light(new_point(-10, 10, -10), new_color(1, 1, 1));
 	float ratio = (float)WIN_WIDTH / WIN_HEIGHT;
-	float size = WIN_WIDTH * .999;
+	float size = WIN_WIDTH * .3;
 	t_camera *camera = new_camera(size, size / ratio, M_PI / 3);
 	set_camera_transform(camera, view_transform(
-				new_point(0, 1.5, -5),
+				new_point(0, 2.5, -25),
 				new_point(0, 1, 0),
 				new_vector(0, 1, 0)));
 	t_world *world = new_world();
@@ -386,6 +397,7 @@ void	generate_world(t_data *data)
 	add_sphere(world, left);
 	data->world = world;
 	data->camera = camera;
+	data->cam_position = new_point(0, 0, -2.5);
 }
 
 void	rotate_sphere(t_data *data, float deg)
@@ -403,14 +415,47 @@ void	rotate_sphere(t_data *data, float deg)
 	draw_spheres(data);
 }
 
-int	exit_hook(int key, t_data *data)
+int	key_release_hook(int key, t_data *data)
 {
 	if (key == 'q')
+	{
+		destroy_world(data->world);
 		exit(0);
+	}
+	else if (key == 'w')
+		data->movement.forward = 0;
+	else if (key == 's')
+		data->movement.backward = 0;
 	else if (key == 'a')
-		rotate_sphere(data, .2);
+		data->movement.left = 0;
 	else if (key == 'd')
-		rotate_sphere(data, -.2);
+		data->movement.right = 0;
+	else if (key == 'k')
+		data->movement.up = 0;
+	else if (key == 'j')
+		data->movement.down = 0;
+	return (1);
+}
+
+int	key_press_hook(int key, t_data *data)
+{
+	if (key == 'q')
+	{
+		destroy_world(data->world);
+		exit(0);
+	}
+	else if (key == 'w')
+		data->movement.forward = 1;
+	else if (key == 's')
+		data->movement.backward = 1;
+	else if (key == 'a')
+		data->movement.left = 1;
+	else if (key == 'd')
+		data->movement.right = 1;
+	else if (key == 'k')
+		data->movement.up = 1;
+	else if (key == 'j')
+		data->movement.down = 1;
 	return (1);
 }
 
@@ -427,7 +472,7 @@ void print_fps(t_data *data, double delta_time)
 	double seconds;
 	char buff[100];
 
-	seconds = 1 / (delta_time / 1000);
+	seconds = 1 / delta_time;
 	snprintf(buff, 100, "fps: %f", seconds);
 	mlx_string_put(data->mlx, data->window, 10, 10, 0xff5500, buff);
 	seconds = 0;
@@ -435,24 +480,71 @@ void print_fps(t_data *data, double delta_time)
 
 int update(t_data *data)
 {
-	static double rotation;
 	static double seconds;
 	double current_time;
 	double delta_time;
-	float rps = .2;
+	t_tuple from;
+	t_tuple to;
+	t_tuple up;
+	float cam_speed = 1;
 
 	current_time = milis();
-	delta_time = current_time - data->last_tick;
-	seconds += delta_time / 1000;
+	delta_time = (current_time - data->last_tick) / 1000;
+	seconds += delta_time;
 	if (seconds > 1)
 	{
 		printf("a second has passed\n");
 		seconds = 0;
 	}
 	data->last_tick = current_time;
+	if (data->movement.right)
+	{
+		from.x = data->cam_position->x + (cam_speed * delta_time);
+		data->cam_position->x = from.x;
+	}
+	else if (data->movement.left)
+	{
+		from.x = data->cam_position->x - (cam_speed * delta_time);
+		data->cam_position->x = from.x;
+	}
+	else
+		from.x = data->cam_position->x;
+	if (data->movement.up)
+	{
+		from.y = data->cam_position->y + (cam_speed * delta_time);
+		data->cam_position->y = from.y;
 
-	rotation += rps * (M_PI * 2) * (delta_time / 1000);
-	rotate_sphere(data, rotation);
+	}
+	else if (data->movement.down)
+	{
+		from.y = data->cam_position->y - (cam_speed * delta_time);
+		data->cam_position->y = from.y;
+	}
+	else
+		from.y = data->cam_position->y;
+	if (data->movement.forward)
+	{
+		from.z = data->cam_position->z + (cam_speed * delta_time);
+		data->cam_position->z = from.z;
+	}
+	else if (data->movement.backward)
+	{
+		from.z = data->cam_position->z - (cam_speed * delta_time);
+		data->cam_position->z = from.z;
+	}
+	else
+		from.z = data->cam_position->z;
+	from.w = 1;
+	to.x = 0;
+	to.y = 0;
+	to.z = 1;
+	to.w = 1;
+	up.x = 0;
+	up.y = 1;
+	up.z = 0;
+	up.w = 0;
+	set_camera_transform(data->camera, view_transform(&from, &to, &up));
+	draw_spheres(data);
 	print_fps(data, delta_time);
 	return (1);
 }
@@ -462,6 +554,7 @@ int	main(void)
 	t_data data;
 
 	data.canvas = NULL;
+	data.movement = (t_movement){0, 0, 0, 0, 0, 0};
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
@@ -471,8 +564,10 @@ int	main(void)
 	generate_world(&data);
 	// draw_spheres(&data);
 	// mlx_put_image_to_window(data.mlx, data.window, data.mlx_img.ptr, 0, 0);
-	mlx_hook(data.window, 2, 1, exit_hook, &data);
+	mlx_hook(data.window, 2, 1, key_press_hook, &data);
+	mlx_hook(data.window, 3, 2, key_release_hook, &data);
 	mlx_loop_hook(data.mlx, update, &data);
+	// update(&data);
 	data.last_tick = milis();
 	mlx_loop(data.mlx);
 	return (0);

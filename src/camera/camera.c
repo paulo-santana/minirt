@@ -18,11 +18,11 @@
 #define Z 2
 #define W 3
 
-t_camera	*new_camera(int hsize, int vsize, float field_of_view)
+t_camera	*new_camera(int hsize, int vsize, double field_of_view)
 {
 	t_camera	*camera;
-	float		half_view;
-	float		aspect;
+	double		half_view;
+	double		aspect;
 
 	camera = malloc(sizeof(t_camera));
 	camera->hsize = hsize;
@@ -31,7 +31,7 @@ t_camera	*new_camera(int hsize, int vsize, float field_of_view)
 	camera->transform = identity_matrix();
 	camera->inverse_transform = identity_matrix();
 	half_view = tanf(field_of_view / 2);
-	aspect = (float)hsize / vsize;
+	aspect = (double)hsize / vsize;
 	if (aspect >= 1)
 	{
 		camera->half_width = half_view;
@@ -72,8 +72,8 @@ t_ray	*generate_ray(t_camera *camera, t_tuple *pixel)
 
 t_ray	*ray_to_pixel(int x, int y, t_camera *camera)
 {
-	float	offset[2];
-	float	world[2];
+	double	offset[2];
+	double	world[2];
 	t_ray	*ray;
 	t_tuple	*pixel;
 	t_tuple	*point;

@@ -21,15 +21,15 @@
 typedef struct s_camera {
 	int			hsize;
 	int			vsize;
-	float		fov;
-	float		pixel_size;
-	float		half_width;
-	float		half_height;
+	double		fov;
+	double		pixel_size;
+	double		half_width;
+	double		half_height;
 	t_matrix	*transform;
 	t_matrix	*inverse_transform;
 }	t_camera;
 
-t_camera		*new_camera(int hsize, int vsize, float field_of_view);
+t_camera		*new_camera(int hsize, int vsize, double field_of_view);
 void			set_camera_transform(t_camera *camera, t_matrix *t);
 t_ray			*ray_to_pixel(int x, int y, t_camera *camera);
 void			destroy_camera(t_camera *camera);

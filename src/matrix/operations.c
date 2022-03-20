@@ -78,7 +78,7 @@ t_matrix	*matrix_multiply_n(t_matrix **mats)
 t_tuple	*matrix_multiply_tuple(t_matrix *a, t_tuple *b)
 {
 	int		row;
-	float	tmp[4];
+	double	tmp[4];
 	t_tuple	*result;
 
 	row = 0;
@@ -121,8 +121,8 @@ t_matrix	*inverse(t_matrix *matrix)
 	t_matrix	*inversed;
 	int			row;
 	int			col;
-	float		cofact;
-	float		determn;
+	double		cofact;
+	double		determn;
 
 	determn = determinant(matrix);
 	if (determn == 0)

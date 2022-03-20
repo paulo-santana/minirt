@@ -77,7 +77,9 @@ void	*draw_piece(void *args)
 		{
 			ray = ray_to_pixel(x, y, data->camera);
 			color = color_at(data->world, ray);
+			destroy_ray(ray);
 			data->image->data[y * data->image->width + x] = color_to_int(color);
+			free(color);
 			x++;
 		}
 		y++;

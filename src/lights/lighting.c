@@ -15,7 +15,7 @@
 #include "structures.h"
 
 t_color	*get_diffuse(
-	t_lighting_args *args, t_color *effective_color, float light_dot_normal)
+	t_lighting_args *args, t_color *effective_color, double light_dot_normal)
 {
 	t_color	*diffuse;
 	t_color	*tmp_color;
@@ -42,7 +42,7 @@ t_color	*get_ambient(t_lighting_args *args, t_color *effective_color)
 	return (ambient);
 }
 
-t_color	*calculate_specular(t_lighting_args *args, float reflect_dot_eye)
+t_color	*calculate_specular(t_lighting_args *args, double reflect_dot_eye)
 {
 	void	*tmp;
 	t_color	*specular;
@@ -61,12 +61,12 @@ t_color	*calculate_specular(t_lighting_args *args, float reflect_dot_eye)
 }
 
 t_color	*get_specular(
-		t_lighting_args *args, float light_dot_normal, t_tuple *light_v)
+		t_lighting_args *args, double light_dot_normal, t_tuple *light_v)
 {
 	t_color	*specular;
 	void	*tmp;
 	t_tuple	*reflect_v;
-	float	reflect_dot_eye;
+	double	reflect_dot_eye;
 
 	if (light_dot_normal < 0)
 		specular = new_color(0, 0, 0);
@@ -100,7 +100,7 @@ t_color	*lighting(t_lighting_args *args)
 {
 	t_tuple	*tmp_tuple;
 	t_tuple	*light_v;
-	float	light_dot_normal;
+	double	light_dot_normal;
 	t_color	*tmp_color;
 	t_color	*effective_color;
 
@@ -108,15 +108,17 @@ t_color	*lighting(t_lighting_args *args)
 			args->material->color, args->light->intensity);
 	if (args->in_shadow)
 	{
-		return (get_ambient(args, effective_color));
+		tmp_color = effective_color;
+		effective_color = get_ambient(args, effective_color);
+		free(tmp_color);
+		return (effective_color);
 	}
 	tmp_tuple = subtract_tuples(args->light->position, args->position);
 	light_v = normalize(tmp_tuple);
 	free(tmp_tuple);
 	light_dot_normal = dot(light_v, args->normal_vector);
 	tmp_color = effective_color;
-	effective_color = sum_colors(
-			get_ambient(args, effective_color),
+	effective_color = sum_colors(get_ambient(args, effective_color),
 			get_diffuse(args, effective_color, light_dot_normal),
 			get_specular(args, light_dot_normal, light_v)
 			);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   float_comparison.c                                 :+:      :+:    :+:   */
+/*   double_comparison.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,7 @@
 
 #define EPSILON 0.00001
 
-int	fequals(float a, float b)
+int	fequals(double a, double b)
 {
 	if (fabs(a - b) < EPSILON)
 		return (1);

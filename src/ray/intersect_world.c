@@ -82,7 +82,7 @@ t_color	*sum_color_list(t_list *colors)
 int	is_shadowed(t_world *world, t_tuple *point, t_point_light *light)
 {
 	t_tuple			*v;
-	float			distance;
+	double			distance;
 	t_tuple			*direction;
 	t_intersections	*xs;
 	int				result;
@@ -155,6 +155,7 @@ t_color	*color_at(t_world *world, t_ray *ray)
 	free(comps->eyev);
 	free(comps->normalv);
 	free(comps->point);
+	free(comps->over_point);
 	free(comps);
 	return (color);
 }

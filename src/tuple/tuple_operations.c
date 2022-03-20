@@ -36,7 +36,7 @@ t_tuple	*negate_tuple(t_tuple *a)
 	return (new_tuple(-a->x, -a->y, -a->z, -a->w));
 }
 
-t_tuple	*multiply_scalar(t_tuple *tuple, float value)
+t_tuple	*multiply_scalar(t_tuple *tuple, double value)
 {
 	return (new_tuple(
 			tuple->x * value,
@@ -45,7 +45,7 @@ t_tuple	*multiply_scalar(t_tuple *tuple, float value)
 			tuple->w * value));
 }
 
-t_tuple	*divide_scalar(t_tuple *tuple, float value)
+t_tuple	*divide_scalar(t_tuple *tuple, double value)
 {
 	return (new_tuple(
 			tuple->x / value,
@@ -54,7 +54,7 @@ t_tuple	*divide_scalar(t_tuple *tuple, float value)
 			tuple->w / value));
 }
 
-float	dot(t_tuple *a, t_tuple *b)
+double	dot(t_tuple *a, t_tuple *b)
 {
 	return (
 		a->x * b->x

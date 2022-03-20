@@ -22,12 +22,12 @@
 t_ray			*new_ray(t_tuple *origin, t_tuple *direction);
 void			destroy_ray(t_ray *ray);
 
-t_tuple			*get_position(t_ray *ray, float t);
+t_tuple			*get_position(t_ray *ray, double t);
 void			intersect(
 					t_intersections *current_intersections,
 					t_sphere *sphere,
 					t_ray *ray);
-t_intersection	*new_intersection(float t, void *obj, t_object_types obj_type);
+t_intersection	*new_intersection(double t, void *obj, t_object_types obj_type);
 t_intersection	*hit(t_intersections *inters);
 
 void			add_intersection(

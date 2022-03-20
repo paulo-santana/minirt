@@ -37,7 +37,7 @@ void	add_intersection(t_intersections *intersections, t_intersection *new)
 	intersections->is_sorted = 0;
 }
 
-float	get_discriminant(t_sphere *sphere, t_ray *ray, float abc[3])
+double	get_discriminant(t_sphere *sphere, t_ray *ray, double abc[3])
 {
 	t_tuple		*sphere_to_ray;
 
@@ -52,9 +52,9 @@ float	get_discriminant(t_sphere *sphere, t_ray *ray, float abc[3])
 void	intersect(
 		t_intersections *intersections, t_sphere *sphere, t_ray *ray)
 {
-	float			abc[3];
-	float			discriminant;
-	float			result;
+	double			abc[3];
+	double			discriminant;
+	double			result;
 	t_ray			*transformed_ray;
 	t_matrix		*sphere_transform;
 
@@ -75,7 +75,7 @@ void	intersect(
 	return ;
 }
 
-t_intersection	*new_intersection(float t, void *obj, t_object_types obj_type)
+t_intersection	*new_intersection(double t, void *obj, t_object_types obj_type)
 {
 	t_intersection	*i;
 

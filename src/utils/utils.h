@@ -13,6 +13,6 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-int	fequals(float a, float b);
+int	fequals(double a, double b);
 
 #endif /* !UTILS_H */

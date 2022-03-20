@@ -13,7 +13,7 @@
 #include "structures.h"
 #include <minirt.h>
 
-t_color	*new_color(float red, float green, float blue)
+t_color	*new_color(double red, double green, double blue)
 {
 	t_color	*color;
 
@@ -40,7 +40,7 @@ t_color	*subtract_colors(t_color *a, t_color *b)
 			a->blue - b->blue));
 }
 
-t_color	*multiply_scalar_color(t_color *tuple, float value)
+t_color	*multiply_scalar_color(t_color *tuple, double value)
 {
 	return (new_color(
 			tuple->red * value,

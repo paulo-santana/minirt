@@ -12,7 +12,7 @@
 
 #include "tuple.h"
 
-float	magnitude(t_tuple *a)
+double	magnitude(t_tuple *a)
 {
 	return (sqrt(
 			a->x * a->x
@@ -24,7 +24,7 @@ float	magnitude(t_tuple *a)
 
 t_tuple	*normalize(t_tuple *vector)
 {
-	float	mag;
+	double	mag;
 
 	mag = magnitude(vector);
 	return (new_tuple(
@@ -46,13 +46,13 @@ t_tuple	*cross(t_tuple *a, t_tuple *b)
 
 t_tuple	*reflect(t_tuple *vector, t_tuple *normal)
 {
-	float	product;
-	t_tuple	*floatd;
+	double	product;
+	t_tuple	*doubled;
 	t_tuple	*result;
 
 	product = dot(vector, normal);
-	floatd = multiply_scalar(normal, 2 * product);
-	result = subtract_tuples(vector, floatd);
-	free(floatd);
+	doubled = multiply_scalar(normal, 2 * product);
+	result = subtract_tuples(vector, doubled);
+	free(doubled);
 	return (result);
 }

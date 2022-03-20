@@ -12,9 +12,9 @@
 
 #include "matrix.h"
 
-inline float	determinant(t_matrix *a)
+inline double	determinant(t_matrix *a)
 {
-	float	det;
+	double	det;
 	int		col;
 
 	if (a->size == 2)
@@ -32,9 +32,9 @@ inline float	determinant(t_matrix *a)
 	return (det);
 }
 
-float	cofactor(t_matrix *a, int row, int col)
+double	cofactor(t_matrix *a, int row, int col)
 {
-	float	min;
+	double	min;
 
 	min = minor(a, row, col);
 	if ((row + col) % 2 != 0)
@@ -42,10 +42,10 @@ float	cofactor(t_matrix *a, int row, int col)
 	return (min);
 }
 
-float	minor(t_matrix *a, int row, int col)
+double	minor(t_matrix *a, int row, int col)
 {
 	t_matrix	*sub;
-	float		minor;
+	double		minor;
 
 	sub = submatrix(a, row, col);
 	minor = determinant(sub);

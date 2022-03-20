@@ -66,8 +66,8 @@ SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3 -I $(MLX_DIR) -I $(LIBFT_DIR) -I src
-LFLAGS = -lm -L $(MLX_DIR) -lmlx -lXext -lX11 -L $(LIBFT_DIR) -lft
+CFLAGS = -Wall -Werror -Wextra -O2 -I $(MLX_DIR) -I $(LIBFT_DIR) -I src #-fsanitize=address
+LFLAGS = -lm -L $(MLX_DIR) -lmlx -lXext -lX11 -L $(LIBFT_DIR) -lft #-fsanitize=address
 
 RM = rm -rf
 
