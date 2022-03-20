@@ -16,34 +16,34 @@
 # include "../libft/libft.h"
 
 typedef struct s_tuple {
-	float	x;
-	float	y;
-	float	z;
-	float	w;
+	double	x;
+	double	y;
+	double	z;
+	double	w;
 }	t_tuple;
 
 typedef struct s_color {
-	float	red;
-	float	green;
-	float	blue;
+	double	red;
+	double	green;
+	double	blue;
 }	t_color;
 
 typedef struct s_matrix {
 	int		size;
-	float	data[4][4];
+	double	data[4][4];
 }	t_matrix;
 
 typedef struct s_material {
 	t_color	*color;
-	float	ambient;
-	float	diffuse;
-	float	specular;
-	float	shininess;
+	double	ambient;
+	double	diffuse;
+	double	specular;
+	double	shininess;
 }	t_material;
 
 typedef struct s_sphere {
 	t_tuple		*position;
-	float		radius;
+	double		radius;
 	t_matrix	*transform;
 	t_matrix	*inverse_transform;
 	t_material	*material;
@@ -71,10 +71,11 @@ typedef enum e_object_types {
 }	t_object_types;
 
 typedef struct s_computations {
-	float			t;
+	double			t;
 	void			*object;
 	t_object_types	object_type;
 	t_tuple			*point;
+	t_tuple			*over_point;
 	t_tuple			*eyev;
 	t_tuple			*normalv;
 	int				inside;
@@ -86,7 +87,7 @@ typedef struct s_ray {
 }	t_ray;
 
 typedef struct s_intersection {
-	float			t;
+	double			t;
 	void			*object;
 	t_object_types	object_type;
 }	t_intersection;
@@ -97,5 +98,11 @@ typedef struct s_intersections {
 	int				is_sorted;
 	t_intersection	**intersections;
 }	t_intersections;
+
+typedef struct s_canvas {
+	unsigned int	*data;
+	int				width;
+	int				height;
+}	t_canvas;
 
 #endif /* !STRUCTURES_H */

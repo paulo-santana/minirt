@@ -3,6 +3,7 @@
 
 #include <matrix/matrix.h>
 
+void	print_color(t_color *color);
 void	print_matrix(t_matrix *matrix);
 void	print_tuple(t_tuple *tuple);
 

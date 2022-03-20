@@ -8,13 +8,17 @@
 #include "tuple/tuple.h"
 #include "debug.h"
 #include "world/world.h"
+#include <bits/types/struct_timeval.h>
 #include <math.h>
 #include <mlx.h>
+#include <stdio.h>
+#include <sys/time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <camera/camera.h>
 
-#define WIN_WIDTH 1200
-#define WIN_HEIGHT 800
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 600
 
 typedef struct s_projectile {
 	t_tuple	*position;
@@ -34,18 +38,14 @@ typedef struct s_image {
 	int		endian;
 } t_image;
 
-typedef struct s_canvas {
-	unsigned int	*data;
-	int				width;
-	int				height;
-}	t_canvas;
-
 typedef struct s_data {
 	void			*mlx;
 	void			*window;
 	t_image			mlx_img;
 	t_canvas		*canvas;
+	t_camera		*camera;
 	t_world			*world;
+	double			last_tick;
 } t_data;
 
 t_projectile	*tick(t_environment *environment, t_projectile *projectile)
@@ -65,24 +65,6 @@ t_projectile	*tick(t_environment *environment, t_projectile *projectile)
 	return (new_proj);
 }
 
-unsigned int color_to_int(t_color *color)
-{
-	unsigned int	red;
-	unsigned int	green;
-	unsigned int	blue;
-
-	red = color->red * 255;
-	green = color->green * 255;
-	blue = color->blue * 255;
-	if (red > 255)
-		red = 255;
-	if (green > 255)
-		green = 255;
-	if (blue > 255)
-		blue = 255;
-	return (red << 16 | green << 8 | blue);
-}
-
 void put_pixel(t_canvas *img, t_color *color, int x, int y)
 {
 	img->data[y * img->width + x] = color_to_int(color);
@@ -98,30 +80,29 @@ void	my_mlx_put_pixel(t_image *img, unsigned int color, int x, int y)
 
 void	draw_canvas_mlx(t_canvas *canvas, t_image *mlx_img)
 {
-	int		i;
-	int 	j;
+	int		y;
+	int 	x;
 	int		pixel_x;
 	int		pixel_y;
 
-	i = 0;
+	y = 0;
+	int height = WIN_HEIGHT;
 	int width = mlx_img->size_line / (mlx_img->bpp / 8);
-// -	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
-	while (i < width)
+	while (y < height)
 	{
-		j = 0;
-		int height = WIN_HEIGHT;
-		while (j < height)
+		x = 0;
+		pixel_y = roundf(((float)y / height) * canvas->height);
+		while (x < width)
 		{
-			int limit = WIN_HEIGHT > WIN_WIDTH ? WIN_WIDTH : WIN_HEIGHT;
-			pixel_x = (i * canvas->width) / limit;
-			pixel_y = (j * canvas->height) / limit;
+			// int limit = WIN_HEIGHT > WIN_WIDTH ? WIN_WIDTH : WIN_HEIGHT;
+			pixel_x = roundf(((float)x / width) * canvas->width);
 			if (pixel_x > canvas->width || pixel_y > canvas->height)
 				return ;
 			unsigned int color = canvas->data[pixel_y * canvas->width + pixel_x];
-			my_mlx_put_pixel(mlx_img, color, i, j);
-			j++;
+			my_mlx_put_pixel(mlx_img, color, x, y);
+			x++;
 		}
-		i++;
+		y++;
 	}
 }
 
@@ -228,19 +209,6 @@ void	reset_intersections(t_intersections *xs)
 	xs->is_sorted = 0;
 }
 
-t_canvas	*new_canvas(int width, int height)
-{
-	t_canvas	*canvas;
-	int			size;
-
-	canvas = malloc(sizeof(t_canvas));
-	size = sizeof(canvas->data) * width * height;
-	canvas->data = malloc(size);
-	ft_bzero(canvas->data, size);
-	canvas->width = width;
-	canvas->height = height;
-	return (canvas);
-}
 
 void	draw_canvas_ascii(t_canvas *canvas)
 {
@@ -335,19 +303,104 @@ void	draw_sphere(t_data *data)
 	free(color);
 }
 
-void	rotate_light(t_data *data, float deg)
+void draw_spheres(t_data *data)
 {
-	t_matrix	*rot;
-	t_tuple		*position;
-	t_point_light *light;
+	free(data->canvas);
+	data->canvas = render(data->camera, data->world);
+	draw_canvas_mlx(data->canvas, &data->mlx_img);
+	// draw_canvas_ascii(data->canvas);
+	// printf("desenhando na tela...\n");
+	// sleep(1);
+	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
+}
 
-	rot = rotation_y(deg);
-	light = data->world->lights->content;
-	position = light->position;
-	light->position = matrix_multiply_tuple(rot, position);
-	// print_tuple(position);
-	free(position);
-	draw_sphere(data);
+void	generate_world(t_data *data)
+{
+	t_sphere *floors = new_sphere();
+	t_matrix *transforms[5];
+	set_transform(floors, scaling(10, 0.01, 10));
+	floors->material->color->green = .9;
+	floors->material->color->blue = .9;
+	floors->material->specular = 0;
+
+	t_sphere *left_wall = new_sphere();
+	transforms[0] = scaling(10, .01, 10);
+	transforms[1] = rotation_x(M_PI_2);
+	transforms[2] = rotation_y(-M_PI_4);
+	transforms[3] = translation(0, 0, 5);
+	transforms[4] = NULL;
+	set_transform(left_wall, matrix_multiply_n(transforms));
+	left_wall->material->specular = floors->material->specular;
+	left_wall->material->color->blue = floors->material->color->blue;
+	left_wall->material->color->green = floors->material->color->green;
+
+	t_sphere *right_wall = new_sphere();
+	transforms[0] = scaling(10, .01, 10);
+	transforms[1] = rotation_x(M_PI_2);
+	transforms[2] = rotation_y(M_PI_4);
+	transforms[3] = translation(0, 0, 5);
+	transforms[4] = NULL;
+	set_transform(right_wall, matrix_multiply_n(transforms));
+	right_wall->material->specular = floors->material->specular;
+	right_wall->material->color->blue = floors->material->color->blue;
+	right_wall->material->color->green = floors->material->color->green;
+
+	t_sphere *middle = new_sphere();
+	set_transform(middle, translation(-0.5, 1, 0.5));
+	middle->material->color->red = 0.1;
+	middle->material->color->blue = 0.5;
+	middle->material->diffuse = 0.7;
+	middle->material->specular = 0.3;
+
+	t_sphere *right = new_sphere();
+	set_transform(right, matrix_multiply(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5)));
+	right->material->color->red = 0.5;
+	right->material->color->blue = 0.1;
+	right->material->diffuse = 0.7;
+	right->material->specular = 0.3;
+
+	t_sphere *left = new_sphere();
+	set_transform(left, matrix_multiply(translation(-1.5, 0.33, -0.75), scaling(0.33, 0.33, 0.33)));
+	left->material->color->green = 0.8;
+	left->material->color->blue = 0.1;
+	left->material->diffuse = 0.7;
+	left->material->specular = 0.3;
+
+	t_point_light *light = new_point_light(new_point(-10, 10, -10), new_color(1, 1, 1));
+	float ratio = (float)WIN_WIDTH / WIN_HEIGHT;
+	float size = WIN_WIDTH * .999;
+	t_camera *camera = new_camera(size, size / ratio, M_PI / 3);
+	set_camera_transform(camera, view_transform(
+				new_point(0, 1.5, -5),
+				new_point(0, 1, 0),
+				new_vector(0, 1, 0)));
+	t_world *world = new_world();
+	add_light(world, light);
+	// t_point_light *light2 = new_point_light(new_point(10, 10, -10), new_color(.5, .2, 1));
+	// add_light(world, light2);
+	add_sphere(world, floors);
+	add_sphere(world, left_wall);
+	add_sphere(world, right_wall);
+	add_sphere(world, right);
+	add_sphere(world, middle);
+	add_sphere(world, left);
+	data->world = world;
+	data->camera = camera;
+}
+
+void	rotate_sphere(t_data *data, float deg)
+{
+	t_matrix	*trans;
+	t_sphere	*sphere;
+	float x, y;
+
+	x = 2 * cosf(deg);
+	y = 2 * sinf(deg);
+
+	sphere = data->world->objects.spheres->next->next->next->next->content;
+	trans = translation(x, y, sphere->position->z);
+	set_transform(sphere, trans);
+	draw_spheres(data);
 }
 
 int	exit_hook(int key, t_data *data)
@@ -355,28 +408,72 @@ int	exit_hook(int key, t_data *data)
 	if (key == 'q')
 		exit(0);
 	else if (key == 'a')
-		rotate_light(data, -.1);
+		rotate_sphere(data, .2);
 	else if (key == 'd')
-		rotate_light(data, .1);
+		rotate_sphere(data, -.2);
+	return (1);
+}
+
+double milis(void)
+{
+	struct timeval current_time;
+	gettimeofday(&current_time, NULL);
+
+	return (current_time.tv_sec * 1000. + current_time.tv_usec / 1000.);
+}
+
+void print_fps(t_data *data, double delta_time)
+{
+	double seconds;
+	char buff[100];
+
+	seconds = 1 / (delta_time / 1000);
+	snprintf(buff, 100, "fps: %f", seconds);
+	mlx_string_put(data->mlx, data->window, 10, 10, 0xff5500, buff);
+	seconds = 0;
+}
+
+int update(t_data *data)
+{
+	static double rotation;
+	static double seconds;
+	double current_time;
+	double delta_time;
+	float rps = .2;
+
+	current_time = milis();
+	delta_time = current_time - data->last_tick;
+	seconds += delta_time / 1000;
+	if (seconds > 1)
+	{
+		printf("a second has passed\n");
+		seconds = 0;
+	}
+	data->last_tick = current_time;
+
+	rotation += rps * (M_PI * 2) * (delta_time / 1000);
+	rotate_sphere(data, rotation);
+	print_fps(data, delta_time);
 	return (1);
 }
 
 int	main(void)
 {
 	t_data data;
-	float canvas_pixels = 400;
 
-	data.canvas = new_canvas(canvas_pixels, canvas_pixels);
-	data.world = default_world();
-
+	data.canvas = NULL;
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
 	// test_projectile(&data);
 	// draw_clock(&data);
-	draw_sphere(&data);
-	mlx_put_image_to_window(data.mlx, data.window, data.mlx_img.ptr, 0, 0);
+	// draw_sphere(&data);
+	generate_world(&data);
+	// draw_spheres(&data);
+	// mlx_put_image_to_window(data.mlx, data.window, data.mlx_img.ptr, 0, 0);
 	mlx_hook(data.window, 2, 1, exit_hook, &data);
+	mlx_loop_hook(data.mlx, update, &data);
+	data.last_tick = milis();
 	mlx_loop(data.mlx);
 	return (0);
 }

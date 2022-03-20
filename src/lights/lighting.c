@@ -106,6 +106,10 @@ t_color	*lighting(t_lighting_args *args)
 
 	effective_color = multiply_colors(
 			args->material->color, args->light->intensity);
+	if (args->in_shadow)
+	{
+		return (get_ambient(args, effective_color));
+	}
 	tmp_tuple = subtract_tuples(args->light->position, args->position);
 	light_v = normalize(tmp_tuple);
 	free(tmp_tuple);

@@ -22,6 +22,7 @@ typedef struct s_lighting_args {
 	t_tuple			*position;
 	t_tuple			*eye_vector;
 	t_tuple			*normal_vector;
+	int				in_shadow;
 }	t_lighting_args;
 
 t_point_light	*new_point_light(t_tuple *pos, t_color *intensity);

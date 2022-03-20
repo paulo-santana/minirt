@@ -107,6 +107,7 @@ MunitResult material_test3(PARAMS);
 MunitResult material_test4(PARAMS);
 MunitResult material_test5(PARAMS);
 MunitResult material_test6(PARAMS);
+MunitResult material_test7(PARAMS);
 
 MunitResult world_test1(PARAMS);
 MunitResult world_test2(PARAMS);
@@ -125,6 +126,7 @@ MunitResult camera_test2(PARAMS);
 MunitResult camera_test3(PARAMS);
 MunitResult camera_test4(PARAMS);
 MunitResult camera_test5(PARAMS);
+MunitResult camera_test6(PARAMS);
 
 MunitTest test(char *desc, MunitTestFunc the_test)
 {
@@ -263,6 +265,7 @@ int main(int argc, char **argv) {
 		test("/lighting() with the light offseted 45º", material_test4),
 		test("/lighting() with the eye in the path of the reflection", material_test5),
 		test("/lighting() with the light behind the surface", material_test6),
+		test("/lighting() with shadows", material_test7),
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
@@ -287,6 +290,7 @@ int main(int argc, char **argv) {
 		test("/ray_to_pixel() at the center of the canvas", camera_test3),
 		test("/ray_to_pixel() at the corner of the canvas", camera_test4),
 		test("/ray_to_pixel() with a transformed camera", camera_test5),
+		test("/render() rendering a world with a camera", camera_test6),
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 

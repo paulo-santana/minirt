@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:08:55 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/17 12:52:24 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:50:58 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,17 @@ typedef struct s_camera {
 	t_matrix	*inverse_transform;
 }	t_camera;
 
-t_camera	*new_camera(int hsize, int vsize, float field_of_view);
-void		set_camera_transform(t_camera *camera, t_matrix *t);
-t_ray		*ray_to_pixel(int x, int y, t_camera *camera);
-void		destroy_camera(t_camera *camera);
+t_camera		*new_camera(int hsize, int vsize, float field_of_view);
+void			set_camera_transform(t_camera *camera, t_matrix *t);
+t_ray			*ray_to_pixel(int x, int y, t_camera *camera);
+void			destroy_camera(t_camera *camera);
 
-t_matrix	*view_transform(t_tuple *from, t_tuple *to, t_tuple *up);
+t_matrix		*view_transform(t_tuple *from, t_tuple *to, t_tuple *up);
+
+t_canvas		*render(t_camera *camera, t_world *world);
+// t_canvas		*render(t_camera *camera, t_world *world);
+t_color			*pixel_at(t_canvas *image, int x, int y);
+t_canvas		*new_canvas(int width, int height);
+unsigned int	color_to_int(t_color *color);
 
 #endif /* !CAMERA_H */

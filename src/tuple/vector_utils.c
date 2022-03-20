@@ -47,12 +47,12 @@ t_tuple	*cross(t_tuple *a, t_tuple *b)
 t_tuple	*reflect(t_tuple *vector, t_tuple *normal)
 {
 	float	product;
-	t_tuple	*doubled;
+	t_tuple	*floatd;
 	t_tuple	*result;
 
 	product = dot(vector, normal);
-	doubled = multiply_scalar(normal, 2 * product);
-	result = subtract_tuples(vector, doubled);
-	free(doubled);
+	floatd = multiply_scalar(normal, 2 * product);
+	result = subtract_tuples(vector, floatd);
+	free(floatd);
 	return (result);
 }

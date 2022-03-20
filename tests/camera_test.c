@@ -6,6 +6,8 @@
 #include "ray/ray.h"
 #include "tuple/tuple.h"
 #include "camera/camera.h"
+#include "world/world.h"
+#include "utils.h"
 #include <math.h>
 
 // the pixel size for a horizontal canvas
@@ -88,5 +90,31 @@ MunitResult camera_test5(const MunitParameter params[], void *fixture)
 	free(expected_origin);
 	free(rot);
 	free(trans);
+	return (MUNIT_OK);
+}
+
+// rendering a world with a camera
+MunitResult camera_test6(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	t_camera *camera = new_camera(11, 11, M_PI_2);
+	t_tuple *from = new_point(0, 0, -5);
+	t_tuple *to = new_point(0, 0, 0);
+	t_tuple *up = new_vector(0, 1, 0);
+	set_camera_transform(camera, view_transform(from, to, up));
+	t_canvas *image = render(camera, world);
+
+	t_color *color = pixel_at(image, 5, 5);
+	t_color *expected_color = new_color(0.38039, 0.47451, 0.28627);
+
+	munit_assert_true(color_equals(color, expected_color));
+	free(color);
+	free(expected_color);
+	free(from);
+	free(to);
+	free(up);
+	destroy_camera(camera);
+	destroy_world(world);
+	free(image);
 	return (MUNIT_OK);
 }

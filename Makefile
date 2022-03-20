@@ -8,6 +8,7 @@ MLX = $(MLX_DIR)/libmlx.a
 
 IFLAGS = -I ./src
 
+HEADERS =  src/structures.h
 HEADERS =  src/minirt.h
 HEADERS += src/tuple/tuple.h
 HEADERS += src/shapes/shapes.h
@@ -43,6 +44,7 @@ SRC_FILES += lights/point_light.c
 SRC_FILES += world/world.c
 
 SRC_FILES += camera/camera.c
+SRC_FILES += camera/canvas.c
 SRC_FILES += camera/view.c
 
 SRC_FILES += utils/float_comparison.c

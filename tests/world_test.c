@@ -239,3 +239,51 @@ MunitResult world_test11(const MunitParameter params[], void *fixture)
 	free(color);
 	return (MUNIT_OK);
 }
+
+// there is no shadow when nothing is collinear with point and light
+MunitResult world_test12(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	t_tuple *point = new_point(0, 10, 0);
+
+	munit_assert_false(is_shadowed(world, point));
+	destroy_world(world);
+	free(point);
+	return (MUNIT_OK);
+}
+
+// the shadow when an object is between the point and the light
+MunitResult world_test13(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	t_tuple *point = new_point(10, -10, 10);
+
+	munit_assert_true(is_shadowed(world, point));
+	destroy_world(world);
+	free(point);
+	return (MUNIT_OK);
+}
+
+// there's no shadown when an object is behind the light
+MunitResult world_test14(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	t_tuple *point = new_point(-20, 20, -20);
+
+	munit_assert_false(is_shadowed(world, point));
+	destroy_world(world);
+	free(point);
+	return (MUNIT_OK);
+}
+
+// there's no shadown when an object is behind the light
+MunitResult world_test15(const MunitParameter params[], void *fixture)
+{
+	t_world *world = default_world();
+	t_tuple *point = new_point(-2, 2, -2);
+
+	munit_assert_false(is_shadowed(world, point));
+	destroy_world(world);
+	free(point);
+	return (MUNIT_OK);
+}

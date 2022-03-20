@@ -15,6 +15,12 @@
 #include "ray.h"
 #include "structures.h"
 #include "tuple/tuple.h"
+#include "utils/utils.h"
+
+#ifndef EPSILON
+# define EPSILON .001
+
+#endif /* !EPSILON */
 
 t_computations	*prepare_computations(t_intersection *intersection, t_ray *ray)
 {
@@ -35,6 +41,9 @@ t_computations	*prepare_computations(t_intersection *intersection, t_ray *ray)
 		comps->normalv = negate_tuple(comps->normalv);
 		free(tmp);
 	}
+	tmp = multiply_scalar(comps->normalv, EPSILON);
+	comps->over_point = add_tuples(comps->point, tmp);
+	free(tmp);
 	return (comps);
 }
 
@@ -70,6 +79,29 @@ t_color	*sum_color_list(t_list *colors)
 	return (result);
 }
 
+int	is_shadowed(t_world *world, t_tuple *point, t_point_light *light)
+{
+	t_tuple			*v;
+	float			distance;
+	t_tuple			*direction;
+	t_intersections	*xs;
+	int				result;
+
+	light = world->lights->content;
+	v = subtract_tuples(light->position, point);
+	distance = magnitude(v);
+	direction = normalize(v);
+	t_ray *ray = new_ray(point, direction);
+	xs = intersect_world(world, ray);
+	t_intersection *inter = hit(xs);
+	result = inter != NULL && inter->t < distance;
+	free(v);
+	free(ray->direction);
+	free(ray);
+	destroy_intersections_list(xs);
+	return (result);
+}
+
 t_color	*shade_hit(t_world *world, t_computations *comps)
 {
 	t_lighting_args	args;
@@ -83,10 +115,11 @@ t_color	*shade_hit(t_world *world, t_computations *comps)
 	{
 		args.material = ((t_sphere *)comps->object)->material;
 		args.light = light->content;
-		args.position = comps->point;
+		args.position = comps->over_point;
 		args.eye_vector = comps->eyev;
 		args.normal_vector = comps->normalv;
 		light = light->next;
+		args.in_shadow = is_shadowed(world, comps->over_point, world->lights->content);
 		ft_lstadd_front(&colors, ft_lstnew(lighting(&args)));
 	}
 	final_color = sum_color_list(colors);
