@@ -64,12 +64,12 @@ void	intersect(
 	destroy_ray(transformed_ray);
 	if (discriminant < 0)
 		return ;
-	result = (-abc[1] - sqrtf(discriminant)) / (2 * abc[0]);
+	result = (-abc[1] - sqrt(discriminant)) / (2 * abc[0]);
 	add_intersection(intersections,
 		new_intersection(result, sphere, OBJ_SPHERE));
 	if (fequals(discriminant, 0))
 		return ;
-	result = (-abc[1] + sqrtf(discriminant)) / (2 * abc[0]);
+	result = (-abc[1] + sqrt(discriminant)) / (2 * abc[0]);
 	add_intersection(intersections,
 		new_intersection(result, sphere, OBJ_SPHERE));
 	return ;
@@ -89,10 +89,10 @@ t_intersection	*new_intersection(double t, void *obj, t_object_types obj_type)
 t_intersection	**intersection_arr(t_list *list)
 {
 	int				i;
-	int				size;
+	size_t			size;
 	t_intersection	**inters;
 
-	size = ft_lstsize(list);
+	size = (size_t)ft_lstsize(list);
 	inters = malloc(sizeof(t_intersection *) * size);
 	i = 0;
 	while (list)
@@ -105,8 +105,8 @@ t_intersection	**intersection_arr(t_list *list)
 
 void	sort_intersections(t_intersections *inters)
 {
-	int				i;
-	int				j;
+	size_t			i;
+	size_t			j;
 	t_intersection	*tmp;
 
 	if (inters->is_sorted)
@@ -132,7 +132,7 @@ void	sort_intersections(t_intersections *inters)
 
 t_intersection	*hit(t_intersections *inters)
 {
-	int				i;
+	size_t	i;
 
 	if (!inters->is_sorted)
 		sort_intersections(inters);
@@ -146,7 +146,7 @@ t_intersection	*hit(t_intersections *inters)
 	return (NULL);
 }
 
-t_intersections *new_intersections_list(void)
+t_intersections	*new_intersections_list(void)
 {
 	t_intersections	*intersections;
 

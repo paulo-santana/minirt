@@ -42,8 +42,8 @@ t_matrix	*rotation_x(double rad)
 {
 	return (new_matrix(4, (double [4][4]){
 		{1, 0, 0, 0},
-		{0, cosf(rad), -sinf(rad), 0},
-		{0, sinf(rad), cosf(rad), 0},
+		{0, cos(rad), -sin(rad), 0},
+		{0, sin(rad), cos(rad), 0},
 		{0, 0, 0, 1},
 	}));
 }
@@ -51,9 +51,9 @@ t_matrix	*rotation_x(double rad)
 t_matrix	*rotation_y(double rad)
 {
 	return (new_matrix(4, (double [4][4]){
-		{cosf(rad), 0, sinf(rad), 0},
+		{cos(rad), 0, sin(rad), 0},
 		{0, 1, 0, 0},
-		{-sinf(rad), 0, cosf(rad), 0},
+		{-sin(rad), 0, cos(rad), 0},
 		{0, 0, 0, 1},
 	}));
 }
@@ -61,8 +61,8 @@ t_matrix	*rotation_y(double rad)
 t_matrix	*rotation_z(double rad)
 {
 	return (new_matrix(4, (double [4][4]){
-		{cosf(rad), -sinf(rad), 0, 0},
-		{sinf(rad), cosf(rad), 0, 0},
+		{cos(rad), -sin(rad), 0, 0},
+		{sin(rad), cos(rad), 0, 0},
 		{0, 0, 1, 0},
 		{0, 0, 0, 1},
 	}));

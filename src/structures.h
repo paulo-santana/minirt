@@ -14,6 +14,7 @@
 # define STRUCTURES_H
 
 # include "../libft/libft.h"
+#include <stddef.h>
 
 typedef struct s_tuple {
 	double	x;
@@ -93,8 +94,8 @@ typedef struct s_intersection {
 }	t_intersection;
 
 typedef struct s_intersections {
-	int				count;
-	int				size;
+	size_t			count;
+	size_t			size;
 	int				is_sorted;
 	t_intersection	**intersections;
 }	t_intersections;

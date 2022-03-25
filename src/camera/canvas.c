@@ -14,6 +14,7 @@
 #include "debug.h"
 #include "ray/ray.h"
 #include "structures.h"
+#include <stddef.h>
 #include <stdio.h>
 #include <bits/pthreadtypes.h>
 #include <pthread.h>
@@ -21,10 +22,10 @@
 t_canvas	*new_canvas(int width, int height)
 {
 	t_canvas	*canvas;
-	int			size;
+	size_t		size;
 
 	canvas = malloc(sizeof(t_canvas));
-	size = sizeof(canvas->data) * width * height;
+	size = sizeof(canvas->data) * (size_t)width * (size_t)height;
 	canvas->data = malloc(size);
 	ft_bzero(canvas->data, size);
 	canvas->width = width;
@@ -38,9 +39,9 @@ unsigned int	color_to_int(t_color *color)
 	unsigned int	green;
 	unsigned int	blue;
 
-	red = roundf(color->red * 255);
-	green = roundf(color->green * 255);
-	blue = roundf(color->blue * 255);
+	red = (unsigned int)round(color->red * 255);
+	green = (unsigned int)round(color->green * 255);
+	blue = (unsigned int)round(color->blue * 255);
 	if (red > 255)
 		red = 255;
 	if (green > 255)
