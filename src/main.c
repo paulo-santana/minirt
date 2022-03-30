@@ -144,7 +144,7 @@ void	draw_canvas_ascii(t_canvas *canvas)
 	int		pixel_x;
 	int		pixel_y;
 	unsigned int color;
-	unsigned int blue;
+	unsigned int avg;
 	char	*buffer;
 	char	*palette = " .:-~+*%YOSHD#NM";
 
@@ -167,8 +167,9 @@ void	draw_canvas_ascii(t_canvas *canvas)
 			// 	return ;
 			color = canvas->data[pixel_y * canvas->width + pixel_x];
 			// my_mlx_put_pixel(mlx_img, color, i, j);
-			blue = (color & 0xff) >> 0;
-			char c = palette[(int)(blue / 256. * (double)strlen(palette))];
+			avg = ((color & 0xff0000) >> 16) + ((color & 0xff00) >> 8) + (color & 0xff);
+			avg /= 3;
+			char c = palette[(int)(avg / 256. * (double)strlen(palette))];
 			buffer[i * (width + 1) + j] = c;
 			j++;
 		}
@@ -185,7 +186,7 @@ void draw_spheres(t_data *data)
 	free(data->canvas);
 	data->canvas = render(data->camera, data->world);
 	draw_canvas_mlx(data->canvas, &data->mlx_img);
-	// draw_canvas_ascii(data->canvas);
+	draw_canvas_ascii(data->canvas);
 	// printf("desenhando na tela...\n");
 	// sleep(1);
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
