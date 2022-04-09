@@ -18,7 +18,7 @@
 #include "utils/utils.h"
 
 #ifndef EPSILON
-# define EPSILON .001
+# define EPSILON .0001
 
 #endif /* !EPSILON */
 
@@ -87,14 +87,14 @@ int	is_shadowed(t_world *world, t_tuple *point, t_point_light *light)
 	t_intersections	*xs;
 	int				result;
 
-	light = world->lights->content;
+	// light = world->lights->content;
 	v = subtract_tuples(light->position, point);
 	distance = magnitude(v);
 	direction = normalize(v);
 	t_ray *ray = new_ray(point, direction);
 	xs = intersect_world(world, ray);
 	t_intersection *inter = hit(xs);
-	result = inter != NULL && inter->t < distance;
+	result = (inter != NULL && inter->t < distance);
 	free(v);
 	free(ray->direction);
 	free(ray);
@@ -118,9 +118,9 @@ t_color	*shade_hit(t_world *world, t_computations *comps)
 		args.position = comps->over_point;
 		args.eye_vector = comps->eyev;
 		args.normal_vector = comps->normalv;
-		light = light->next;
-		args.in_shadow = is_shadowed(world, comps->over_point, world->lights->content);
+		args.in_shadow = is_shadowed(world, comps->over_point, light->content);
 		ft_lstadd_front(&colors, ft_lstnew(lighting(&args)));
+		light = light->next;
 	}
 	final_color = sum_color_list(colors);
 	ft_lstclear(&colors, free);

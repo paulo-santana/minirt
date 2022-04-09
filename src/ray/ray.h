@@ -42,6 +42,8 @@ t_ray			*transform(t_ray *ray, t_matrix *matrix);
 t_intersections	*new_intersections_list(void);
 void			destroy_intersections_list(t_intersections *inters);
 
+int				is_shadowed(t_world *world,
+					t_tuple *point, t_point_light *light);
 t_computations	*prepare_computations(t_intersection *intersection, t_ray *ray);
 void			destroy_computations(t_computations *comps);
 t_intersections	*intersect_world(t_world *world, t_ray *ray);

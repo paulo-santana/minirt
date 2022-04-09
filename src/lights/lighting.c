@@ -120,8 +120,7 @@ t_color	*lighting(t_lighting_args *args)
 	tmp_color = effective_color;
 	effective_color = sum_colors(get_ambient(args, effective_color),
 			get_diffuse(args, effective_color, light_dot_normal),
-			get_specular(args, light_dot_normal, light_v)
-			);
+			get_specular(args, light_dot_normal, light_v));
 	free(light_v);
 	free(tmp_color);
 	return (effective_color);

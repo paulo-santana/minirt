@@ -13,8 +13,8 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
+# include <stddef.h>
 # include "../libft/libft.h"
-#include <stddef.h>
 
 typedef struct s_tuple {
 	double	x;
