@@ -354,7 +354,7 @@ MunitResult matrix_transform_test17(const MunitParameter params[], void *fixture
 	t_tuple *up = new_vector(1, 1, 0);
 	t_matrix *t = view_transform(from, to, up);
 
-	t_matrix *expected = new_matrix(4, (float[4][4]){
+	t_matrix *expected = new_matrix(4, (double[4][4]){
 		{ -0.50709, 0.50709,  0.67612, -2.36643},
 		{  0.76772, 0.60609,  0.12122, -2.82843},
 		{ -0.35857, 0.59761, -0.71714,  0.00000},

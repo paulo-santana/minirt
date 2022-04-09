@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   double_comparison.c                                 :+:      :+:    :+:   */
+/*   double_comparison.c                                 :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,9 @@
 
 #include <math.h>
 
-#define EPSILON 0.00001
+#define EPSILON 0.0001
 
-int	fequals(double a, double b)
+int	dequals(double a, double b)
 {
 	if (fabs(a - b) < EPSILON)
 		return (1);

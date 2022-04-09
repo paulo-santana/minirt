@@ -17,9 +17,9 @@
 void	print_color(t_color *color)
 {
 	printf("\n");
-	printf("red: %f\n", color->red);
-	printf("green: %f\n", color->green);
-	printf("blue: %f\n", color->blue);
+	printf("red: %.10lf\n", color->red);
+	printf("green: %.10lf\n", color->green);
+	printf("blue: %.10lf\n", color->blue);
 }
 
 void	print_matrix(t_matrix *matrix)

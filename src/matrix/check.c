@@ -26,7 +26,7 @@ int	matrix_equals(t_matrix *a, t_matrix *b)
 		j = 0;
 		while (j < a->size)
 		{
-			if (!fequals(a->data[i][j], b->data[i][j]))
+			if (!dequals(a->data[i][j], b->data[i][j]))
 				return (0);
 			j++;
 		}

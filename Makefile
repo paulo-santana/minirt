@@ -47,7 +47,7 @@ SRC_FILES += camera/camera.c
 SRC_FILES += camera/canvas.c
 SRC_FILES += camera/view.c
 
-SRC_FILES += utils/float_comparison.c
+SRC_FILES += utils/double_comparison.c
 
 SRC_FILES += debug.c
 
@@ -66,7 +66,7 @@ SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -Wconversion -O2 -I $(MLX_DIR) -I $(LIBFT_DIR) -I src #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -Wconversion -g3 -I $(MLX_DIR) -I $(LIBFT_DIR) -I src #-fsanitize=address
 LFLAGS = -lm -L $(MLX_DIR) -lmlx -lXext -lX11 -L $(LIBFT_DIR) -lft #-fsanitize=address
 
 RM = rm -rf
@@ -93,15 +93,15 @@ $(OBJ_ROOT)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 
 TEST_SRC += tests/munit/munit.c
 TEST_SRC += tests/main.c
-TEST_SRC += tests/tuples_test.c
-TEST_SRC += tests/matrix_test.c
-TEST_SRC += tests/matrix_transform_test.c
-TEST_SRC += tests/ray_test.c
-TEST_SRC += tests/sphere_test.c
-TEST_SRC += tests/lights_test.c
-TEST_SRC += tests/materials_test.c
-TEST_SRC += tests/world_test.c
-TEST_SRC += tests/camera_test.c
+TEST_SRC += tests/test_tuples.c
+TEST_SRC += tests/test_matrix.c
+TEST_SRC += tests/test_matrix_transform.c
+TEST_SRC += tests/test_ray.c
+TEST_SRC += tests/test_sphere.c
+TEST_SRC += tests/test_lights.c
+TEST_SRC += tests/test_materials.c
+TEST_SRC += tests/test_world.c
+TEST_SRC += tests/test_camera.c
 TEST_SRC += tests/utils.c
 
 test: $(LIBFT) $(OBJ_DIRS) $(OBJ)

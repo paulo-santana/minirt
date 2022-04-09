@@ -67,7 +67,7 @@ void	intersect(
 	result = (-abc[1] - sqrt(discriminant)) / (2 * abc[0]);
 	add_intersection(intersections,
 		new_intersection(result, sphere, OBJ_SPHERE));
-	if (fequals(discriminant, 0))
+	if (dequals(discriminant, 0))
 		return ;
 	result = (-abc[1] + sqrt(discriminant)) / (2 * abc[0]);
 	add_intersection(intersections,

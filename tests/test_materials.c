@@ -43,9 +43,9 @@ MunitResult material_test2(const MunitParameter params[], void *fixture)
 
 	t_color *result = lighting(&args);
 
-	munit_assert_true(fequals(result->red, 1.9));
-	munit_assert_true(fequals(result->green, 1.9));
-	munit_assert_true(fequals(result->blue, 1.9));
+	munit_assert_true(dequals(result->red, 1.9));
+	munit_assert_true(dequals(result->green, 1.9));
+	munit_assert_true(dequals(result->blue, 1.9));
 
 	free(m->color);
 	free(m);
@@ -79,9 +79,9 @@ MunitResult material_test3(const MunitParameter params[], void *fixture)
 
 	t_color *result = lighting(&args);
 
-	munit_assert_true(fequals(result->red, 1.0));
-	munit_assert_true(fequals(result->green, 1.0));
-	munit_assert_true(fequals(result->blue, 1.0));
+	munit_assert_true(dequals(result->red, 1.0));
+	munit_assert_true(dequals(result->green, 1.0));
+	munit_assert_true(dequals(result->blue, 1.0));
 
 	free(m->color);
 	free(m);
@@ -115,9 +115,9 @@ MunitResult material_test4(const MunitParameter params[], void *fixture)
 
 	t_color *result = lighting(&args);
 
-	munit_assert_true(fequals(result->red, 0.7364));
-	munit_assert_true(fequals(result->green, 0.7364));
-	munit_assert_true(fequals(result->blue, 0.7364));
+	munit_assert_true(dequals(result->red, 0.7364));
+	munit_assert_true(dequals(result->green, 0.7364));
+	munit_assert_true(dequals(result->blue, 0.7364));
 
 	free(m->color);
 	free(m);
@@ -151,9 +151,9 @@ MunitResult material_test5(const MunitParameter params[], void *fixture)
 
 	t_color *result = lighting(&args);
 
-	munit_assert_true(fequals(result->red, 1.63638));
-	munit_assert_true(fequals(result->green, 1.63638));
-	munit_assert_true(fequals(result->blue, 1.63638));
+	munit_assert_true(dequals(result->red, 1.6364));
+	munit_assert_true(dequals(result->green, 1.6364));
+	munit_assert_true(dequals(result->blue, 1.6364));
 
 	free(m->color);
 	free(m);
@@ -187,9 +187,9 @@ MunitResult material_test6(const MunitParameter params[], void *fixture)
 
 	t_color *result = lighting(&args);
 
-	munit_assert_true(fequals(result->red, 0.1));
-	munit_assert_true(fequals(result->green, 0.1));
-	munit_assert_true(fequals(result->blue, 0.1));
+	munit_assert_true(dequals(result->red, 0.1));
+	munit_assert_true(dequals(result->green, 0.1));
+	munit_assert_true(dequals(result->blue, 0.1));
 
 	free(m->color);
 	free(m);
@@ -224,9 +224,9 @@ MunitResult material_test7(const MunitParameter params[], void *fixture)
 
 	t_color *result = lighting(&args);
 
-	munit_assert_true(fequals(result->red, 0.1));
-	munit_assert_true(fequals(result->green, 0.1));
-	munit_assert_true(fequals(result->blue, 0.1));
+	munit_assert_true(dequals(result->red, 0.1));
+	munit_assert_true(dequals(result->green, 0.1));
+	munit_assert_true(dequals(result->blue, 0.1));
 
 	free(m->color);
 	free(m);

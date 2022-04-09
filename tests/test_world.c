@@ -176,6 +176,7 @@ MunitResult world_test8(const MunitParameter params[], void *fixture)
 	t_color *color = shade_hit(world, comps);
 
 	t_color *expected_color = new_color(0.90498, 0.90498, 0.90498);
+
 	munit_assert_true(color_equals(color, expected_color));
 	destroy_ray(ray);
 	destroy_world(world);
@@ -246,7 +247,7 @@ MunitResult world_test12(const MunitParameter params[], void *fixture)
 	t_world *world = default_world();
 	t_tuple *point = new_point(0, 10, 0);
 
-	munit_assert_false(is_shadowed(world, point));
+	munit_assert_false(is_shadowed(world, point, world->lights->content));
 	destroy_world(world);
 	free(point);
 	return (MUNIT_OK);
@@ -258,7 +259,7 @@ MunitResult world_test13(const MunitParameter params[], void *fixture)
 	t_world *world = default_world();
 	t_tuple *point = new_point(10, -10, 10);
 
-	munit_assert_true(is_shadowed(world, point));
+	munit_assert_true(is_shadowed(world, point, world->lights->content));
 	destroy_world(world);
 	free(point);
 	return (MUNIT_OK);
@@ -270,7 +271,7 @@ MunitResult world_test14(const MunitParameter params[], void *fixture)
 	t_world *world = default_world();
 	t_tuple *point = new_point(-20, 20, -20);
 
-	munit_assert_false(is_shadowed(world, point));
+	munit_assert_false(is_shadowed(world, point, world->lights->content));
 	destroy_world(world);
 	free(point);
 	return (MUNIT_OK);
@@ -282,7 +283,7 @@ MunitResult world_test15(const MunitParameter params[], void *fixture)
 	t_world *world = default_world();
 	t_tuple *point = new_point(-2, 2, -2);
 
-	munit_assert_false(is_shadowed(world, point));
+	munit_assert_false(is_shadowed(world, point, world->lights->content));
 	destroy_world(world);
 	free(point);
 	return (MUNIT_OK);

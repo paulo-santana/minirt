@@ -25,10 +25,10 @@ int	is_vector(t_tuple *tuple)
 int	tuple_equals(t_tuple *a, t_tuple *b)
 {
 	return (
-		fequals(a->x, b->x)
-		&& fequals(a->y, b->y)
-		&& fequals(a->z, b->z)
-		&& fequals(a->w, b->w)
+		dequals(a->x, b->x)
+		&& dequals(a->y, b->y)
+		&& dequals(a->z, b->z)
+		&& dequals(a->w, b->w)
 	);
 }
 

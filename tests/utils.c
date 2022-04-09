@@ -25,9 +25,9 @@ int color_equals(t_color *c1, t_color *c2)
 	if (c1 == NULL || c2 == NULL)
 		if (c1 != c2)
 			return (0);
-	return (fequals(c1->red, c2->red)
-			&& fequals(c1->green, c2->green)
-			&& fequals(c1->blue, c2->blue));
+	return (dequals(c1->red, c2->red)
+			&& dequals(c1->green, c2->green)
+			&& dequals(c1->blue, c2->blue));
 }
 
 int light_equals(t_point_light *l1, t_point_light *l2)
@@ -44,10 +44,10 @@ int material_equals(t_material *m1, t_material *m2)
 	if (m1 == NULL || m2 == NULL)
 		if (m1 != m2)
 			return (0);
-	return (fequals(m1->ambient, m2->ambient)
-		&& fequals(m1->diffuse, m2->diffuse)
-		&& fequals(m1->shininess, m2->shininess)
-		&& fequals(m1->specular, m2->specular)
+	return (dequals(m1->ambient, m2->ambient)
+		&& dequals(m1->diffuse, m2->diffuse)
+		&& dequals(m1->shininess, m2->shininess)
+		&& dequals(m1->specular, m2->specular)
 		&& color_equals(m1->color, m2->color)
 		);
 }
@@ -57,7 +57,7 @@ int sphere_equals(t_sphere *s1, t_sphere *s2)
 	if (s1 == NULL || s2 == NULL)
 		if (s1 != s2)
 			return (0);
-	return (fequals(s1->radius, s2->radius)
+	return (dequals(s1->radius, s2->radius)
 		&& matrix_equals(s1->transform, s2->transform)
 		&& matrix_equals(s1->inverse_transform, s2->inverse_transform)
 		&& tuple_equals(s1->position, s2->position)
