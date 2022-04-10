@@ -11,9 +11,15 @@
 #include "../libft/libft.h"
 #include "utils.h"
 
+t_tuple *test_normal_at(t_shape *shape, t_tuple *p)
+{
+	return (new_vector(p->x, p->y, p->z));
+}
+
 t_shape *new_test_shape(void)
 {
 	t_shape *shape = new_shape();
+	shape->normal_at = test_normal_at;
 	return (shape);
 }
 
@@ -74,5 +80,45 @@ MunitResult shape_test4(const MunitParameter params[], void *fixture)
 	set_material(shape, m);
 	munit_assert_true(material_equals(shape->material, m));
 	destroy_shape(shape);
+	return MUNIT_OK;
+}
+
+// computing the normal on a translated shape
+MunitResult shape_test5(const MunitParameter params[], void *fixture)
+{
+	t_shape	*shape = new_test_shape();
+	t_tuple	*point;
+	t_tuple	*result;
+	t_tuple	*expected;
+
+	expected = new_vector(0, 0.70711, -0.70711);
+	set_transform(shape, translation(0, 1, 0));
+	point = new_point(0, 1.70711, -0.70711);
+	result = normal_at(shape, point);
+
+	munit_assert_true(tuple_equals(result, expected));
+	free(result);
+	free(expected);
+	free(point);
+	destroy_shape(shape);
+	return MUNIT_OK;
+}
+
+// computing the normal on a transformed shape
+MunitResult shape_test6(const MunitParameter params[], void *fixture)
+{
+	t_shape *shape = new_test_shape();
+
+	t_matrix *scale = scaling(1, .5, 1);
+	t_matrix *rotation = rotation_z(M_PI / 5);
+
+	t_matrix *trans = matrix_multiply(scale, rotation);
+	set_transform(shape, trans);
+
+	t_tuple *p = new_point(0, M_SQRT2 / 2, -M_SQRT2 / 2);
+	t_tuple *normal = normal_at(shape, p);
+	t_tuple *expected = new_vector(0, 0.97014, -0.24254);
+
+	munit_assert_true(tuple_equals(normal, expected));
 	return MUNIT_OK;
 }

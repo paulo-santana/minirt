@@ -46,7 +46,7 @@ MunitResult sphere_test3(const MunitParameter params[], void *fixture)
 
 	set_transform(sphere, s);
 	xs = new_intersections_list();
-	sphere->intersect(sphere, ray, xs);
+	intersect(sphere, ray, xs);
 	munit_assert_int(xs->count, ==, 2);
 	munit_assert_float(xs->intersections[0]->t, ==, 3);
 	munit_assert_float(xs->intersections[1]->t, ==, 7);
