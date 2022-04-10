@@ -55,13 +55,8 @@ void	sphere_intersect(
 	double			abc[3];
 	double			discriminant;
 	double			result;
-	t_ray			*transformed_ray;
-	t_matrix		*sphere_transform;
 
-	sphere_transform = sphere->inverse_transform;
-	transformed_ray = transform(ray, sphere_transform);
-	discriminant = get_discriminant(&sphere->sphere_props, transformed_ray, abc);
-	destroy_ray(transformed_ray);
+	discriminant = get_discriminant(&sphere->sphere_props, ray, abc);
 	if (discriminant < 0)
 		return ;
 	result = (-abc[1] - sqrt(discriminant)) / (2 * abc[0]);

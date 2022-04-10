@@ -37,6 +37,7 @@ SRC_FILES += ray/transform.c
 
 SRC_FILES += shapes/shape.c
 SRC_FILES += shapes/material.c
+SRC_FILES += shapes/normal.c
 SRC_FILES += shapes/sphere.c
 
 SRC_FILES += lights/lighting.c

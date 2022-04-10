@@ -23,6 +23,7 @@ t_ray			*new_ray(t_tuple *origin, t_tuple *direction);
 void			destroy_ray(t_ray *ray);
 
 t_tuple			*get_position(t_ray *ray, double t);
+void			intersect(t_shape *shape, t_ray *ray, t_intersections *xs);
 void			sphere_intersect(
 					t_shape *sphere,
 					t_ray *ray,

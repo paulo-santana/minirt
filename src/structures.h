@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/10 10:41:45 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/10 16:15:39 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ struct s_shape {
 	union {
 		t_sphere	sphere_props;
 	};
+	t_tuple			*(*normal_at)(t_shape *shape, t_tuple *point);
 	void			(*intersect)(
 			t_shape *shape, t_ray *ray, t_intersections *xs);
 	void			(*destroy_fn)(void *data);

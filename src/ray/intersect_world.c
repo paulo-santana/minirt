@@ -47,19 +47,28 @@ t_computations	*prepare_computations(t_intersection *intersection, t_ray *ray)
 	return (comps);
 }
 
+void	intersect(t_shape *shape, t_ray *ray, t_intersections *xs)
+{
+	t_ray	*local_ray;
+
+	local_ray = transform(ray, shape->inverse_transform);
+	shape->intersect(shape, local_ray, xs);
+	destroy_ray(local_ray);
+}
+
 t_intersections	*intersect_world(t_world *world, t_ray *ray)
 {
 	t_intersections	*xs;
-	t_list			*spheres;
+	t_list			*object;
 	t_shape			*shape;
 
 	xs = new_intersections_list();
-	spheres = world->objects.spheres;
-	while (spheres)
+	object = world->objects.spheres;
+	while (object)
 	{
-		shape = spheres->content;
-		shape->intersect(shape, ray, xs);
-		spheres = spheres->next;
+		shape = object->content;
+		intersect(shape, ray, xs);
+		object = object->next;
 	}
 	sort_intersections(xs);
 	return (xs);
@@ -88,17 +97,19 @@ int	is_shadowed(t_world *world, t_tuple *point, t_point_light *light)
 	t_tuple			*direction;
 	t_intersections	*xs;
 	int				result;
+	t_ray			*ray;
+	t_intersection	*inter;
 
 	v = subtract_tuples(light->position, point);
 	distance = magnitude(v);
 	direction = normalize(v);
-	t_ray *ray = new_ray(point, direction);
+	ray = new_ray(point, direction);
 	xs = intersect_world(world, ray);
-	t_intersection *inter = hit(xs);
+	inter = hit(xs);
 	result = (inter != NULL && inter->t < distance);
+	ray->origin = NULL;
+	destroy_ray(ray);
 	free(v);
-	free(ray->direction);
-	free(ray);
 	destroy_intersections_list(xs);
 	return (result);
 }
