@@ -19,6 +19,7 @@ t_shape	*new_shape(void)
 	t_shape	*shape;
 
 	shape = malloc(sizeof(t_shape));
+	*shape = (t_shape){};
 	shape->transform = identity_matrix();
 	shape->inverse_transform = identity_matrix();
 	shape->material = new_material();
