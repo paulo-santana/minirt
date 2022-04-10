@@ -13,7 +13,7 @@ t_world	*new_world(void)
 	return (world);
 }
 
-void	add_sphere(t_world *world, t_sphere *sphere)
+void	add_sphere(t_world *world, t_shape *sphere)
 {
 	ft_lstadd_back(&world->objects.spheres, ft_lstnew(sphere));
 	world->objects.total++;
@@ -28,8 +28,8 @@ void	add_light(t_world *world, t_point_light *light)
 t_world *default_world(void)
 {
 	t_world		*world;
-	t_sphere	*s1;
-	t_sphere	*s2;
+	t_shape		*s1;
+	t_shape		*s2;
 	t_matrix	*scale;
 
 	world = new_world();

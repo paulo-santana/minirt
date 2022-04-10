@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 13:04:58 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/16 17:56:41 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/10 11:03:58 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ t_ray			*new_ray(t_tuple *origin, t_tuple *direction);
 void			destroy_ray(t_ray *ray);
 
 t_tuple			*get_position(t_ray *ray, double t);
-void			intersect(
-					t_intersections *current_intersections,
-					t_sphere *sphere,
-					t_ray *ray);
+void			sphere_intersect(
+					t_shape *sphere,
+					t_ray *ray,
+					t_intersections *current_intersections);
 t_intersection	*new_intersection(double t, void *obj, t_object_types obj_type);
 t_intersection	*hit(t_intersections *inters);
 

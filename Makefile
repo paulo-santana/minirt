@@ -35,6 +35,7 @@ SRC_FILES += ray/intersections.c
 SRC_FILES += ray/intersect_world.c
 SRC_FILES += ray/transform.c
 
+SRC_FILES += shapes/shape.c
 SRC_FILES += shapes/material.c
 SRC_FILES += shapes/sphere.c
 

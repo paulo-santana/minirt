@@ -196,14 +196,14 @@ void draw_spheres(t_data *data)
 
 void	generate_world(t_data *data)
 {
-	t_sphere *floors = new_sphere();
+	t_shape *floors = new_sphere();
 	t_matrix *transforms[5];
 	set_transform(floors, scaling(10, 0.01, 10));
 	floors->material->color->green = .9;
 	floors->material->color->blue = .9;
 	floors->material->specular = 0;
 
-	t_sphere *left_wall = new_sphere();
+	t_shape *left_wall = new_sphere();
 	transforms[0] = scaling(10, .01, 10);
 	transforms[1] = rotation_x(M_PI_2);
 	transforms[2] = rotation_y(-M_PI_4);
@@ -214,7 +214,7 @@ void	generate_world(t_data *data)
 	left_wall->material->color->blue = floors->material->color->blue;
 	left_wall->material->color->green = floors->material->color->green;
 
-	t_sphere *right_wall = new_sphere();
+	t_shape *right_wall = new_sphere();
 	transforms[0] = scaling(10, .01, 10);
 	transforms[1] = rotation_x(M_PI_2);
 	transforms[2] = rotation_y(M_PI_4);
@@ -225,21 +225,21 @@ void	generate_world(t_data *data)
 	right_wall->material->color->blue = floors->material->color->blue;
 	right_wall->material->color->green = floors->material->color->green;
 
-	t_sphere *middle = new_sphere();
+	t_shape *middle = new_sphere();
 	set_transform(middle, translation(-0.5, 1, 0.5));
 	middle->material->color->red = 0.1;
 	middle->material->color->blue = 0.8;
 	middle->material->diffuse = 0.4;
 	middle->material->specular = 0.4;
 
-	t_sphere *right = new_sphere();
+	t_shape *right = new_sphere();
 	set_transform(right, matrix_multiply(translation(-1.3, 1.6, -0.9), scaling(0.5, 0.5, 0.5)));
 	right->material->color->red = 0.5;
 	right->material->color->blue = 0.1;
 	right->material->diffuse = 0.7;
 	right->material->specular = 0.3;
 
-	t_sphere *left = new_sphere();
+	t_shape *left = new_sphere();
 	set_transform(left, matrix_multiply(translation(-1.5, 0.33, -0.75), scaling(0.33, 0.33, 0.33)));
 	left->material->color->green = 0.8;
 	left->material->color->blue = 0.1;
@@ -247,7 +247,7 @@ void	generate_world(t_data *data)
 	left->material->specular = 0.3;
 
 	t_point_light *light = new_point_light(new_point(-10, 10, -10), new_color(.5, .5, .5));
-	t_point_light *light2 = new_point_light(new_point(-2, 4, -5), new_color(.5, .5, .5));
+	t_point_light *light2 = new_point_light(new_point(-1, 1.0, -2), new_color(.5, .5, .5));
 	float ratio = (float)WIN_WIDTH / WIN_HEIGHT;
 	float size = (float)(WIN_WIDTH * data->resolution);
 	t_camera *camera = new_camera((int)size, (int)(size / ratio), M_PI / 3);

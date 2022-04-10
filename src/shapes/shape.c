@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.c                                           :+:      :+:    :+:   */
+/*   shape.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 12:04:46 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/10 11:00:48 by psergio-         ###   ########.fr       */
+/*   Created: 2022/04/10 09:41:28 by psergio-          #+#    #+#             */
+/*   Updated: 2022/04/10 10:15:31 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ray/ray.h"
 #include "shapes.h"
 #include "structures.h"
+#include <stdlib.h>
 
-t_shape	*new_sphere(void)
+t_shape	*new_shape(void)
 {
-	t_shape	*sphere;
+	t_shape	*shape;
 
-	sphere = new_shape();
-	sphere->sphere_props.position = (t_tuple){0, 0, 0, 1};
-	sphere->sphere_props.radius = 1;
-	sphere->intersect = sphere_intersect;
-	sphere->destroy_fn = destroy_sphere;
-	return (sphere);
+	shape = malloc(sizeof(t_shape));
+	shape->transform = identity_matrix();
+	shape->inverse_transform = identity_matrix();
+	shape->material = new_material();
+	return (shape);
 }
 
-void	destroy_sphere(void *data)
+void	set_transform(t_shape *sphere, t_matrix *t)
 {
-	t_shape	*sphere;
-
-	sphere = data;
 	free(sphere->transform);
+	sphere->transform = t;
 	free(sphere->inverse_transform);
-	destroy_material(sphere->material);
-	free(sphere);
+	sphere->inverse_transform = inverse(t);
 }

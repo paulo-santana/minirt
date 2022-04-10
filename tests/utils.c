@@ -52,15 +52,15 @@ int material_equals(t_material *m1, t_material *m2)
 		);
 }
 
-int sphere_equals(t_sphere *s1, t_sphere *s2)
+int sphere_equals(t_shape *s1, t_shape *s2)
 {
 	if (s1 == NULL || s2 == NULL)
 		if (s1 != s2)
 			return (0);
-	return (dequals(s1->radius, s2->radius)
+	return (dequals(s1->sphere_props.radius, s2->sphere_props.radius)
 		&& matrix_equals(s1->transform, s2->transform)
 		&& matrix_equals(s1->inverse_transform, s2->inverse_transform)
-		&& tuple_equals(s1->position, s2->position)
+		&& tuple_equals(&s1->sphere_props.position, &s2->sphere_props.position)
 		&& material_equals(s1->material, s2->material)
    );
 }

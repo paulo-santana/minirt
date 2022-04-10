@@ -32,13 +32,13 @@ MunitResult world_test2(const MunitParameter params[], void *fixture)
 			new_point(-10, 10, -10),
 			new_color(1, 1, 1)
 		);
-	t_sphere *s1 = new_sphere();
+	t_shape *s1 = new_sphere();
 	s1->material->diffuse = 0.7;
 	s1->material->specular = 0.2;
 	free(s1->material->color);
 	s1->material->color = new_color(0.8, 1.0, 0.6);
 
-	t_sphere *s2 = new_sphere();
+	t_shape *s2 = new_sphere();
 	t_matrix *t = scaling(0.5, 0.5, 0.5);
 	set_transform(s2, t);
 	t_world	*world = default_world();
@@ -79,7 +79,7 @@ MunitResult world_test3(const MunitParameter params[], void *fixture)
 MunitResult world_test4(const MunitParameter params[], void *fixture)
 {
 	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	t_sphere *sphere = new_sphere();
+	t_shape *sphere = new_sphere();
 	t_intersection *i = new_intersection(4, sphere, OBJ_SPHERE);
 
 	t_computations *comps = prepare_computations(i, ray);
@@ -107,7 +107,7 @@ MunitResult world_test4(const MunitParameter params[], void *fixture)
 MunitResult world_test5(const MunitParameter params[], void *fixture)
 {
 	t_ray *ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	t_sphere *sphere = new_sphere();
+	t_shape *sphere = new_sphere();
 	t_intersection *i = new_intersection(4, sphere, OBJ_SPHERE);
 	t_computations *comps = prepare_computations(i, ray);
 
@@ -123,7 +123,7 @@ MunitResult world_test5(const MunitParameter params[], void *fixture)
 MunitResult world_test6(const MunitParameter params[], void *fixture)
 {
 	t_ray *ray = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
-	t_sphere *sphere = new_sphere();
+	t_shape *sphere = new_sphere();
 	t_intersection *i = new_intersection(1, sphere, OBJ_SPHERE);
 	t_computations *comps = prepare_computations(i, ray);
 
@@ -226,9 +226,9 @@ MunitResult world_test11(const MunitParameter params[], void *fixture)
 {
 	t_world *world = default_world();
 	t_ray *ray = new_ray(new_point(0, 0, .75), new_vector(0, 0, -1));
-	t_sphere *outer = world->objects.spheres->content;
+	t_shape *outer = world->objects.spheres->content;
 	outer->material->ambient = new_color(1, 1, 1);
-	t_sphere *inner = world->objects.spheres->next->content;
+	t_shape *inner = world->objects.spheres->next->content;
 	inner->material->ambient = new_color(1, 1, 1);
 	t_color *expected = inner->material->color;
 

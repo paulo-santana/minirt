@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:16:46 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/16 17:56:41 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/10 12:28:41 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,14 @@ t_intersections	*intersect_world(t_world *world, t_ray *ray)
 {
 	t_intersections	*xs;
 	t_list			*spheres;
+	t_shape			*shape;
 
 	xs = new_intersections_list();
 	spheres = world->objects.spheres;
 	while (spheres)
 	{
-		intersect(xs, spheres->content, ray);
+		shape = spheres->content;
+		shape->intersect(shape, ray, xs);
 		spheres = spheres->next;
 	}
 	sort_intersections(xs);
@@ -87,7 +89,6 @@ int	is_shadowed(t_world *world, t_tuple *point, t_point_light *light)
 	t_intersections	*xs;
 	int				result;
 
-	// light = world->lights->content;
 	v = subtract_tuples(light->position, point);
 	distance = magnitude(v);
 	direction = normalize(v);
@@ -113,7 +114,7 @@ t_color	*shade_hit(t_world *world, t_computations *comps)
 	colors = NULL;
 	while (light)
 	{
-		args.material = ((t_sphere *)comps->object)->material;
+		args.material = comps->object->material;
 		args.light = light->content;
 		args.position = comps->over_point;
 		args.eye_vector = comps->eyev;

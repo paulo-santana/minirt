@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:17:07 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 14:32:43 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/10 10:40:51 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_color	*multiply_scalar_color(t_color *tuple, double value);
 t_color	*multiply_colors(t_color *a, t_color *b);
 double	dot(t_tuple *a, t_tuple *b);
 
-t_tuple	*normal_at(t_sphere *sphere, t_tuple *world_point);
+t_tuple	*normal_at(t_shape *sphere, t_tuple *world_point);
 t_tuple	*reflect(t_tuple *vector, t_tuple *normal);
 
 #endif
