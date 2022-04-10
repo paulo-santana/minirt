@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/10 16:15:39 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/10 18:43:32 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_color			t_color;
 typedef struct s_matrix			t_matrix;
 typedef struct s_material		t_material;
 typedef struct s_sphere			t_sphere;
+typedef struct s_plane			t_plane;
 typedef struct s_shape			t_shape;
 typedef struct s_point_light	t_point_light;
 typedef struct s_objects		t_objects;
@@ -68,6 +69,9 @@ struct s_sphere {
 	double		radius;
 };
 
+struct s_plane {
+};
+
 struct s_shape {
 	t_matrix		*transform;
 	t_matrix		*inverse_transform;
@@ -75,11 +79,12 @@ struct s_shape {
 	t_object_types	type;
 	union {
 		t_sphere	sphere_props;
+		t_plane		plane_props;
 	};
 	t_tuple			*(*normal_at)(t_shape *shape, t_tuple *point);
 	void			(*intersect)(
 			t_shape *shape, t_ray *ray, t_intersections *xs);
-	void			(*destroy_fn)(void *data);
+	void			(*destroy_fn)(t_shape *data);
 };
 
 struct s_point_light {

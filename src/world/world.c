@@ -55,6 +55,6 @@ void	destroy_world(t_world *world)
 {
 	// if (world->light)
 	ft_lstclear(&world->lights, (void(*)(void*))destroy_point_light);
-	ft_lstclear(&world->objects.spheres, destroy_sphere);
+	ft_lstclear(&world->objects.spheres, (void *)destroy_sphere);
 	free(world);
 }
