@@ -27,16 +27,6 @@
 #define XK_rightarrow                    65363  /* U+2192 RIGHTWARDS ARROW */
 #define XK_downarrow                     65364  /* U+2193 DOWNWARDS ARROW */
 
-typedef struct s_projectile {
-	t_tuple	*position;
-	t_tuple	*velocity;
-} t_projectile;
-
-typedef struct s_environment {
-	t_tuple	*gravity;
-	t_tuple	*wind;
-} t_environment;
-
 typedef struct s_image {
 	void	*ptr;
 	char	*data;
