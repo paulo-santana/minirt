@@ -99,6 +99,8 @@ MunitResult sphere_test8(PARAMS);
 MunitResult sphere_test9(PARAMS);
 MunitResult sphere_test10(PARAMS);
 
+MunitResult plane_test1(PARAMS);
+
 MunitResult shape_test1(PARAMS);
 MunitResult shape_test2(PARAMS);
 MunitResult shape_test3(PARAMS);
@@ -311,6 +313,11 @@ int main(int argc, char **argv) {
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
+	MunitTest plane_tests[] = {
+		test("/the normal of a plane is constant everywhere", plane_test1),
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
 	#define OPTIONS NULL, 1, MUNIT_SUITE_OPTION_NONE
 	MunitSuite tuple_suite =            { "/tuples", tuple_tests, OPTIONS };
 	MunitSuite matrix_suite =           { "/matrices", matrix_tests, OPTIONS };
@@ -322,6 +329,7 @@ int main(int argc, char **argv) {
 	MunitSuite camera_suite =           { "/camera", camera_tests, OPTIONS };
 	MunitSuite sphere_suite =           { "/spheres", sphere_tests, OPTIONS };
 	MunitSuite shape_suite =            { "/shapes", shape_tests, OPTIONS };
+	MunitSuite plane_suite =            { "/planes", plane_tests, OPTIONS };
 
 	MunitSuite suites[] = {
 		tuple_suite,
@@ -334,6 +342,7 @@ int main(int argc, char **argv) {
 		camera_suite,
 		shape_suite,
 		sphere_suite,
+		plane_suite,
 		NULL,
 	};
 
