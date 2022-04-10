@@ -12,8 +12,7 @@
 
 t_shape *new_test_shape(void)
 {
-	t_shape *shape = malloc(sizeof(t_shape));
-	*shape = (t_shape){};
+	t_shape *shape = new_shape();
 	return (shape);
 }
 
@@ -49,6 +48,17 @@ MunitResult shape_test2(const MunitParameter params[], void *fixture)
 	set_transform(shape, t);
 	munit_assert_true(matrix_equals(shape->transform, t));
 	destroy_shape(shape);
-	free(t);
+	return MUNIT_OK;
+}
+
+// the default material
+MunitResult shape_test3(const MunitParameter params[], void *fixture)
+{
+	t_shape *shape = new_test_shape();
+
+	t_matrix *t = translation(2, 3, 4);
+	set_transform(shape, t);
+	munit_assert_true(matrix_equals(shape->transform, t));
+	destroy_shape(shape);
 	return MUNIT_OK;
 }

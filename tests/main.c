@@ -99,6 +99,10 @@ MunitResult sphere_test8(PARAMS);
 MunitResult sphere_test9(PARAMS);
 MunitResult sphere_test10(PARAMS);
 
+MunitResult shape_test1(PARAMS);
+MunitResult shape_test2(PARAMS);
+MunitResult shape_test3(PARAMS);
+
 MunitResult light_test1(PARAMS);
 
 MunitResult material_test1(PARAMS);
@@ -294,27 +298,36 @@ int main(int argc, char **argv) {
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
-#define OPTIONS NULL, 1, MUNIT_SUITE_OPTION_NONE
+	MunitTest shape_tests[] = {
+		test("/a shape has a default transformation", shape_test1),
+		test("/assign a tranformation to a shape", shape_test2),
+		test("/a shape has a default material", shape_test3),
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
+	#define OPTIONS NULL, 1, MUNIT_SUITE_OPTION_NONE
 	MunitSuite tuple_suite =            { "/tuples", tuple_tests, OPTIONS };
 	MunitSuite matrix_suite =           { "/matrices", matrix_tests, OPTIONS };
 	MunitSuite matrix_transform_suite = { "/matrices/tranform", matrix_transform_tests, OPTIONS };
 	MunitSuite ray_suite =              { "/rays", ray_tests, OPTIONS };
-	MunitSuite sphere_suite =           { "/shperes", sphere_tests, OPTIONS };
 	MunitSuite light_suite =            { "/lights", light_tests, OPTIONS };
 	MunitSuite material_suite =         { "/materials", material_tests, OPTIONS };
 	MunitSuite world_suite =            { "/world", world_tests, OPTIONS };
 	MunitSuite camera_suite =           { "/camera", camera_tests, OPTIONS };
+	MunitSuite sphere_suite =           { "/spheres", sphere_tests, OPTIONS };
+	MunitSuite shape_suite =            { "/shapes", shape_tests, OPTIONS };
 
 	MunitSuite suites[] = {
 		tuple_suite,
 		matrix_suite,
 		matrix_transform_suite,
 		ray_suite,
-		sphere_suite,
 		light_suite,
 		material_suite,
 		world_suite,
 		camera_suite,
+		shape_suite,
+		sphere_suite,
 		NULL,
 	};
 
