@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "../libft/libft.h"
+#include "utils.h"
 
 t_shape *new_test_shape(void)
 {
@@ -56,9 +57,22 @@ MunitResult shape_test3(const MunitParameter params[], void *fixture)
 {
 	t_shape *shape = new_test_shape();
 
-	t_matrix *t = translation(2, 3, 4);
-	set_transform(shape, t);
-	munit_assert_true(matrix_equals(shape->transform, t));
+	t_material *m = new_material();
+	munit_assert_true(material_equals(shape->material, m));
+	destroy_shape(shape);
+	return MUNIT_OK;
+}
+
+// assignin a material
+MunitResult shape_test4(const MunitParameter params[], void *fixture)
+{
+	t_shape *shape = new_test_shape();
+
+	t_material *m = new_material();
+	free(m->ambient);
+	m->ambient = new_color(1, 1, 1);
+	set_material(shape, m);
+	munit_assert_true(material_equals(shape->material, m));
 	destroy_shape(shape);
 	return MUNIT_OK;
 }

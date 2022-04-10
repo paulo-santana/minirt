@@ -33,3 +33,9 @@ void	set_transform(t_shape *sphere, t_matrix *t)
 	free(sphere->inverse_transform);
 	sphere->inverse_transform = inverse(t);
 }
+
+void	set_material(t_shape *shape, t_material *material)
+{
+	destroy_material(shape->material);
+	shape->material = material;
+}

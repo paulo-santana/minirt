@@ -102,6 +102,7 @@ MunitResult sphere_test10(PARAMS);
 MunitResult shape_test1(PARAMS);
 MunitResult shape_test2(PARAMS);
 MunitResult shape_test3(PARAMS);
+MunitResult shape_test4(PARAMS);
 
 MunitResult light_test1(PARAMS);
 
@@ -302,6 +303,7 @@ int main(int argc, char **argv) {
 		test("/a shape has a default transformation", shape_test1),
 		test("/assign a tranformation to a shape", shape_test2),
 		test("/a shape has a default material", shape_test3),
+		test("/assigning a material", shape_test4),
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
