@@ -227,9 +227,9 @@ MunitResult world_test11(const MunitParameter params[], void *fixture)
 	t_world *world = default_world();
 	t_ray *ray = new_ray(new_point(0, 0, .75), new_vector(0, 0, -1));
 	t_sphere *outer = world->objects.spheres->content;
-	outer->material->ambient = 1;
+	outer->material->ambient = new_color(1, 1, 1);
 	t_sphere *inner = world->objects.spheres->next->content;
-	inner->material->ambient = 1;
+	inner->material->ambient = new_color(1, 1, 1);
 	t_color *expected = inner->material->color;
 
 	t_color *color = color_at(world, ray);

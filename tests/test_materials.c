@@ -14,7 +14,9 @@ MunitResult material_test1(const MunitParameter params[], void *fixture)
 	munit_assert_float(m->color->red , ==, 1);
 	munit_assert_float(m->color->green , ==, 1);
 	munit_assert_float(m->color->blue , ==, 1);
-	munit_assert_float(m->ambient, ==, 0.1);
+	munit_assert_float(m->ambient->red, ==, 0.1);
+	munit_assert_float(m->ambient->green, ==, 0.1);
+	munit_assert_float(m->ambient->blue, ==, 0.1);
 	munit_assert_float(m->diffuse, ==, 0.9);
 	munit_assert_float(m->specular, ==, 0.9);
 	munit_assert_float(m->shininess, ==, 200.0);

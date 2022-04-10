@@ -159,7 +159,9 @@ MunitResult sphere_test10(const MunitParameter params[], void *fixture)
 	t_sphere *sphere = new_sphere();
 	t_material *material = new_material();
 
-	munit_assert_float(sphere->material->ambient, ==, material->ambient);
+	munit_assert_float(sphere->material->ambient->red, ==, material->ambient->red);
+	munit_assert_float(sphere->material->ambient->green, ==, material->ambient->green);
+	munit_assert_float(sphere->material->ambient->blue, ==, material->ambient->blue);
 	munit_assert_float(sphere->material->diffuse, ==, material->diffuse);
 	munit_assert_float(sphere->material->specular, ==, material->specular);
 	munit_assert_float(sphere->material->shininess, ==, material->shininess);

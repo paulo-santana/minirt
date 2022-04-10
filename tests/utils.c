@@ -44,7 +44,7 @@ int material_equals(t_material *m1, t_material *m2)
 	if (m1 == NULL || m2 == NULL)
 		if (m1 != m2)
 			return (0);
-	return (dequals(m1->ambient, m2->ambient)
+	return (color_equals(m1->ambient, m2->ambient)
 		&& dequals(m1->diffuse, m2->diffuse)
 		&& dequals(m1->shininess, m2->shininess)
 		&& dequals(m1->specular, m2->specular)
