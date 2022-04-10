@@ -11,6 +11,29 @@
 /* ************************************************************************** */
 
 #include "camera.h"
+#include "structures.h"
+
+void	set_camera_dimensions(t_camera *camera, t_canvas *canvas)
+{
+	double	half_view;
+	double	aspect;
+
+	camera->hsize = canvas->width;
+	camera->vsize = canvas->height;
+	half_view = tan(camera->fov / 2);
+	aspect = (double)camera->hsize / camera->vsize;
+	if (aspect >= 1)
+	{
+		camera->half_width = half_view;
+		camera->half_height = half_view / aspect;
+	}
+	else
+	{
+		camera->half_width = half_view * aspect;
+		camera->half_height = half_view;
+	}
+	camera->pixel_size = camera->half_width * 2 / camera->hsize;
+}
 
 t_matrix	*translate_view(t_matrix *orientation, t_tuple *from)
 {

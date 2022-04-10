@@ -33,6 +33,7 @@ t_camera		*new_camera(int hsize, int vsize, double field_of_view);
 void			set_camera_transform(t_camera *camera, t_matrix *t);
 t_ray			*ray_to_pixel(int x, int y, t_camera *camera);
 void			destroy_camera(t_camera *camera);
+void			set_camera_dimensions(t_camera *camera, t_canvas *canvas);
 
 t_matrix		*view_transform(t_tuple *from, t_tuple *to, t_tuple *up);
 
