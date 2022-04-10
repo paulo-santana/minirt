@@ -31,5 +31,6 @@ void	destroy_material(void *data)
 
 	mat = data;
 	free(mat->color);
+	free(mat->ambient);
 	free(mat);
 }
