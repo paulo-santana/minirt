@@ -34,12 +34,30 @@ t_color	*get_diffuse(
 	return (diffuse);
 }
 
+t_color	*get_brighter(t_color *a, t_color *b)
+{
+	double	a_brightness;
+	double	b_brightness;
+
+	a_brightness = a->red + a->green + a->blue;
+	b_brightness = b->red + b->green + b->blue;
+	if (a_brightness > b_brightness)
+		return (new_color(a->red, a->green, a->blue));
+	return (new_color(b->red, b->green, b->blue));
+}
+
 t_color	*get_ambient(t_lighting_args *args, t_color *effective_color)
 {
 	t_color	*ambient;
+	t_color	*pure;
+	t_color	*result;
 
-	ambient = multiply_scalar_color(effective_color, args->material->ambient);
-	return (ambient);
+	ambient = multiply_colors(effective_color, args->material->ambient);
+	pure = multiply_colors(args->material->color, args->material->ambient);
+	result = get_brighter(ambient, pure);
+	// if (result == effective_color)
+	// 	free(ambient);
+	return (result);
 }
 
 t_color	*calculate_specular(t_lighting_args *args, double reflect_dot_eye)
@@ -96,7 +114,7 @@ t_color	*sum_colors(t_color *ambient, t_color *diffuse, t_color *specular)
 	return (effective_color);
 }
 
-t_color	*lighting(t_lighting_args *args)
+t_color *lighting(t_lighting_args *args)
 {
 	t_tuple	*tmp_tuple;
 	t_tuple	*light_v;
