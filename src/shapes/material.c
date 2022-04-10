@@ -18,7 +18,7 @@ t_material	*new_material(void)
 
 	material = malloc(sizeof(t_material));
 	material->color = new_color(1, 1, 1);
-	material->ambient = 0.1;
+	material->ambient = new_color(.1, .1, .1);
 	material->diffuse = 0.9;
 	material->specular = 0.9;
 	material->shininess = 200;
