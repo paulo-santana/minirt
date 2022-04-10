@@ -79,6 +79,7 @@ typedef struct s_data {
 	double			delta_mouse_x;
 	double			delta_mouse_y;
 	int				navigation_mode;
+	int				rendered;
 } t_data;
 
 void put_pixel(t_canvas *img, t_color *color, int x, int y)
@@ -297,16 +298,6 @@ int	key_release_hook(int key, t_data *data)
 		data->rotation.y_plus = 0;
 	else if (key == XK_rightarrow)
 		data->rotation.y_minus = 0;
-	else if (key == 'l')
-		data->rotation.z_plus = 0;
-	else if (key == 'h')
-		data->rotation.z_minus = 0;
-	if (key == 'y')
-		data->resolution -= 0.1;
-	else if (key == 'u')
-		data->resolution += 0.1;
-	if (data->resolution <= 0)
-		data->resolution = 0.05;
 	if (key == 'm')
 		data->navigation_mode = !data->navigation_mode;
 	return (1);
@@ -339,10 +330,6 @@ int	key_press_hook(int key, t_data *data)
 		data->rotation.y_plus = 1;
 	else if (key == XK_rightarrow)
 		data->rotation.y_minus = 1;
-	else if (key == 'l')
-		data->rotation.z_plus = 1;
-	else if (key == 'h')
-		data->rotation.z_minus = 1;
 	return (1);
 }
 
@@ -447,7 +434,12 @@ double rad_to_deg(double radian)
 	return radian * 180 / M_PI;
 }
 
-int update(t_data *data)
+void center_mouse(t_data *data)
+{
+	mlx_mouse_move(data->mlx, data->window, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+}
+
+void navigate(t_data *data)
 {
 	double delta_time;
 	double current_time;
@@ -460,6 +452,7 @@ int update(t_data *data)
 	t_tuple *direction;
 	double cam_speed = 2;
 
+	data->rendered = 0;
 	current_time = milis();
 	delta_time = (current_time - data->last_tick) / 1000;
 	data->last_tick = current_time;
@@ -501,9 +494,32 @@ int update(t_data *data)
 
 	draw_spheres(data);
 	rotate_camera(data, delta_time);
-	mlx_mouse_move(data->mlx, data->window, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	center_mouse(data);
 	print_fps(data, delta_time);
 	// mlx_clear_window(data->mlx, data->window);
+}
+
+void render_full(t_data *data)
+{
+	t_canvas *canvas;
+
+	if (data->rendered)
+		return ;
+	data->rendered = 1;
+	canvas = new_canvas(WIN_WIDTH, WIN_HEIGHT);
+	free(data->canvas);
+	data->canvas = canvas;
+	set_camera_dimensions(data->camera, data->canvas);
+	mlx_mouse_show(data->mlx, data->window);
+	draw_spheres(data);
+}
+
+int update(t_data *data)
+{
+	if (data->navigation_mode)
+		navigate(data);
+	else
+		render_full(data);
 	return (0);
 }
 
@@ -550,7 +566,7 @@ int	main(void)
 	mlx_mouse_hide(data.mlx, data.window);
 
 	data.last_tick = milis();
-	mlx_mouse_move(data.mlx, data.window, 0, 0);
+	center_mouse(&data);
 	mlx_loop(data.mlx);
 	return (0);
 }
