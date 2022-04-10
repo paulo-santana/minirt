@@ -78,6 +78,7 @@ typedef struct s_data {
 	double			resolution;
 	double			delta_mouse_x;
 	double			delta_mouse_y;
+	int				navigation_mode;
 } t_data;
 
 void put_pixel(t_canvas *img, t_color *color, int x, int y)
@@ -146,7 +147,7 @@ void	draw_canvas_ascii(t_canvas *canvas)
 	unsigned int color;
 	unsigned int avg;
 	char	*buffer;
-	char	*palette = " .:-~+*%YOSHD#NM";
+	char	*palette = " .-~+*%YOSHD#NM";
 
 	i = 0;
 	// int width = mlx_img->size_line / (mlx_img->bpp / 8);
@@ -226,12 +227,12 @@ void	generate_world(t_data *data)
 	t_sphere *middle = new_sphere();
 	set_transform(middle, translation(-0.5, 1, 0.5));
 	middle->material->color->red = 0.1;
-	middle->material->color->blue = 0.5;
-	middle->material->diffuse = 0.7;
-	middle->material->specular = 0.3;
+	middle->material->color->blue = 0.8;
+	middle->material->diffuse = 0.4;
+	middle->material->specular = 0.4;
 
 	t_sphere *right = new_sphere();
-	set_transform(right, matrix_multiply(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5)));
+	set_transform(right, matrix_multiply(translation(-1.3, 1.6, -0.9), scaling(0.5, 0.5, 0.5)));
 	right->material->color->red = 0.5;
 	right->material->color->blue = 0.1;
 	right->material->diffuse = 0.7;
@@ -244,8 +245,8 @@ void	generate_world(t_data *data)
 	left->material->diffuse = 0.7;
 	left->material->specular = 0.3;
 
-	t_point_light *light = new_point_light(new_point(-10, 10, -10), new_color(1, .5, .4));
-	// t_point_light *light2 = new_point_light(new_point(-10, 10, 10), new_color(.9, .2, 0.9));
+	t_point_light *light = new_point_light(new_point(-10, 10, -10), new_color(.5, .5, .5));
+	t_point_light *light2 = new_point_light(new_point(-2, 4, -5), new_color(.5, .5, .5));
 	float ratio = (float)WIN_WIDTH / WIN_HEIGHT;
 	float size = (float)(WIN_WIDTH * data->resolution);
 	t_camera *camera = new_camera((int)size, (int)(size / ratio), M_PI / 3);
@@ -255,7 +256,7 @@ void	generate_world(t_data *data)
 				new_vector(0, 1, 0)));
 	t_world *world = new_world();
 	add_light(world, light);
-	// add_light(world, light2);
+	add_light(world, light2);
 	// t_point_light *light2 = new_point_light(new_point(10, 10, -10), new_color(.5, .2, 1));
 	// add_light(world, light2);
 	add_sphere(world, floors);
@@ -306,6 +307,8 @@ int	key_release_hook(int key, t_data *data)
 		data->resolution += 0.1;
 	if (data->resolution <= 0)
 		data->resolution = 0.05;
+	if (key == 'm')
+		data->navigation_mode = !data->navigation_mode;
 	return (1);
 }
 
@@ -393,7 +396,7 @@ void get_mouse_delta(t_data *data, double *x, double *y)
 	*y = (double)py / (double)WIN_HEIGHT * 2. - 1.;
 	data->delta_mouse_x = *x;
 	data->delta_mouse_y = *y;
-	printf("mouse x: %i, y: %i\n", px, py);
+	// printf("mouse x: %i, y: %i\n", px, py);
 	// printf("mouse x: %.15lf, y: %.15lf\n", data->delta_mouse_x, data->delta_mouse_y);
 }
 
@@ -448,7 +451,6 @@ int update(t_data *data)
 {
 	double delta_time;
 	double current_time;
-	static double seconds;
 	t_tuple *distance;
 	static t_tuple up = {0, 1, 0, 0};
 	t_tuple forward = {0, 0, 1, 0};
@@ -473,11 +475,6 @@ int update(t_data *data)
 		t_matrix *roty = rotation_y(data->cam_orientation->y);
 		t_matrix *rotx = rotation_x(data->cam_orientation->x);
 		t_matrix *cam_rotation = matrix_multiply(roty, rotx);
-		if (seconds += delta_time, seconds > 1)
-		{
-			seconds = 0;
-			print_stats(data);
-		}
 		free(roty);
 		free(rotx);
 		direction = matrix_multiply_tuple(cam_rotation, &target);
@@ -528,8 +525,8 @@ int log_mouse(t_data *data)
 
 	delta_time = get_delta_time(data);
 	get_mouse_delta(data, &mousex, &mousey);
-	printf("mousex: %lf\n", mousex);
-	printf("mousey: %lf\n", mousey);
+	// printf("mousex: %lf\n", mousex);
+	// printf("mousey: %lf\n", mousey);
 	draw_spheres(data);
 	print_fps(data, delta_time);
 	return (0);
@@ -539,25 +536,19 @@ int	main(void)
 {
 	t_data data;
 
-	data.canvas = NULL;
-	data.movement = (t_movement){};
-	data.rotation = (t_rotation){};
+	data = (t_data){};
+	data.navigation_mode = 1;
 	data.cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
 	data.resolution = 0.2;
 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
-	// test_projectile(&data);
-	// draw_clock(&data);
-	// draw_sphere(&data);
 	generate_world(&data);
-	// draw_spheres(&data);
-	// mlx_put_image_to_window(data.mlx, data.window, data.mlx_img.ptr, 0, 0);
 	mlx_hook(data.window, 2, 1, key_press_hook, &data);
 	mlx_hook(data.window, 3, 2, key_release_hook, &data);
 	mlx_loop_hook(data.mlx, update, &data);
-	// mlx_mouse_hide(data.mlx, data.window);
-	// update(&data);
+	mlx_mouse_hide(data.mlx, data.window);
+
 	data.last_tick = milis();
 	mlx_mouse_move(data.mlx, data.window, 0, 0);
 	mlx_loop(data.mlx);
