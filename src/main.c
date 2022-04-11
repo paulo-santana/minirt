@@ -186,34 +186,20 @@ void draw_spheres(t_data *data)
 
 void	generate_world(t_data *data)
 {
-	t_shape *floors = new_sphere();
+	t_shape *floors = new_plane();
 	t_matrix *transforms[5];
 	set_transform(floors, scaling(10, 0.01, 10));
 	floors->material->color->green = .9;
 	floors->material->color->blue = .9;
 	floors->material->specular = 0;
 
-	t_shape *left_wall = new_sphere();
-	transforms[0] = scaling(10, .01, 10);
-	transforms[1] = rotation_x(M_PI_2);
-	transforms[2] = rotation_y(-M_PI_4);
-	transforms[3] = translation(0, 0, 5);
-	transforms[4] = NULL;
-	set_transform(left_wall, matrix_multiply_n(transforms));
-	left_wall->material->specular = floors->material->specular;
-	left_wall->material->color->blue = floors->material->color->blue;
-	left_wall->material->color->green = floors->material->color->green;
-
-	t_shape *right_wall = new_sphere();
-	transforms[0] = scaling(10, .01, 10);
-	transforms[1] = rotation_x(M_PI_2);
-	transforms[2] = rotation_y(M_PI_4);
-	transforms[3] = translation(0, 0, 5);
-	transforms[4] = NULL;
-	set_transform(right_wall, matrix_multiply_n(transforms));
-	right_wall->material->specular = floors->material->specular;
-	right_wall->material->color->blue = floors->material->color->blue;
-	right_wall->material->color->green = floors->material->color->green;
+	t_shape *wall = new_plane();
+	transforms[0] = rotation_x(M_PI_2);
+	transforms[1] = translation(0, 0, 4.5);
+	transforms[2] = NULL;
+	t_matrix *trans = matrix_multiply_n(transforms);
+	set_transform(wall, trans);
+	wall->material->specular = .1;
 
 	t_shape *middle = new_sphere();
 	set_transform(middle, translation(-0.5, 1, 0.5));
@@ -251,8 +237,7 @@ void	generate_world(t_data *data)
 	// t_point_light *light2 = new_point_light(new_point(10, 10, -10), new_color(.5, .2, 1));
 	// add_light(world, light2);
 	add_sphere(world, floors);
-	add_sphere(world, left_wall);
-	add_sphere(world, right_wall);
+	add_sphere(world, wall);
 	add_sphere(world, right);
 	add_sphere(world, middle);
 	add_sphere(world, left);
