@@ -35,6 +35,7 @@ typedef struct s_computations	t_computations;
 
 enum e_object_types {
 	OBJ_SPHERE,
+	OBJ_PLANE,
 	OBJ_MAX,
 };
 

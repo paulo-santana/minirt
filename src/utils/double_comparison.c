@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 
 #include <math.h>
-
-#define EPSILON 0.0001
+#include "minirt.h"
 
 int	dequals(double a, double b)
 {

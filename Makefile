@@ -39,6 +39,7 @@ SRC_FILES += shapes/shape.c
 SRC_FILES += shapes/material.c
 SRC_FILES += shapes/normal.c
 SRC_FILES += shapes/sphere.c
+SRC_FILES += shapes/plane.c
 
 SRC_FILES += lights/lighting.c
 SRC_FILES += lights/point_light.c

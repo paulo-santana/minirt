@@ -13,6 +13,8 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# define EPSILON 0.0001
+
 # include <stdio.h>
 # include <stdlib.h>
 

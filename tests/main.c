@@ -100,6 +100,10 @@ MunitResult sphere_test9(PARAMS);
 MunitResult sphere_test10(PARAMS);
 
 MunitResult plane_test1(PARAMS);
+MunitResult plane_test2(PARAMS);
+MunitResult plane_test3(PARAMS);
+MunitResult plane_test4(PARAMS);
+MunitResult plane_test5(PARAMS);
 
 MunitResult shape_test1(PARAMS);
 MunitResult shape_test2(PARAMS);
@@ -315,6 +319,10 @@ int main(int argc, char **argv) {
 
 	MunitTest plane_tests[] = {
 		test("/the normal of a plane is constant everywhere", plane_test1),
+		test("/intersect with a ray parallel to the plane", plane_test2),
+		test("/intersect with a coplanar ray", plane_test3),
+		test("/intersecting a plane from above", plane_test4),
+		test("/intersecting a plane from below", plane_test5),
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
