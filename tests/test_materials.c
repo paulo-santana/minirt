@@ -5,7 +5,10 @@
 #include "ray/ray.h"
 #include "shapes/shapes.h"
 #include "tuple/tuple.h"
+#include "utils.h"
 #include <math.h>
+
+t_pattern	*stripe_pattern(t_color *a, t_color *b);
 
 MunitResult material_test1(const MunitParameter params[], void *fixture)
 {
@@ -239,5 +242,44 @@ MunitResult material_test7(const MunitParameter params[], void *fixture)
 	free(eyev);
 	free(normalv);
 	free(result);
+	return (MUNIT_OK);
+}
+
+// lighting with a pattern applied
+MunitResult material_test8(const MunitParameter params[], void *fixture)
+{
+	t_material *m = new_material();
+	t_tuple *position = new_point(0, 0, 0);
+	m->pattern = stripe_pattern(new_color(1, 1, 1), new_color(0, 0, 0));
+	m->ambient = new_color(1, 1, 1);
+	m->diffuse = 0;
+	m->specular = 0;
+
+	t_tuple *eyev = new_vector(0, 0, -1);
+	t_tuple *normalv = new_vector(0, 0, -1);
+	t_point_light *light = new_point_light(new_point(0, 0, -10), new_color(1, 1, 1));
+	t_lighting_args args;
+
+	args.material = m;
+	args.light = light;
+	args.position = position;
+	args.eye_vector = eyev;
+	args.normal_vector = normalv;
+	args.in_shadow = 0;
+
+	t_color *result1 = lighting(&args);
+	args.position->x = 1.1;
+	t_color *result2 = lighting(&args);
+
+	munit_assert_true(color_equals(result1, m->pattern->a));
+	munit_assert_true(color_equals(result2, m->pattern->b));
+
+	destroy_material(m);
+	destroy_point_light(light);
+	free(position);
+	free(eyev);
+	free(normalv);
+	free(result1);
+	free(result2);
 	return (MUNIT_OK);
 }

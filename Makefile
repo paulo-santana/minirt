@@ -107,6 +107,7 @@ TEST_SRC += tests/test_lights.c
 TEST_SRC += tests/test_materials.c
 TEST_SRC += tests/test_world.c
 TEST_SRC += tests/test_camera.c
+TEST_SRC += tests/test_patterns.c
 TEST_SRC += tests/utils.c
 
 test: $(LIBFT) $(OBJ_DIRS) $(OBJ)

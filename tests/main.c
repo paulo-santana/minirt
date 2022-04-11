@@ -121,6 +121,7 @@ MunitResult material_test4(PARAMS);
 MunitResult material_test5(PARAMS);
 MunitResult material_test6(PARAMS);
 MunitResult material_test7(PARAMS);
+MunitResult material_test8(PARAMS);
 
 MunitResult world_test1(PARAMS);
 MunitResult world_test2(PARAMS);
@@ -140,6 +141,11 @@ MunitResult camera_test3(PARAMS);
 MunitResult camera_test4(PARAMS);
 MunitResult camera_test5(PARAMS);
 MunitResult camera_test6(PARAMS);
+
+MunitResult pattern_test1(PARAMS);
+MunitResult pattern_test2(PARAMS);
+MunitResult pattern_test3(PARAMS);
+MunitResult pattern_test4(PARAMS);
 
 MunitTest test(char *desc, MunitTestFunc the_test)
 {
@@ -279,6 +285,7 @@ int main(int argc, char **argv) {
 		test("/lighting() with the eye in the path of the reflection", material_test5),
 		test("/lighting() with the light behind the surface", material_test6),
 		test("/lighting() with shadows", material_test7),
+		test("/lighting() with patterns", material_test8),
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
@@ -326,6 +333,14 @@ int main(int argc, char **argv) {
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
+	MunitTest pattern_tests[] = {
+		test("/a stripe pattern", pattern_test1),
+		test("/a stripe pattern is constant in y", pattern_test2),
+		test("/a stripe pattern is constant in z", pattern_test3),
+		test("/a stripe pattern alternates in x", pattern_test4),
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
 	#define OPTIONS NULL, 1, MUNIT_SUITE_OPTION_NONE
 	MunitSuite tuple_suite =            { "/tuples", tuple_tests, OPTIONS };
 	MunitSuite matrix_suite =           { "/matrices", matrix_tests, OPTIONS };
@@ -338,6 +353,7 @@ int main(int argc, char **argv) {
 	MunitSuite sphere_suite =           { "/spheres", sphere_tests, OPTIONS };
 	MunitSuite shape_suite =            { "/shapes", shape_tests, OPTIONS };
 	MunitSuite plane_suite =            { "/planes", plane_tests, OPTIONS };
+	MunitSuite pattern_suite =          { "/patterns", pattern_tests, OPTIONS };
 
 	MunitSuite suites[] = {
 		tuple_suite,
@@ -351,6 +367,7 @@ int main(int argc, char **argv) {
 		shape_suite,
 		sphere_suite,
 		plane_suite,
+		pattern_suite,
 		NULL,
 	};
 
