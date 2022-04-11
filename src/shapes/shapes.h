@@ -33,4 +33,7 @@ void		set_material(t_shape *shape, t_material *material);
 t_material	*new_material(void);
 void		destroy_material(void *mat);
 
+t_pattern	*stripe_pattern(t_color *a, t_color *b);
+t_color		*stripe_at(t_tuple *point, t_pattern *pattern);
+
 #endif /* !SHAPES_H */

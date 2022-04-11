@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "lights.h"
+#include "shapes/shapes.h"
 #include "tuple/tuple.h"
 #include "structures.h"
 
@@ -55,8 +56,6 @@ t_color	*get_ambient(t_lighting_args *args, t_color *effective_color)
 	ambient = multiply_colors(effective_color, args->material->ambient);
 	pure = multiply_colors(args->material->color, args->material->ambient);
 	result = get_brighter(ambient, pure);
-	// if (result == effective_color)
-	// 	free(ambient);
 	return (result);
 }
 
@@ -114,7 +113,17 @@ t_color	*sum_colors(t_color *ambient, t_color *diffuse, t_color *specular)
 	return (effective_color);
 }
 
-t_color *lighting(t_lighting_args *args)
+t_color	*return_shadowed(t_lighting_args *args, t_color *color)
+{
+	t_color	*tmp_color;
+
+	tmp_color = color;
+	color = get_ambient(args, color);
+	free(tmp_color);
+	return (color);
+}
+
+t_color	*lighting(t_lighting_args *args)
 {
 	t_tuple	*tmp_tuple;
 	t_tuple	*light_v;
@@ -122,15 +131,13 @@ t_color *lighting(t_lighting_args *args)
 	t_color	*tmp_color;
 	t_color	*effective_color;
 
-	effective_color = multiply_colors(
-			args->material->color, args->light->intensity);
+	if (args->material->pattern)
+		tmp_color = stripe_at(args->position, args->material->pattern);
+	else
+		tmp_color = args->material->color;
+	effective_color = multiply_colors(tmp_color, args->light->intensity);
 	if (args->in_shadow)
-	{
-		tmp_color = effective_color;
-		effective_color = get_ambient(args, effective_color);
-		free(tmp_color);
-		return (effective_color);
-	}
+		return (return_shadowed(args, effective_color));
 	tmp_tuple = subtract_tuples(args->light->position, args->position);
 	light_v = normalize(tmp_tuple);
 	free(tmp_tuple);

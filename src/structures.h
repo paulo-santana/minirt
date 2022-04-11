@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/10 18:43:32 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/10 22:06:21 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_intersection	t_intersection;
 typedef struct s_intersections	t_intersections;
 typedef struct s_canvas			t_canvas;
 typedef struct s_computations	t_computations;
+typedef struct s_pattern		t_pattern;
 
 enum e_object_types {
 	OBJ_SPHERE,
@@ -57,12 +58,18 @@ struct s_matrix {
 	double	data[4][4];
 };
 
+struct s_pattern {
+	t_color	*a;
+	t_color	*b;
+};
+
 struct s_material {
-	t_color	*color;
-	t_color	*ambient;
-	double	diffuse;
-	double	specular;
-	double	shininess;
+	t_color		*color;
+	t_color		*ambient;
+	t_pattern	*pattern;
+	double		diffuse;
+	double		specular;
+	double		shininess;
 };
 
 struct s_sphere {
