@@ -112,6 +112,10 @@ MunitResult shape_test4(PARAMS);
 MunitResult shape_test5(PARAMS);
 MunitResult shape_test6(PARAMS);
 
+MunitResult cylinder_test1(PARAMS);
+MunitResult cylinder_test2(PARAMS);
+MunitResult cylinder_test3(PARAMS);
+
 MunitResult light_test1(PARAMS);
 
 MunitResult material_test1(PARAMS);
@@ -326,6 +330,13 @@ int main(int argc, char **argv) {
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
+	MunitTest cylinder_tests[] = {
+		test("/a ray misses a cylinder", cylinder_test1),
+		test("/a ray strikes a cylinder", cylinder_test2),
+		test("/normal vector on a cylinder", cylinder_test3),
+		{ NULL, NULL, NULL, NULL, 0, NULL },
+	};
+
 	#define OPTIONS NULL, 1, MUNIT_SUITE_OPTION_NONE
 	MunitSuite tuple_suite =            { "/tuples", tuple_tests, OPTIONS };
 	MunitSuite matrix_suite =           { "/matrices", matrix_tests, OPTIONS };
@@ -338,6 +349,7 @@ int main(int argc, char **argv) {
 	MunitSuite sphere_suite =           { "/spheres", sphere_tests, OPTIONS };
 	MunitSuite shape_suite =            { "/shapes", shape_tests, OPTIONS };
 	MunitSuite plane_suite =            { "/planes", plane_tests, OPTIONS };
+	MunitSuite cylinder_suite =         { "/cylinders", cylinder_tests, OPTIONS };
 
 	MunitSuite suites[] = {
 		tuple_suite,
@@ -351,6 +363,7 @@ int main(int argc, char **argv) {
 		shape_suite,
 		sphere_suite,
 		plane_suite,
+		cylinder_suite,
 		NULL,
 	};
 

@@ -103,6 +103,7 @@ TEST_SRC += tests/test_matrix_transform.c
 TEST_SRC += tests/test_ray.c
 TEST_SRC += tests/test_sphere.c
 TEST_SRC += tests/test_planes.c
+TEST_SRC += tests/test_cylinders.c
 TEST_SRC += tests/test_shapes.c
 TEST_SRC += tests/test_lights.c
 TEST_SRC += tests/test_materials.c
