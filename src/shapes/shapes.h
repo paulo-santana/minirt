@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:05:36 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/10 21:03:23 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/11 21:56:05 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_shape		*new_plane(void);
 void		destroy_plane(t_shape *shape);
 void		plane_intersect(t_shape *shape, t_ray *ray, t_intersections *xs);
 t_tuple		*plane_normal_at(t_shape *shape, t_tuple *tuple);
+
+t_shape		*new_cylinder(void);
 
 void		set_transform(t_shape *sphere, t_matrix *t);
 void		set_material(t_shape *shape, t_material *material);

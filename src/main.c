@@ -208,6 +208,14 @@ void	generate_world(t_data *data)
 	middle->material->diffuse = 0.4;
 	middle->material->specular = 0.4;
 
+	t_shape *cyl1 = new_cylinder();
+	transforms[0] = rotation_x(1);
+	transforms[1] = rotation_y(-2);
+	transforms[2] = translation(1, 2, -3);
+	transforms[3] = NULL;
+	trans = matrix_multiply_n(transforms);
+	set_transform(cyl1, trans);
+
 	t_shape *right = new_sphere();
 	set_transform(right, matrix_multiply(translation(-1.3, 1.6, -0.9), scaling(0.5, 0.5, 0.5)));
 	right->material->color->red = 0.5;
@@ -241,6 +249,7 @@ void	generate_world(t_data *data)
 	add_sphere(world, right);
 	add_sphere(world, middle);
 	add_sphere(world, left);
+	add_sphere(world, cyl1);
 	data->world = world;
 	data->camera = camera;
 	data->cam_position = new_point(0, 1, -4.5);

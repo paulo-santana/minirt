@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/10 18:43:32 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/11 22:15:14 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_color			t_color;
 typedef struct s_matrix			t_matrix;
 typedef struct s_material		t_material;
 typedef struct s_sphere			t_sphere;
+typedef struct s_cylinder		t_cylinder;
 typedef struct s_plane			t_plane;
 typedef struct s_shape			t_shape;
 typedef struct s_point_light	t_point_light;
@@ -36,6 +37,7 @@ typedef struct s_computations	t_computations;
 enum e_object_types {
 	OBJ_SPHERE,
 	OBJ_PLANE,
+	OBJ_CYLINDER,
 	OBJ_MAX,
 };
 
@@ -70,6 +72,11 @@ struct s_sphere {
 	double		radius;
 };
 
+struct s_cylinder {
+	t_tuple		position;
+	double		radius;
+};
+
 struct s_plane {
 };
 
@@ -81,6 +88,7 @@ struct s_shape {
 	union {
 		t_sphere	sphere_props;
 		t_plane		plane_props;
+		t_cylinder	cylinder_props;
 	};
 	t_tuple			*(*normal_at)(t_shape *shape, t_tuple *point);
 	void			(*intersect)(
