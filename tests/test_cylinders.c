@@ -121,3 +121,47 @@ MunitResult cylinder_test3(const MunitParameter params[], void *fixture)
 
 	return (MUNIT_OK);
 }
+
+// normal vector on a cylinder
+MunitResult cylinder_test4(const MunitParameter params[], void *fixture)
+{
+	t_shape *cyl = new_cylinder();
+	t_intersections *xs;
+
+	cyl->cylinder_props.min = 1;
+	cyl->cylinder_props.max = 2;
+
+	t_tuple points[] = {
+		{0, 1.5, 0, 1}, // from inside, escaping without hitting
+		{0, 3, -5, 1}, // perpendicular to y axis, above
+		{0, 0, -5, 1}, // perpendicular to y axis, below
+		{0, 2, -5, 1}, // literal edge case
+		{0, 1, -5, 1}, // another edge case
+		{0, 1.5, -2, 1}, // hit in the middle
+	};
+
+	t_tuple directions[] = {
+		{0.1, 1, 0, 0},
+		{0, 0, 1, 0},
+		{0, 0, 1, 0},
+		{0, 0, 1, 0},
+		{0, 0, 1, 0},
+		{0, 0, 1, 0},
+	};
+	
+	int results[] = {0, 0, 0, 0, 0, 2};
+
+	for (int i = 0; i < 6; i++)
+	{
+		t_ray *ray = new_ray(&points[i], normalize(&directions[i]));
+		xs = new_intersections_list();
+		cylinder_intersect(cyl, ray, xs);
+		munit_assert_int(xs->count, ==, results[i]);
+		destroy_intersections_list(xs);
+		free(ray->direction);
+		free(ray);
+	}
+	
+
+	return (MUNIT_OK);
+}

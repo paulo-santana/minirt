@@ -115,6 +115,7 @@ MunitResult shape_test6(PARAMS);
 MunitResult cylinder_test1(PARAMS);
 MunitResult cylinder_test2(PARAMS);
 MunitResult cylinder_test3(PARAMS);
+MunitResult cylinder_test4(PARAMS);
 
 MunitResult light_test1(PARAMS);
 
@@ -334,6 +335,7 @@ int main(int argc, char **argv) {
 		test("/a ray misses a cylinder", cylinder_test1),
 		test("/a ray strikes a cylinder", cylinder_test2),
 		test("/normal vector on a cylinder", cylinder_test3),
+		test("/intersecting a constrained cylinder", cylinder_test4),
 		{ NULL, NULL, NULL, NULL, 0, NULL },
 	};
 
