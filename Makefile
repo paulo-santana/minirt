@@ -9,7 +9,7 @@ MLX = $(MLX_DIR)/libmlx.a
 IFLAGS = -I ./src
 
 HEADERS =  src/structures.h
-HEADERS =  src/minirt.h
+HEADERS +=  src/minirt.h
 HEADERS += src/tuple/tuple.h
 HEADERS += src/shapes/shapes.h
 HEADERS += src/lights/lights.h
@@ -21,6 +21,20 @@ SRC_FILES += tuple/tuple_creation.c
 SRC_FILES += tuple/tuple_operations.c
 SRC_FILES += tuple/vector_utils.c
 SRC_FILES += tuple/color_utils.c
+
+SRC_FILES += parsing/error_message.c
+SRC_FILES += parsing/file_check.c
+SRC_FILES += parsing/file_check_for_a.c
+SRC_FILES += parsing/file_check_for_c.c
+SRC_FILES += parsing/file_check_for_cy.c
+SRC_FILES += parsing/file_check_for_l.c
+SRC_FILES += parsing/file_check_for_pl.c
+SRC_FILES += parsing/file_check_for_sp.c
+SRC_FILES += parsing/file_check_utils_1.c
+SRC_FILES += parsing/file_check_utils_2.c
+SRC_FILES += parsing/list_utils_1.c
+SRC_FILES += parsing/load_file.c
+SRC_FILES += parsing/tokens_utils_1.c
 
 SRC_FILES += matrix/creation.c
 SRC_FILES += matrix/check.c
@@ -57,6 +71,7 @@ SRC_FILES += debug.c
 
 SRC_DIR = ./src
 OBJ_ROOT = ./obj
+OBJ_DIRS += $(OBJ_ROOT)/parsing
 OBJ_DIRS += $(OBJ_ROOT)/tuple
 OBJ_DIRS += $(OBJ_ROOT)/utils
 OBJ_DIRS += $(OBJ_ROOT)/matrix

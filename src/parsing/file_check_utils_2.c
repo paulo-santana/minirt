@@ -12,7 +12,7 @@
 
 #include "headers.h"
 
-static void	add_space(char **input, int index)
+static void	add_space(char **input, size_t index)
 {
 	char	*frst_half;
 	char	*scnd_half;
@@ -35,7 +35,7 @@ static void	add_space(char **input, int index)
 void	space_handler(char **input)
 {
 	char	*set;
-	int		i;
+	size_t	i;
 	int		j;
 
 	set = ",";
