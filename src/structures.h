@@ -16,23 +16,49 @@
 # include <stddef.h>
 # include "../libft/libft.h"
 
-typedef enum e_object_types		t_object_types;
-typedef struct s_tuple			t_tuple;
-typedef struct s_color			t_color;
-typedef struct s_matrix			t_matrix;
-typedef struct s_material		t_material;
-typedef struct s_sphere			t_sphere;
-typedef struct s_cylinder		t_cylinder;
-typedef struct s_plane			t_plane;
-typedef struct s_shape			t_shape;
-typedef struct s_point_light	t_point_light;
-typedef struct s_objects		t_objects;
-typedef struct s_world			t_world;
-typedef struct s_ray			t_ray;
-typedef struct s_intersection	t_intersection;
-typedef struct s_intersections	t_intersections;
-typedef struct s_canvas			t_canvas;
-typedef struct s_computations	t_computations;
+typedef enum e_object_types			t_object_types;
+typedef struct s_tuple				t_tuple;
+typedef struct s_color				t_color;
+typedef struct s_matrix				t_matrix;
+typedef struct s_material			t_material;
+typedef struct s_sphere				t_sphere;
+typedef struct s_cylinder			t_cylinder;
+typedef struct s_plane				t_plane;
+typedef struct s_shape				t_shape;
+typedef struct s_point_light		t_point_light;
+typedef struct s_objects			t_objects;
+typedef struct s_world				t_world;
+typedef struct s_ray				t_ray;
+typedef struct s_intersection		t_intersection;
+typedef struct s_intersections		t_intersections;
+typedef struct s_canvas				t_canvas;
+typedef struct s_computations		t_computations;
+typedef struct s_scene_object_param	t_scene_object_param;
+typedef struct s_parameters			t_parameters;
+
+struct s_scene_object_param
+{
+	char							*identifier;
+	double							*cordinates;
+	double							*color;
+	double							*orientation_vector;
+	double							diameter;
+	double							height;
+	struct s_scene_object_param		*next;
+};
+
+struct s_parameters
+{
+	double					a_lighting;
+	double					*a_color;
+	double					*c_view_point;
+	double					*c_orientation_vector;
+	double					c_fov;
+	double					*l_light_point;
+	double					l_britghness;
+	double					*l_color;
+	t_scene_object_param	*object_head;
+};
 
 enum e_object_types {
 	OBJ_SPHERE,
@@ -74,6 +100,8 @@ struct s_sphere {
 
 struct s_cylinder {
 	t_tuple		position;
+	double		max;
+	double		min;
 	double		radius;
 };
 

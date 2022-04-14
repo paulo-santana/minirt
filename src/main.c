@@ -202,36 +202,38 @@ void	generate_world(t_data *data)
 	wall->material->specular = .1;
 
 	t_shape *middle = new_sphere();
-	set_transform(middle, translation(-0.5, 1, 0.5));
-	middle->material->color->red = 0.1;
+	set_transform(middle, translation(0.5, 1, 0.0));
+	middle->material->color->red = 0.3;
+	middle->material->color->green = 0.4;
 	middle->material->color->blue = 0.8;
-	middle->material->diffuse = 0.4;
-	middle->material->specular = 0.4;
+	middle->material->diffuse = .9;
+	middle->material->ambient = new_color(0.9, 0.1, 0.2);
+	middle->material->specular = 1;
 
 	t_shape *cyl1 = new_cylinder();
 	transforms[0] = rotation_x(1);
 	transforms[1] = rotation_y(-2);
-	transforms[2] = translation(1, 2, -3);
+	transforms[2] = translation(5, 2, 3);
 	transforms[3] = NULL;
 	trans = matrix_multiply_n(transforms);
 	set_transform(cyl1, trans);
 
 	t_shape *right = new_sphere();
-	set_transform(right, matrix_multiply(translation(-1.3, 1.6, -0.9), scaling(0.5, 0.5, 0.5)));
-	right->material->color->red = 0.5;
+	set_transform(right,translation(-1.5, 1, 0));
+	right->material->color->red = 0.1;
 	right->material->color->blue = 0.1;
 	right->material->diffuse = 0.7;
 	right->material->specular = 0.3;
 
 	t_shape *left = new_sphere();
-	set_transform(left, matrix_multiply(translation(-1.5, 0.33, -0.75), scaling(0.33, 0.33, 0.33)));
-	left->material->color->green = 0.8;
-	left->material->color->blue = 0.1;
+	set_transform(left, matrix_multiply(translation(3.1, 1, 0), scaling(1, 1, 1)));
+	left->material->color->green = 0.4;
+	left->material->color->blue = 0.4;
 	left->material->diffuse = 0.7;
-	left->material->specular = 0.3;
+	left->material->specular = 0.9;
 
 	t_point_light *light = new_point_light(new_point(-10, 10, -10), new_color(.5, .5, .5));
-	t_point_light *light2 = new_point_light(new_point(-1, 1.0, -2), new_color(.5, .5, .5));
+	// t_point_light *light2 = new_point_light(new_point(-1, 1.0, -2), new_color(.5, .5, .5));
 	float ratio = (float)WIN_WIDTH / WIN_HEIGHT;
 	float size = (float)(WIN_WIDTH * data->resolution);
 	t_camera *camera = new_camera((int)size, (int)(size / ratio), M_PI / 3);
@@ -241,7 +243,7 @@ void	generate_world(t_data *data)
 				new_vector(0, 1, 0)));
 	t_world *world = new_world();
 	add_light(world, light);
-	add_light(world, light2);
+	// add_light(world, light2);
 	// t_point_light *light2 = new_point_light(new_point(10, 10, -10), new_color(.5, .2, 1));
 	// add_light(world, light2);
 	add_sphere(world, floors);
@@ -490,12 +492,14 @@ void render_full(t_data *data)
 	if (data->rendered)
 		return ;
 	data->rendered = 1;
+	mlx_string_put(data->mlx, data->window, 0, 0, 0xff, "Teste");
 	canvas = new_canvas(WIN_WIDTH, WIN_HEIGHT);
 	free(data->canvas);
 	data->canvas = canvas;
 	set_camera_dimensions(data->camera, data->canvas);
 	mlx_mouse_show(data->mlx, data->window);
 	draw_spheres(data);
+	mlx_string_put(data->mlx, data->window, 0, 0, 0xff, "testado");
 }
 
 int update(t_data *data)
