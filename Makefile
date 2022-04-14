@@ -129,3 +129,9 @@ re: fclean all
 
 run: $(NAME)
 	./$(NAME)
+
+#SOURCE = main.c \
+	file_check.c file_check_for_a.c file_check_for_c.c file_check_for_l.c \
+	file_check_for_sp.c file_check_for_pl.c file_check_for_cy.c \
+	file_check_utils_1.c file_check_utils_2.c \
+	error_message.c load_file.c tokens_utils_1.c list_utils_1.c \
