@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers.h"
+#include "parsing.h"
 
 static void	update_parameters(char **tokens, t_parameters *p)
 {

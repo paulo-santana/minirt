@@ -2,6 +2,7 @@
 #include "lights/lights.h"
 #include "matrix/matrix.h"
 #include "minirt.h"
+#include "parsing/parsing.h"
 #include "ray/ray.h"
 #include "shapes/shapes.h"
 #include "structures.h"
@@ -536,25 +537,42 @@ int log_mouse(t_data *data)
 	return (0);
 }
 
-int	main(void)
+// int	main(void)
+// {
+// 	t_data data;
+//
+// 	data = (t_data){};
+// 	data.navigation_mode = 1;
+// 	data.cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
+// 	data.mlx = mlx_init();
+// 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
+// 	data.resolution = 0.2;
+// 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
+// 	generate_world(&data);
+// 	mlx_hook(data.window, 2, 1, key_press_hook, &data);
+// 	mlx_hook(data.window, 3, 2, key_release_hook, &data);
+// 	mlx_loop_hook(data.mlx, update, &data);
+// 	mlx_mouse_hide(data.mlx, data.window);
+//
+// 	data.last_tick = milis();
+// 	center_mouse(&data);
+// 	mlx_loop(data.mlx);
+// 	return (0);
+// }
+
+int	main(int argc, char **argv)
 {
-	t_data data;
+	t_parameters	*p;
 
-	data = (t_data){};
-	data.navigation_mode = 1;
-	data.cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
-	data.mlx = mlx_init();
-	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
-	data.resolution = 0.2;
-	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
-	generate_world(&data);
-	mlx_hook(data.window, 2, 1, key_press_hook, &data);
-	mlx_hook(data.window, 3, 2, key_release_hook, &data);
-	mlx_loop_hook(data.mlx, update, &data);
-	mlx_mouse_hide(data.mlx, data.window);
-
-	data.last_tick = milis();
-	center_mouse(&data);
-	mlx_loop(data.mlx);
+	if (argc != 2)
+	{
+		ft_putendl_fd("Error\nBad arguments", 2);
+		return (1);
+	}
+	p = malloc(sizeof(t_parameters));
+	init_allocated_parameters(p);
+	if (file_check(argv[1], p) == -1)
+		ft_putendl_fd("Erou!", 2);
+	free_allocated_parameters(p);
 	return (0);
 }

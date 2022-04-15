@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers.h"
+#include "parsing.h"
 
 void	free_scene_object_param(t_scene_object_param *head)
 {

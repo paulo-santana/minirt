@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers.h"
+#include "parsing.h"
 
 int	file_check(char *file_name, t_parameters *p)
 {
