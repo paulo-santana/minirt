@@ -16,21 +16,21 @@ HEADERS += src/lights/lights.h
 HEADERS += src/utils/utils.h
 HEADERS += libft/libft.h
 
-SRC_FILES += tuple/tuple_check.c
-SRC_FILES += tuple/tuple_creation.c
-SRC_FILES += tuple/tuple_operations.c
-SRC_FILES += tuple/vector_utils.c
-SRC_FILES += tuple/color_utils.c
+COMMON_FILES += tuple/tuple_check.c
+COMMON_FILES += tuple/tuple_creation.c
+COMMON_FILES += tuple/tuple_operations.c
+COMMON_FILES += tuple/vector_utils.c
+COMMON_FILES += tuple/color_utils.c
 
-SRC_FILES += parsing/error_message.c
-SRC_FILES += parsing/file_check.c
-SRC_FILES += parsing/file_check_for_a.c
-SRC_FILES += parsing/file_check_for_c.c
-SRC_FILES += parsing/file_check_for_cy.c
-SRC_FILES += parsing/file_check_for_pl.c
-SRC_FILES += parsing/file_check_for_sp.c
-SRC_FILES += parsing/load_file.c
-SRC_FILES += parsing/tokens_utils_1.c
+COMMON_FILES += parsing/error_message.c
+COMMON_FILES += parsing/file_check.c
+COMMON_FILES += parsing/file_check_for_a.c
+COMMON_FILES += parsing/file_check_for_c.c
+COMMON_FILES += parsing/file_check_for_cy.c
+COMMON_FILES += parsing/file_check_for_pl.c
+COMMON_FILES += parsing/file_check_for_sp.c
+COMMON_FILES += parsing/load_file.c
+COMMON_FILES += parsing/tokens_utils_1.c
 
 MANDATORY_FILES = parsing/file_check_utils_1.c
 MANDATORY_FILES += parsing/file_check_utils_2.c
@@ -42,38 +42,38 @@ BONUS_FILES += parsing/file_check_for_l_bonus.c
 BONUS_FILES += parsing/list_utils_1_bonus.c
 BONUS_FILES += parsing/file_check_utils_2_bonus.c
 
-SRC_FILES += matrix/creation.c
-SRC_FILES += matrix/check.c
-SRC_FILES += matrix/operations.c
-SRC_FILES += matrix/determinant.c
-SRC_FILES += matrix/submatrix.c
-SRC_FILES += matrix/transform.c
+COMMON_FILES += matrix/creation.c
+COMMON_FILES += matrix/check.c
+COMMON_FILES += matrix/operations.c
+COMMON_FILES += matrix/determinant.c
+COMMON_FILES += matrix/submatrix.c
+COMMON_FILES += matrix/transform.c
 
-SRC_FILES += ray/ray.c
-SRC_FILES += ray/creation.c
-SRC_FILES += ray/intersections.c
-SRC_FILES += ray/intersect_world.c
-SRC_FILES += ray/transform.c
+COMMON_FILES += ray/ray.c
+COMMON_FILES += ray/creation.c
+COMMON_FILES += ray/intersections.c
+COMMON_FILES += ray/intersect_world.c
+COMMON_FILES += ray/transform.c
 
-SRC_FILES += shapes/shape.c
-SRC_FILES += shapes/material.c
-SRC_FILES += shapes/normal.c
-SRC_FILES += shapes/sphere.c
-SRC_FILES += shapes/plane.c
-SRC_FILES += shapes/cylinder.c
+COMMON_FILES += shapes/shape.c
+COMMON_FILES += shapes/material.c
+COMMON_FILES += shapes/normal.c
+COMMON_FILES += shapes/sphere.c
+COMMON_FILES += shapes/plane.c
+COMMON_FILES += shapes/cylinder.c
 
-SRC_FILES += lights/lighting.c
-SRC_FILES += lights/point_light.c
+COMMON_FILES += lights/lighting.c
+COMMON_FILES += lights/point_light.c
 
-SRC_FILES += world/world.c
+COMMON_FILES += world/world.c
 
-SRC_FILES += camera/camera.c
-SRC_FILES += camera/canvas.c
-SRC_FILES += camera/view.c
+COMMON_FILES += camera/camera.c
+COMMON_FILES += camera/canvas.c
+COMMON_FILES += camera/view.c
 
-SRC_FILES += utils/double_comparison.c
+COMMON_FILES += utils/double_comparison.c
 
-SRC_FILES += debug.c
+COMMON_FILES += debug.c
 
 SRC_DIR = ./src
 OBJ_ROOT = ./obj
@@ -87,10 +87,10 @@ OBJ_DIRS += $(OBJ_ROOT)/lights
 OBJ_DIRS += $(OBJ_ROOT)/world
 OBJ_DIRS += $(OBJ_ROOT)/camera
 
-MANDATORY_OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
+MANDATORY_OBJ = $(addprefix $(OBJ_ROOT)/, $(COMMON_FILES:.c=.o))
 MANDATORY_OBJ += $(addprefix $(OBJ_ROOT)/, $(MANDATORY_FILES:.c=.o))
 
-BONUS_OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
+BONUS_OBJ = $(addprefix $(OBJ_ROOT)/, $(COMMON_FILES:.c=.o))
 BONUS_OBJ += $(addprefix $(OBJ_ROOT)/, $(BONUS_FILES:.c=.o))
 
 CC = gcc
