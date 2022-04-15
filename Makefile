@@ -9,14 +9,14 @@ MLX = $(MLX_DIR)/libmlx.a
 IFLAGS = -I ./src
 
 HEADERS =  src/structures.h
-HEADERS +=  src/minirt.h
+HEADERS += src/minirt.h
 HEADERS += src/tuple/tuple.h
 HEADERS += src/shapes/shapes.h
 HEADERS += src/lights/lights.h
 HEADERS += src/utils/utils.h
 HEADERS += libft/libft.h
 
-SRC_FILES =  tuple/tuple_check.c
+SRC_FILES += tuple/tuple_check.c
 SRC_FILES += tuple/tuple_creation.c
 SRC_FILES += tuple/tuple_operations.c
 SRC_FILES += tuple/vector_utils.c
@@ -27,18 +27,20 @@ SRC_FILES += parsing/file_check.c
 SRC_FILES += parsing/file_check_for_a.c
 SRC_FILES += parsing/file_check_for_c.c
 SRC_FILES += parsing/file_check_for_cy.c
-SRC_FILES += parsing/file_check_for_l.c
-SRC_FILES += parsing/file_check_for_l_bonus.c
 SRC_FILES += parsing/file_check_for_pl.c
 SRC_FILES += parsing/file_check_for_sp.c
-SRC_FILES += parsing/file_check_utils_1.c
-SRC_FILES += parsing/file_check_utils_1_bonus.c
-SRC_FILES += parsing/file_check_utils_2.c
-SRC_FILES += parsing/file_check_utils_2_bonus.c
-SRC_FILES += parsing/list_utils_1.c
-SRC_FILES += parsing/list_utils_1_bonus.c
 SRC_FILES += parsing/load_file.c
 SRC_FILES += parsing/tokens_utils_1.c
+
+MANDATORY_FILES = parsing/file_check_utils_1.c
+MANDATORY_FILES += parsing/file_check_utils_2.c
+MANDATORY_FILES += parsing/list_utils_1.c
+MANDATORY_FILES += parsing/file_check_for_l.c
+
+BONUS_FILES = parsing/file_check_utils_1_bonus.c
+BONUS_FILES += parsing/file_check_for_l_bonus.c
+BONUS_FILES += parsing/list_utils_1_bonus.c
+BONUS_FILES += parsing/file_check_utils_2_bonus.c
 
 SRC_FILES += matrix/creation.c
 SRC_FILES += matrix/check.c
@@ -85,8 +87,11 @@ OBJ_DIRS += $(OBJ_ROOT)/lights
 OBJ_DIRS += $(OBJ_ROOT)/world
 OBJ_DIRS += $(OBJ_ROOT)/camera
 
-SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
+MANDATORY_OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
+MANDATORY_OBJ += $(addprefix $(OBJ_ROOT)/, $(MANDATORY_FILES:.c=.o))
+
+BONUS_OBJ = $(addprefix $(OBJ_ROOT)/, $(SRC_FILES:.c=.o))
+BONUS_OBJ += $(addprefix $(OBJ_ROOT)/, $(BONUS_FILES:.c=.o))
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -Wconversion -g3 -I $(MLX_DIR) -I $(LIBFT_DIR) -I src #-fsanitize=address
@@ -96,8 +101,11 @@ RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(OBJ) $(OBJ_ROOT)/main.o
-	$(CC) $(OBJ) $(OBJ_ROOT)/main.o -o $(NAME) $(LFLAGS)
+$(NAME): $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(MANDATORY_OBJ) $(OBJ_ROOT)/main.o
+	$(CC) $(MANDATORY_OBJ) $(OBJ_ROOT)/main.o -o $(NAME) $(LFLAGS)
+
+bonus: $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(BONUS_OBJ) $(OBJ_ROOT)/main.o
+	$(CC) $(BONUS_OBJ) $(OBJ_ROOT)/main.o -o $(NAME) $(LFLAGS)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
