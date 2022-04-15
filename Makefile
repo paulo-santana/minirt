@@ -155,7 +155,7 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	./$(NAME)
+	./$(NAME) ./file.rt
 
 #SOURCE = main.c \
 	file_check.c file_check_for_a.c file_check_for_c.c file_check_for_l.c \
