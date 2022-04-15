@@ -32,6 +32,7 @@ SRC_FILES += parsing/file_check_for_l_bonus.c
 SRC_FILES += parsing/file_check_for_pl.c
 SRC_FILES += parsing/file_check_for_sp.c
 SRC_FILES += parsing/file_check_utils_1.c
+SRC_FILES += parsing/file_check_utils_1_bonus.c
 SRC_FILES += parsing/file_check_utils_2.c
 SRC_FILES += parsing/file_check_utils_2_bonus.c
 SRC_FILES += parsing/list_utils_1.c
