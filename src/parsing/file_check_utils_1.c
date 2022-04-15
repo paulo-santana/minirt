@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 12:10:33 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/13 19:38:15 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/14 19:17:51 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,35 @@ int	get_line(char **file_tokens, char *identidier)
 	return (i);
 }
 
+int	check_for_invalid_line(char **file_tokens)
+{
+	int		i;
+	int		status;
+	char	**tmp;
+
+	tmp = NULL;
+	i = 0;
+	while (file_tokens[i])
+	{
+		tmp = ft_split(file_tokens[i], ' ');
+		if (!ft_strcmp(*tmp, "A") || !ft_strcmp(*tmp, "C") || \
+		!ft_strcmp(*tmp, "L") || !ft_strcmp(*tmp, "pl") || \
+		!ft_strcmp(*tmp, "sp") || !ft_strcmp(*tmp, "cy"))
+			status = 0;
+		else
+		{
+			status = send_error("Error\nThere is an invalid line");
+			break ;
+		}
+		free_tokens(tmp);
+		tmp = NULL;
+		++i;
+	}
+	if (tmp)
+		free_tokens(tmp);
+	return (status);
+}
+
 int	check_for_tab(char **file_tokens)
 {
 	int	i;
@@ -60,7 +89,7 @@ int	check_for_tab(char **file_tokens)
 	while (file_tokens[i])
 	{
 		if (ft_strchr(file_tokens[i], '\t'))
-			return (-1);
+			return (send_error("Error\n'\\t' is not a valid character"));
 		++i;
 	}
 	return (0);

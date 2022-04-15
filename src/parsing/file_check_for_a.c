@@ -6,13 +6,13 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 12:14:55 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/13 21:00:25 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/14 20:29:54 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers.h"
 
-static void	update_a_parameters(char **tokens, t_parameters *p)
+static void	update_parameters(char **tokens, t_parameters *p)
 {
 	p->a_lighting = (double) ft_atof(tokens[1]);
 	p->a_color = malloc(sizeof(double) * 3);
@@ -70,7 +70,7 @@ int	check_for_a(char **file_tokens, t_parameters *p)
 	if (validate_line(tokens) == -1)
 		status = -1;
 	else
-		update_a_parameters(tokens, p);
+		update_parameters(tokens, p);
 	free_tokens(tokens);
 	return (status);
 }

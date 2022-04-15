@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_check_for_sp.c                                :+:      :+:    :+:   */
+/*   file_check_for_l_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 20:30:50 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/14 20:31:10 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers.h"
+#include "headers_bonus.h"
 
 static void	update_parameters(char **tokens, t_parameters *p)
 {
-	t_scene_object_param	*object;
+	t_scene_light_param	*light;
 
-	object = malloc(sizeof(t_scene_object_param));
-	object->identifier = ft_strdup("sp");
-	object->cordinates = malloc(sizeof(double) * 3);
-	object->cordinates[0] = (double) ft_atof(tokens[1]);
-	object->cordinates[1] = (double) ft_atof(tokens[3]);
-	object->cordinates[2] = (double) ft_atof(tokens[5]);
-	object->orientation_vector = NULL;
-	object->color = malloc(sizeof(double) * 3);
-	object->color[0] = (double) ft_atof(tokens[7]);
-	object->color[1] = (double) ft_atof(tokens[9]);
-	object->color[2] = (double) ft_atof(tokens[11]);
-	object->diameter = (double) ft_atof(tokens[6]);
-	object->height = 0;
-	object->next = NULL;
-	add_scene_object_param(p, object);
+	light = malloc(sizeof(t_scene_light_param));
+	light->l_light_point = malloc(sizeof(double) * 3);
+	light->l_light_point[0] = (double) ft_atof(tokens[1]);
+	light->l_light_point[1] = (double) ft_atof(tokens[3]);
+	light->l_light_point[2] = (double) ft_atof(tokens[5]);
+	light->l_britghness = (double) ft_atof(tokens[6]);
+	light->l_color = malloc(sizeof(double) * 3);
+	light->l_color[0] = (double) ft_atof(tokens[7]);
+	light->l_color[1] = (double) ft_atof(tokens[9]);
+	light->l_color[2] = (double) ft_atof(tokens[11]);
+	light->next = NULL;
+	add_scene_light_param(p, light);
 }
 
 static int	check_min_max(char **tokens)
@@ -41,7 +38,7 @@ static int	check_min_max(char **tokens)
 		return (-1);
 	if (ft_atof(tokens[5]) < MIN_FLOAT || ft_atof(tokens[5]) > MAX_FLOAT)
 		return (-1);
-	if (ft_atof(tokens[6]) < 0 || ft_atof(tokens[6]) > MAX_FLOAT)
+	if (ft_atof(tokens[6]) < 0 || ft_atof(tokens[6]) > 1.0)
 		return (-1);
 	if (ft_atof(tokens[7]) < 0 || ft_atof(tokens[7]) > 255)
 		return (-1);
@@ -74,27 +71,27 @@ static int	check_digit(char **tokens)
 static int	validate_line(char **tokens)
 {
 	if (get_tokens_len(tokens) != 12)
-		return (send_error("Error\nsp parameter: Bad number of elements"));
+		return (send_error("Error\nL parameter: Bad number of elements"));
 	if (ft_strcmp(tokens[2], ",") || ft_strcmp(tokens[4], ",") || \
 	ft_strcmp(tokens[8], ",") || ft_strcmp(tokens[10], ","))
-		return (send_error("Error\nsp parameter: Bad comma"));
+		return (send_error("Error\nL parameter: Bad comma"));
 	if (check_digit(tokens) == -1)
-		return (send_error("Error\nsp parameter: Bad digit"));
+		return (send_error("Error\nL parameter: Bad digit"));
 	if (check_min_max(tokens) == -1)
-		return (send_error("Error\nsp parameter: Bad min or max"));
+		return (send_error("Error\nL parameter: Bad min or max"));
 	return (0);
 }
 
-int	check_for_sp(char **file_tokens, t_parameters *p)
+int	check_for_l(char **file_tokens, t_parameters *p)
 {
 	char	**tokens;
 	int		line_index;
 	char	status;
 
 	status = 0;
-	if (count_identifiers(file_tokens, "sp") <= 0)
-		return (send_error("Error\nsp parameter: It must be at least one sp"));
-	line_index = get_line(file_tokens, "sp");
+	if (count_identifiers(file_tokens, "L") <= 0)
+		return (send_error("Error\nL parameter: It must be one L"));
+	line_index = get_line(file_tokens, "L");
 	while (line_index < get_tokens_len(file_tokens))
 	{
 		tokens = tokenize_line(file_tokens[line_index]);
@@ -103,7 +100,7 @@ int	check_for_sp(char **file_tokens, t_parameters *p)
 		else
 			update_parameters(tokens, p);
 		++line_index;
-		line_index += get_line(file_tokens + line_index, "sp");
+		line_index += get_line(file_tokens + line_index, "L");
 		free_tokens(tokens);
 	}
 	return (status);

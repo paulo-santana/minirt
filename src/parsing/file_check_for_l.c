@@ -6,13 +6,13 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/13 21:00:55 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/14 20:30:30 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers.h"
 
-static void	update_a_parameters(char **tokens, t_parameters *p)
+static void	update_parameters(char **tokens, t_parameters *p)
 {
 	p->l_light_point = malloc(sizeof(double) * 3);
 	p->l_light_point[0] = (double) ft_atof(tokens[1]);
@@ -89,7 +89,7 @@ int	check_for_l(char **file_tokens, t_parameters *p)
 	if (validate_line(tokens) == -1)
 		status = -1;
 	else
-		update_a_parameters(tokens, p);
+		update_parameters(tokens, p);
 	free_tokens(tokens);
 	return (status);
 }

@@ -6,13 +6,13 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/13 21:04:50 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/14 20:30:36 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers.h"
 
-static void	update_a_parameters(char **tokens, t_parameters *p)
+static void	update_parameters(char **tokens, t_parameters *p)
 {
 	t_scene_object_param	*object;
 
@@ -113,7 +113,7 @@ int	check_for_pl(char **file_tokens, t_parameters *p)
 		if (validate_line(tokens) == -1)
 			status = -1;
 		else
-			update_a_parameters(tokens, p);
+			update_parameters(tokens, p);
 		++line_index;
 		line_index += get_line(file_tokens + line_index, "pl");
 		free_tokens(tokens);

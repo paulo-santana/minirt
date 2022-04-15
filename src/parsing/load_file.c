@@ -25,7 +25,7 @@ static void	saved_update(char **buffer, char **saved)
 int	load_file(char *file_name, char ***tokens)
 {
 	int		fd;
-	ssize_t	read_call;
+	int		read_call;
 	char	*buffer;
 	char	*saved;
 
