@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 20:31:10 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 02:24:01 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_for_l(char **file_tokens, t_parameters *p)
 
 	status = 0;
 	if (count_identifiers(file_tokens, "L") <= 0)
-		return (send_error("Error\nL parameter: It must be one L"));
+		return (send_error("Error\nL parameter: It must be at least one L"));
 	line_index = get_line(file_tokens, "L");
 	while (line_index < get_tokens_len(file_tokens))
 	{

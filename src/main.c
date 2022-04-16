@@ -185,6 +185,116 @@ void draw_spheres(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
 }
 
+				/*
+				* BÁFICA 
+				*/
+static void	set_cylinder_props_position(t_shape *shape, t_scene_object_param *obj)
+{
+	shape->cylinder_props.position.x = obj->cordinates[0];
+	shape->cylinder_props.position.y = obj->cordinates[1];
+	shape->cylinder_props.position.z = obj->cordinates[2];
+	shape->cylinder_props.max = obj->height * 0.5;
+	shape->cylinder_props.min = - obj->height * 0.5;
+	shape->sphere_props.radius = obj->diameter * 0.5;
+}
+
+static void	set_plane_props_position(t_shape *shape, t_scene_object_param *obj)
+{
+	shape->sphere_props.position.x = obj->cordinates[0];
+	shape->sphere_props.position.y = obj->cordinates[1];
+	shape->sphere_props.position.z = obj->cordinates[2];
+}
+
+static void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
+{
+	shape->sphere_props.position.x = obj->cordinates[0];
+	shape->sphere_props.position.y = obj->cordinates[1];
+	shape->sphere_props.position.z = obj->cordinates[2];
+	shape->sphere_props.radius = obj->diameter * 0.5;
+}
+
+static void	set_props(t_shape *shape, t_scene_object_param *obj)
+{
+	if (!ft_strcmp(obj->identifier, "sp"))
+		set_sphere_props_position(shape, obj);
+	if (!ft_strcmp(obj->identifier, "pl"))
+		set_plane_props_position(shape, obj);
+	if (!ft_strcmp(obj->identifier, "cy"))
+		set_cylinder_props_position(shape, obj);
+}
+
+static void	set_color(t_shape *shape, t_scene_object_param *obj)
+{
+	shape->material->color = new_color(\
+								obj->color[0], \
+								obj->color[1], \
+								obj->color[2] \
+									);
+}
+
+static t_shape	*get_scene_shape(t_scene_object_param *obj)
+{
+	if (!ft_strcmp(obj->identifier, "sp"))
+		return (new_sphere());
+	else if (!ft_strcmp(obj->identifier, "pl"))
+		return (new_plane());
+	else if (!ft_strcmp(obj->identifier, "cy"))
+		return (new_cylinder());
+}
+
+static void	set_camera(t_data *data, t_parameters *p)
+{
+	(void)data;
+	(void)p;
+}
+
+static void set_ambient(t_shape *shape, t_parameters *p)
+{
+	t_color	*tmp_color;
+
+	tmp_color = new_color(\
+						p->a_color[0], \
+						p->a_color[1], \
+						p->a_color[2] \
+							);
+	shape->material->color = multiply_scalar_color(tmp_color, p->a_lighting);
+	free(tmp_color);
+}
+
+void	generate_world_objects(t_data *data, t_parameters *p)
+{
+	t_scene_object_param	*tmp_obj;
+	t_list					*head_list;
+	t_list					*new_element;
+	t_shape					*shape;
+
+	data->world = new_world();
+	head_list = NULL;
+	tmp_obj = p->object_head;
+	while (tmp_obj)
+	{
+		shape = get_scene_shape(tmp_obj);
+		set_props(shape, tmp_obj);
+		set_position(shape, tmp_obj);
+		set_color(shape, tmp_obj);
+		new_element = ft_lstnew(shape);
+		if (!head_list)
+			head_list = new_element;
+		else
+			ft_lstadd_back(&head_list, new_element);
+		tmp_obj = tmp_obj->next;
+	}
+}
+
+void	generate_world_light(t_data *data, t_parameters *p)
+{
+	(void)data;
+	(void)p;
+}
+				/*
+				* BÁFICA 
+				*/
+
 void	generate_world(t_data *data)
 {
 	t_shape *floors = new_plane();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/11 22:15:14 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/16 02:26:15 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ typedef struct s_computations		t_computations;
 typedef struct s_scene_object_param	t_scene_object_param;
 typedef struct s_parameters			t_parameters;
 
+typedef struct s_scene_light_param
+{
+	double							*l_light_point;
+	double							l_britghness;
+	double							*l_color;
+	struct s_scene_light_param		*next;
+}	t_scene_light_param;
+
 struct s_scene_object_param
 {
 	char							*identifier;
@@ -54,9 +62,7 @@ struct s_parameters
 	double					*c_view_point;
 	double					*c_orientation_vector;
 	double					c_fov;
-	double					*l_light_point;
-	double					l_britghness;
-	double					*l_color;
+	t_scene_light_param		*light_head;
 	t_scene_object_param	*object_head;
 };
 
@@ -106,6 +112,7 @@ struct s_cylinder {
 };
 
 struct s_plane {
+	t_tuple		position;
 };
 
 struct s_shape {
