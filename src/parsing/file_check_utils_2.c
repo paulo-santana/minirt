@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 22:19:51 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 20:15:49 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 16:24:27 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ void	init_allocated_parameters(t_parameters *p)
 	p->a_color = NULL;
 	p->c_view_point = NULL;
 	p->c_orientation_vector = NULL;
-	p->l_light_point = NULL;
-	p->l_color = NULL;
 	p->object_head = NULL;
 }
 
@@ -98,10 +96,6 @@ void	free_allocated_parameters(t_parameters *p)
 		free(p->c_view_point);
 	if (p->c_orientation_vector)
 		free(p->c_orientation_vector);
-	if (p->l_light_point)
-		free(p->l_light_point);
-	if (p->l_color)
-		free(p->l_color);
 	if (p->object_head)
 		free_scene_object_param(p->object_head);
 	free(p);
