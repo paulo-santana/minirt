@@ -6,11 +6,11 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/16 15:46:09 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 16:32:34 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers_bonus.h"
+#include "parsing.h"
 
 static void	update_parameters(char **tokens, t_parameters *p)
 {
