@@ -6,11 +6,11 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:30:08 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 21:58:50 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 16:30:12 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers_bonus.h"
+#include "parsing.h"
 
 void	free_scene_object_param(t_scene_object_param *head)
 {
