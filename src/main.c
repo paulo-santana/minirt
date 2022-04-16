@@ -240,6 +240,8 @@ static t_shape	*get_scene_shape(t_scene_object_param *obj)
 		return (new_plane());
 	else if (!ft_strcmp(obj->identifier, "cy"))
 		return (new_cylinder());
+	else
+		return (NULL);
 }
 
 static void	set_ambient(t_shape *shape, t_parameters *p)
@@ -251,7 +253,7 @@ static void	set_ambient(t_shape *shape, t_parameters *p)
 						p->a_color[1], \
 						p->a_color[2] \
 							);
-	shape->material->color = multiply_scalar_color(tmp_color, p->a_lighting);
+	shape->material->ambient = multiply_scalar_color(tmp_color, p->a_lighting);
 	free(tmp_color);
 }
 
@@ -266,8 +268,8 @@ static t_list	*get_world_objects_params(t_parameters *p)
 	while (tmp_obj)
 	{
 		shape = get_scene_shape(tmp_obj);
+		set_ambient(shape, p);
 		set_props(shape, tmp_obj);
-		set_position(shape, tmp_obj);
 		set_color(shape, tmp_obj);
 		if (!head_list)
 			head_list = ft_lstnew(shape);
@@ -288,7 +290,7 @@ static t_color	*set_light_color(t_scene_light_param *light)
 					light->l_color[1], \
 					light->l_color[2] \
 						);
-	color = multiply_scalar(tmp_color, light->l_britghness);
+	color = multiply_scalar_color(tmp_color, light->l_britghness);
 	free(tmp_color);
 	return (color);
 }
@@ -312,7 +314,7 @@ static t_list	*get_world_light_params(t_parameters *p)
 	tmp_light = p->light_head;
 	while (tmp_light)
 	{
-		point_light = new_point_light(set_light_positon(p), set_light_color(p));
+		point_light = new_point_light(set_light_positon(p->light_head), set_light_color(p->light_head));
 		if (!head_list)
 			head_list = ft_lstnew(point_light);
 		else
@@ -336,6 +338,7 @@ void	get_params(t_data *data, t_parameters *p)
 	data->world = new_world();
 	data->world->lights = get_world_light_params(p);
 	data->world->objects.spheres = get_world_objects_params(p);
+	data->camera = get_camera_params(p);
 }
 
 				/*

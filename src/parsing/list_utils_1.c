@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 15:30:08 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/13 17:39:34 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 21:58:30 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,10 @@ void	add_scene_object_param(t_parameters *p, t_scene_object_param *node)
 {
 	node->next = p->object_head;
 	p->object_head = node;
+}
+
+void	add_scene_light_param(t_parameters *p, t_scene_light_param *node)
+{
+	node->next = p->light_head;
+	p->light_head = node;
 }
