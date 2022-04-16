@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 12:14:55 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 20:29:54 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 23:24:56 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	update_parameters(char **tokens, t_parameters *p)
 {
 	p->a_lighting = (double) ft_atof(tokens[1]);
 	p->a_color = malloc(sizeof(double) * 3);
-	p->a_color[0] = (double) ft_atof(tokens[2]);
-	p->a_color[1] = (double) ft_atof(tokens[4]);
-	p->a_color[2] = (double) ft_atof(tokens[6]);
+	p->a_color[0] = (double) ft_atof(tokens[2]) / 255.0;
+	p->a_color[1] = (double) ft_atof(tokens[4]) / 255.0;
+	p->a_color[2] = (double) ft_atof(tokens[6]) / 255.0;
 }
 
 static int	check_min_max(char **tokens)

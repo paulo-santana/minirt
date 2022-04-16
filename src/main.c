@@ -733,6 +733,10 @@ int	main(int argc, char **argv)
 	init_allocated_parameters(p);
 	if (file_check(argv[1], p) == -1)
 		ft_putendl_fd("Erou!", 2);
+	t_data data;
+//
+	data = (t_data){};
+	get_params(&data, p);
 	free_allocated_parameters(p);
 	return (0);
 }

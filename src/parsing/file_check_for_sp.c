@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 20:30:50 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 23:27:48 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void	update_parameters(char **tokens, t_parameters *p)
 	object->cordinates[2] = (double) ft_atof(tokens[5]);
 	object->orientation_vector = NULL;
 	object->color = malloc(sizeof(double) * 3);
-	object->color[0] = (double) ft_atof(tokens[7]);
-	object->color[1] = (double) ft_atof(tokens[9]);
-	object->color[2] = (double) ft_atof(tokens[11]);
+	object->color[0] = (double) ft_atof(tokens[7]) / 255.0;
+	object->color[1] = (double) ft_atof(tokens[9]) / 255.0;
+	object->color[2] = (double) ft_atof(tokens[11]) / 255.0;
 	object->diameter = (double) ft_atof(tokens[6]);
 	object->height = 0;
 	object->next = NULL;

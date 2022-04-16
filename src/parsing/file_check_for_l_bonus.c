@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/16 16:29:49 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 23:26:52 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	update_parameters(char **tokens, t_parameters *p)
 	light->l_light_point[2] = (double) ft_atof(tokens[5]);
 	light->l_britghness = (double) ft_atof(tokens[6]);
 	light->l_color = malloc(sizeof(double) * 3);
-	light->l_color[0] = (double) ft_atof(tokens[7]);
-	light->l_color[1] = (double) ft_atof(tokens[9]);
-	light->l_color[2] = (double) ft_atof(tokens[11]);
+	light->l_color[0] = (double) ft_atof(tokens[7]) / 255.0;
+	light->l_color[1] = (double) ft_atof(tokens[9]) / 255.0;
+	light->l_color[2] = (double) ft_atof(tokens[11]) / 255.0;
 	light->next = NULL;
 	add_scene_light_param(p, light);
 }
