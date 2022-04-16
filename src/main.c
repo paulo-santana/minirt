@@ -177,12 +177,13 @@ void	draw_canvas_ascii(t_canvas *canvas)
 void draw_spheres(t_data *data)
 {
 	free(data->canvas);
+	printf("desenhando na tela...\n");
 	data->canvas = render(data->camera, data->world);
 	draw_canvas_mlx(data->canvas, &data->mlx_img);
-	draw_canvas_ascii(data->canvas);
-	// printf("desenhando na tela...\n");
+	// draw_canvas_ascii(data->canvas);
 	// sleep(1);
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
+	printf("done\n");
 }
 
 				/*
@@ -195,14 +196,20 @@ static void	set_cylinder_props_position(t_shape *shape, t_scene_object_param *ob
 	shape->cylinder_props.position.z = obj->cordinates[2];
 	shape->cylinder_props.max = obj->height * 0.5;
 	shape->cylinder_props.min = - obj->height * 0.5;
-	shape->sphere_props.radius = obj->diameter * 0.5;
+	shape->cylinder_props.radius = obj->diameter * 0.5;
 }
 
 static void	set_plane_props_position(t_shape *shape, t_scene_object_param *obj)
 {
-	shape->sphere_props.position.x = obj->cordinates[0];
-	shape->sphere_props.position.y = obj->cordinates[1];
-	shape->sphere_props.position.z = obj->cordinates[2];
+	t_matrix	*trans;
+
+	shape->plane_props.position.x = obj->cordinates[0];
+	shape->plane_props.position.y = obj->cordinates[1];
+	shape->plane_props.position.z = obj->cordinates[2];
+	trans = translation(shape->plane_props.position.x,
+			shape->plane_props.position.y,
+			shape->plane_props.position.z);
+	set_transform(shape, trans);
 }
 
 static void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
@@ -271,10 +278,11 @@ static t_list	*get_world_objects_params(t_parameters *p)
 		set_ambient(shape, p);
 		set_props(shape, tmp_obj);
 		set_color(shape, tmp_obj);
-		if (!head_list)
-			head_list = ft_lstnew(shape);
-		else
-			ft_lstadd_back(&head_list, ft_lstnew(shape));
+		ft_lstadd_back(&head_list, ft_lstnew(shape));
+		// if (!head_list)
+		// 	head_list = ft_lstnew(shape);
+		// else
+		// 	ft_lstadd_back(&head_list, ft_lstnew(shape));
 		tmp_obj = tmp_obj->next;
 	}
 	return (head_list);
@@ -331,11 +339,17 @@ static t_camera	*get_camera_params(t_parameters *p)
 	t_tuple		*orientation;
 
 	camera = new_camera(WIN_WIDTH, WIN_HEIGHT, p->c_fov);
-	t_matrix *rot = rotation_x(M_PI_2);
-	orientation = new_vector(p->c_orientation_vector[0], p->c_orientation_vector[1], p->c_orientation_vector[2]);
-	up = matrix_multiply_tuple(rot, orientation);
+	orientation = new_vector(
+			p->c_orientation_vector[0],
+			p->c_orientation_vector[1],
+			p->c_orientation_vector[2]);
+	// t_matrix *rot = rotation_x(M_PI_2);
+	// up = matrix_multiply_tuple(rot, orientation);
+	up = new_vector(0, 1, 0);
 	t_matrix *transform = view_transform(
-			new_point(p->c_view_point[0], p->c_view_point[1], p->c_view_point[2]),
+			new_point(p->c_view_point[0],
+				p->c_view_point[1],
+				p->c_view_point[2]),
 			orientation,
 			up);
 	set_camera_transform(camera, transform);
@@ -386,7 +400,7 @@ void	generate_world(t_data *data)
 	wall->material->color->blue = 1;
 
 	t_shape *middle = new_sphere();
-	set_transform(middle, translation(0.5, 1, 0.0));
+	// set_transform(middle, translation(0.5, 1, 0.0));
 	middle->material->color->red = 0.3;
 	middle->material->color->green = 0.4;
 	middle->material->color->blue = 0.8;
@@ -403,14 +417,14 @@ void	generate_world(t_data *data)
 	set_transform(cyl1, trans);
 
 	t_shape *right = new_sphere();
-	set_transform(right,translation(-1.5, 1, 0));
+	// set_transform(right,translation(-1.5, 1, 0));
 	right->material->color->red = 0.1;
 	right->material->color->blue = 0.1;
 	right->material->diffuse = 0.7;
 	right->material->specular = 0.3;
 
 	t_shape *left = new_sphere();
-	set_transform(left, matrix_multiply(translation(3.1, 1, 0), scaling(1, 1, 1)));
+	// set_transform(left, matrix_multiply(translation(3.1, 1, 0), scaling(1, 1, 1)));
 	left->material->color->green = 0.4;
 	left->material->color->blue = 0.4;
 	left->material->diffuse = 0.7;
@@ -670,19 +684,9 @@ void navigate(t_data *data)
 
 void render_full(t_data *data)
 {
-	t_canvas *canvas;
-
-	if (data->rendered)
-		return ;
-	data->rendered = 1;
-	mlx_string_put(data->mlx, data->window, 0, 0, 0xff, "Teste");
-	canvas = new_canvas(WIN_WIDTH, WIN_HEIGHT);
-	free(data->canvas);
-	data->canvas = canvas;
-	set_camera_dimensions(data->camera, data->canvas);
-	mlx_mouse_show(data->mlx, data->window);
+	mlx_string_put(data->mlx, data->window, 20, 20, 0xff00, "Teste");
 	draw_spheres(data);
-	mlx_string_put(data->mlx, data->window, 0, 0, 0xff, "testado");
+	mlx_string_put(data->mlx, data->window, 20, 20, 0xff0000, "Testado");
 }
 
 int update(t_data *data)
@@ -705,18 +709,14 @@ double get_delta_time(t_data *data)
 	return (delta);
 }
 
-int log_mouse(t_data *data)
+void activate_firulas(t_data *data)
 {
-	double delta_time;
-	double mousex, mousey;
-
-	delta_time = get_delta_time(data);
-	get_mouse_delta(data, &mousex, &mousey);
-	// printf("mousex: %lf\n", mousex);
-	// printf("mousey: %lf\n", mousey);
-	draw_spheres(data);
-	print_fps(data, delta_time);
-	return (0);
+	data->navigation_mode = 1;
+	data->cam_position = new_point(0, 0, -1);
+	data->cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
+	data->resolution = 0.2;
+	mlx_loop_hook(data->mlx, update, data);
+	// mlx_mouse_hide(data->mlx, data->window);
 }
 
 int	main(int argc, char **argv)
@@ -725,18 +725,11 @@ int	main(int argc, char **argv)
 	t_parameters	*p;
 
 	data = (t_data){};
-	data.navigation_mode = 1;
-	data.cam_position = new_point(0, 0, -1);
-	data.cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
-	data.resolution = 0.2;
 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
-	// generate_world(&data);
 	mlx_hook(data.window, 2, 1, key_press_hook, &data);
 	mlx_hook(data.window, 3, 2, key_release_hook, &data);
-	mlx_loop_hook(data.mlx, update, &data);
-	mlx_mouse_hide(data.mlx, data.window);
 
 	data.last_tick = milis();
 	center_mouse(&data);
@@ -750,8 +743,10 @@ int	main(int argc, char **argv)
 	init_allocated_parameters(p);
 	if (file_check(argv[1], p) == -1)
 		ft_putendl_fd("Erou!", 2);
-	get_params(&data, p);
-
+	// get_params(&data, p);
+	generate_world(&data);
+	activate_firulas(&data);
+	render_full(&data);
 	mlx_loop(data.mlx);
 
 	free_allocated_parameters(p);
