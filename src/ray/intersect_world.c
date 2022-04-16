@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:16:46 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/10 12:28:41 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/16 01:40:07 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,23 +90,31 @@ t_color	*sum_color_list(t_list *colors)
 	return (result);
 }
 
+static t_ray	*ray_from_to(t_tuple *origin, t_tuple *target)
+{
+	t_tuple			*v;
+	t_tuple			*direction;
+	t_ray			*ray;
+
+	v = subtract_tuples(target, origin);
+	direction = normalize(v);
+	ray = new_ray(origin, direction);
+	return (ray);
+}
+
 int	is_shadowed(t_world *world, t_tuple *point, t_point_light *light)
 {
 	t_tuple			*v;
 	double			distance;
-	t_tuple			*direction;
 	t_intersections	*xs;
 	int				result;
 	t_ray			*ray;
-	t_intersection	*inter;
 
 	v = subtract_tuples(light->position, point);
 	distance = magnitude(v);
-	direction = normalize(v);
-	ray = new_ray(point, direction);
+	ray = ray_from_to(point, light->position);
 	xs = intersect_world(world, ray);
-	inter = hit(xs);
-	result = (inter != NULL && inter->t < distance);
+	result = (hit(xs) != NULL && hit(xs)->t < distance);
 	ray->origin = NULL;
 	destroy_ray(ray);
 	free(v);

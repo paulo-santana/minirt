@@ -64,6 +64,7 @@ COMMON_FILES += shapes/cylinder.c
 COMMON_FILES += shapes/cylinder_utils.c
 
 COMMON_FILES += lights/lighting.c
+COMMON_FILES += lights/lighting_utils.c
 COMMON_FILES += lights/point_light.c
 
 COMMON_FILES += world/world.c
