@@ -6,13 +6,15 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 20:49:28 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/11 22:51:02 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/15 23:29:27 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minirt.h"
 #include "shapes.h"
 #include "ray/ray.h"
 #include "structures.h"
+#include "tuple/tuple.h"
 
 static void	swap_if_needed(double *t0, double *t1)
 {
@@ -64,11 +66,18 @@ void	cylinder_intersect(t_shape *cylinder, t_ray *ray, t_intersections *xs)
 	t[0] = (-b - sqrt(discriminant)) / (2 * a);
 	t[1] = (-b + sqrt(discriminant)) / (2 * a);
 	add_if_intersect(xs, t, cylinder, ray);
+	intersect_caps(cylinder, ray, xs);
 }
 
 t_tuple	*cylinder_normal_at(t_shape *cylinder, t_tuple *point)
 {
-	(void)cylinder;
+	double	dist;
+
+	dist = (point->x * point->x) + (point->z * point->z);
+	if (dist < 1 && point->y >= cylinder->cylinder_props.max - EPSILON)
+		return (new_vector(0, 1, 0));
+	else if (dist < 1 && point->y <= cylinder->cylinder_props.min - EPSILON)
+		return (new_vector(0, -1, 0));
 	return (new_vector(point->x, 0, point->z));
 }
 
@@ -86,7 +95,7 @@ t_shape	*new_cylinder(void)
 	cylinder = new_shape();
 	cylinder->cylinder_props.radius = 1;
 	cylinder->cylinder_props.position.w = 1;
-	cylinder->cylinder_props.min = -1;
+	cylinder->cylinder_props.min = 1;
 	cylinder->cylinder_props.max = 2;
 	cylinder->intersect = cylinder_intersect;
 	cylinder->normal_at = cylinder_normal_at;

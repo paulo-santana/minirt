@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 12:59:14 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 14:26:03 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/16 01:56:12 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,12 @@ typedef struct s_lighting_args {
 t_point_light	*new_point_light(t_tuple *pos, t_color *intensity);
 void			destroy_point_light(t_point_light *light);
 t_color			*lighting(t_lighting_args *args);
+
+t_color			*get_diffuse(
+					t_lighting_args *args,
+					t_color *effective_color,
+					double light_dot_normal);
+t_color			*get_brighter(t_color *a, t_color *b);
+t_color			*get_ambient(t_lighting_args *args, t_color *effective_color);
 
 #endif /* !LIGHT_H */

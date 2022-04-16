@@ -6,7 +6,7 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:05:36 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/11 21:56:05 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/15 23:28:55 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ void		set_material(t_shape *shape, t_material *material);
 
 t_material	*new_material(void);
 void		destroy_material(void *mat);
+
+void		intersect_caps(t_shape *shape, t_ray *ray, t_intersections *xs);
 
 #endif /* !SHAPES_H */

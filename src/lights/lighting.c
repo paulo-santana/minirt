@@ -6,59 +6,12 @@
 /*   By: psergio- <psergio->                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 19:34:24 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/15 21:03:14 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/16 01:55:09 by psergio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lights.h"
 #include "tuple/tuple.h"
-#include "structures.h"
-
-t_color	*get_diffuse(
-	t_lighting_args *args, t_color *effective_color, double light_dot_normal)
-{
-	t_color	*diffuse;
-	t_color	*tmp_color;
-
-	if (light_dot_normal < 0)
-	{
-		diffuse = new_color(0, 0, 0);
-	}
-	else
-	{
-		tmp_color = multiply_scalar_color(effective_color,
-				args->material->diffuse);
-		diffuse = multiply_scalar_color(tmp_color, light_dot_normal);
-		free(tmp_color);
-	}
-	return (diffuse);
-}
-
-t_color	*get_brighter(t_color *a, t_color *b)
-{
-	double	a_brightness;
-	double	b_brightness;
-
-	a_brightness = a->red + a->green + a->blue;
-	b_brightness = b->red + b->green + b->blue;
-	if (a_brightness > b_brightness)
-		return (new_color(a->red, a->green, a->blue));
-	return (new_color(b->red, b->green, b->blue));
-}
-
-t_color	*get_ambient(t_lighting_args *args, t_color *effective_color)
-{
-	t_color	*ambient;
-	t_color	*pure;
-	t_color	*result;
-
-	ambient = multiply_colors(effective_color, args->material->ambient);
-	pure = multiply_colors(args->material->color, args->material->ambient);
-	result = get_brighter(ambient, pure);
-	// if (result == effective_color)
-	// 	free(ambient);
-	return (result);
-}
 
 t_color	*calculate_specular(t_lighting_args *args, double reflect_dot_eye)
 {
@@ -114,7 +67,17 @@ t_color	*sum_colors(t_color *ambient, t_color *diffuse, t_color *specular)
 	return (effective_color);
 }
 
-t_color *lighting(t_lighting_args *args)
+t_color	*shadowed_color(t_color *effective_color, t_lighting_args *args)
+{
+	t_color	*tmp_color;
+
+	tmp_color = effective_color;
+	effective_color = get_ambient(args, effective_color);
+	free(tmp_color);
+	return (effective_color);
+}
+
+t_color	*lighting(t_lighting_args *args)
 {
 	t_tuple	*tmp_tuple;
 	t_tuple	*light_v;
@@ -125,12 +88,7 @@ t_color *lighting(t_lighting_args *args)
 	effective_color = multiply_colors(
 			args->material->color, args->light->intensity);
 	if (args->in_shadow)
-	{
-		tmp_color = effective_color;
-		effective_color = get_ambient(args, effective_color);
-		free(tmp_color);
-		return (effective_color);
-	}
+		return (shadowed_color(effective_color, args));
 	tmp_tuple = subtract_tuples(args->light->position, args->position);
 	light_v = normalize(tmp_tuple);
 	free(tmp_tuple);

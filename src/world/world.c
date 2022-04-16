@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   world.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/16 00:51:23 by psergio-          #+#    #+#             */
+/*   Updated: 2022/04/16 00:51:50 by psergio-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "world.h"
 #include "libft.h"
 #include "lights/lights.h"
@@ -25,7 +37,7 @@ void	add_light(t_world *world, t_point_light *light)
 	ft_lstadd_back(&world->lights, ft_lstnew(light));
 }
 
-t_world *default_world(void)
+t_world	*default_world(void)
 {
 	t_world		*world;
 	t_shape		*s1;
@@ -35,8 +47,8 @@ t_world *default_world(void)
 	world = new_world();
 	if (world == NULL)
 		return (NULL);
-	add_light(world, new_point_light(new_point(-10, 10, -10), new_color(1, 1, 1)));
-	// add_light(world, new_point_light(new_point(-10, -5, -10), new_color(1, .1, .1)));
+	add_light(world, new_point_light(new_point(-10, 10, -10),
+			new_color(1, 1, 1)));
 	s1 = new_sphere();
 	s1->material->diffuse = 0.7;
 	s1->material->specular = 0.2;
@@ -53,8 +65,7 @@ t_world *default_world(void)
 
 void	destroy_world(t_world *world)
 {
-	// if (world->light)
-	ft_lstclear(&world->lights, (void(*)(void*))destroy_point_light);
+	ft_lstclear(&world->lights, (void (*)(void *))destroy_point_light);
 	ft_lstclear(&world->objects.spheres, (void *)destroy_sphere);
 	free(world);
 }

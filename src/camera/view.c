@@ -62,8 +62,10 @@ t_matrix	*view_transform(t_tuple *from, t_tuple *to, t_tuple *up)
 	true_up = cross(left, forward);
 	free(up);
 	orientation = new_matrix(4, (double [4][4]){
-		{left->x, left->y, left->z, 0}, {true_up->x, true_up->y, true_up->z, 0},
-		{-forward->x, -forward->y, -forward->z, 0}, {0, 0, 0, 1},
+		{left->x, left->y, left->z, 0},
+		{true_up->x, true_up->y, true_up->z, 0},
+		{-forward->x, -forward->y, -forward->z, 0},
+		{0, 0, 0, 1},
 		});
 	result = translate_view(orientation, from);
 	free(orientation);
