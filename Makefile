@@ -61,6 +61,7 @@ COMMON_FILES += shapes/normal.c
 COMMON_FILES += shapes/sphere.c
 COMMON_FILES += shapes/plane.c
 COMMON_FILES += shapes/cylinder.c
+COMMON_FILES += shapes/cylinder_utils.c
 
 COMMON_FILES += lights/lighting.c
 COMMON_FILES += lights/point_light.c
