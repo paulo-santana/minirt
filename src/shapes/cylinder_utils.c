@@ -28,7 +28,7 @@ void	intersect_caps(t_shape *shape, t_ray *ray, t_intersections *xs)
 {
 	double	t;
 
-	if (dequals(ray->direction->y, 0))
+	if (ray->direction->y == 0)
 		return ;
 	t = (shape->cylinder_props.min - ray->origin->y) / ray->direction->y;
 	if (check_cap(ray, t))
