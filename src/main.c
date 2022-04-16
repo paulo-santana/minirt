@@ -327,9 +327,18 @@ static t_list	*get_world_light_params(t_parameters *p)
 static t_camera	*get_camera_params(t_parameters *p)
 {
 	t_camera	*camera;
+	t_tuple		*up;
+	t_tuple		*orientation;
 
-	camera = new_camera(0, 0, 0);
-	camera->fov = p->c_fov;
+	camera = new_camera(WIN_WIDTH, WIN_HEIGHT, p->c_fov);
+	t_matrix *rot = rotation_x(M_PI_2);
+	orientation = new_vector(p->c_orientation_vector[0], p->c_orientation_vector[1], p->c_orientation_vector[2]);
+	up = matrix_multiply_tuple(rot, orientation);
+	t_matrix *transform = view_transform(
+			new_point(p->c_view_point[0], p->c_view_point[1], p->c_view_point[2]),
+			orientation,
+			up);
+	set_camera_transform(camera, transform);
 	return (camera);
 }
 
@@ -607,7 +616,7 @@ void navigate(t_data *data)
 	static t_tuple up = {0, 1, 0, 0};
 	t_tuple forward = {0, 0, 1, 0};
 	t_tuple target = {0, 0, 1, 0};
-	t_tuple *look_at;
+	// t_tuple *look_at;
 	t_tuple *tmp;
 	t_tuple *direction;
 	double cam_speed = 2;
@@ -638,17 +647,17 @@ void navigate(t_data *data)
 
 		free(direction);
 		direction = matrix_multiply_tuple(cam_rotation, &forward);
-		look_at = add_tuples(data->cam_position, direction);
+		// look_at = add_tuples(data->cam_position, direction);
 		destroy_camera(data->camera);
 
 		float ratio = (float)WIN_WIDTH / WIN_HEIGHT;
 		float size = (float)(WIN_WIDTH * data->resolution);
 		tmp = matrix_multiply_tuple(cam_rotation, &up);
-		t_matrix *view = view_transform(data->cam_position, look_at, tmp);
+		t_matrix *view = view_transform(data->cam_position, direction, tmp);
 		data->camera = new_camera((int)size, (int)(size / ratio), M_PI / 3);
 		set_camera_transform(data->camera, view);
 		free(tmp);
-		free(look_at);
+		// free(look_at);
 	}
 	// free(data->canvas);
 
@@ -710,18 +719,20 @@ int log_mouse(t_data *data)
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_data data;
+	t_parameters	*p;
 
 	data = (t_data){};
 	data.navigation_mode = 1;
+	data.cam_position = new_point(0, 0, -1);
 	data.cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
 	data.resolution = 0.2;
 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
-	generate_world(&data);
+	// generate_world(&data);
 	mlx_hook(data.window, 2, 1, key_press_hook, &data);
 	mlx_hook(data.window, 3, 2, key_release_hook, &data);
 	mlx_loop_hook(data.mlx, update, &data);
@@ -729,23 +740,20 @@ int	main(void)
 
 	data.last_tick = milis();
 	center_mouse(&data);
+
+	if (argc != 2)
+	{
+		ft_putendl_fd("Error\nBad arguments", 2);
+		return (1);
+	}
+	p = malloc(sizeof(t_parameters));
+	init_allocated_parameters(p);
+	if (file_check(argv[1], p) == -1)
+		ft_putendl_fd("Erou!", 2);
+	get_params(&data, p);
+
 	mlx_loop(data.mlx);
+
+	free_allocated_parameters(p);
 	return (0);
 }
-//
-// int	main(int argc, char **argv)
-// {
-// 	t_parameters	*p;
-//
-// 	if (argc != 2)
-// 	{
-// 		ft_putendl_fd("Error\nBad arguments", 2);
-// 		return (1);
-// 	}
-// 	p = malloc(sizeof(t_parameters));
-// 	init_allocated_parameters(p);
-// 	if (file_check(argv[1], p) == -1)
-// 		ft_putendl_fd("Erou!", 2);
-// 	free_allocated_parameters(p);
-// 	return (0);
-// }

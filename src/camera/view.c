@@ -46,17 +46,13 @@ t_matrix	*translate_view(t_matrix *orientation, t_tuple *from)
 	return (result);
 }
 
-t_matrix	*view_transform(t_tuple *from, t_tuple *to, t_tuple *up)
+t_matrix	*view_transform(t_tuple *from, t_tuple *forward, t_tuple *up)
 {
 	void		*result;
-	t_tuple		*forward;
 	t_tuple		*left;
 	t_tuple		*true_up;
 	t_matrix	*orientation;
 
-	result = subtract_tuples(to, from);
-	forward = normalize(result);
-	free(result);
 	up = normalize(up);
 	left = cross(forward, up);
 	true_up = cross(left, forward);

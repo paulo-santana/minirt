@@ -86,6 +86,7 @@ void	init_allocated_parameters(t_parameters *p)
 	p->c_view_point = NULL;
 	p->c_orientation_vector = NULL;
 	p->object_head = NULL;
+	p->light_head = NULL;
 }
 
 void	free_allocated_parameters(t_parameters *p)
