@@ -242,13 +242,7 @@ static t_shape	*get_scene_shape(t_scene_object_param *obj)
 		return (new_cylinder());
 }
 
-static void	set_camera(t_data *data, t_parameters *p)
-{
-	(void)data;
-	(void)p;
-}
-
-static void set_ambient(t_shape *shape, t_parameters *p)
+static void	set_ambient(t_shape *shape, t_parameters *p)
 {
 	t_color	*tmp_color;
 
@@ -261,14 +255,12 @@ static void set_ambient(t_shape *shape, t_parameters *p)
 	free(tmp_color);
 }
 
-void	generate_world_objects(t_data *data, t_parameters *p)
+static t_list	*get_world_objects_params(t_parameters *p)
 {
 	t_scene_object_param	*tmp_obj;
 	t_list					*head_list;
-	t_list					*new_element;
 	t_shape					*shape;
 
-	data->world = new_world();
 	head_list = NULL;
 	tmp_obj = p->object_head;
 	while (tmp_obj)
@@ -277,20 +269,75 @@ void	generate_world_objects(t_data *data, t_parameters *p)
 		set_props(shape, tmp_obj);
 		set_position(shape, tmp_obj);
 		set_color(shape, tmp_obj);
-		new_element = ft_lstnew(shape);
 		if (!head_list)
-			head_list = new_element;
+			head_list = ft_lstnew(shape);
 		else
-			ft_lstadd_back(&head_list, new_element);
+			ft_lstadd_back(&head_list, ft_lstnew(shape));
 		tmp_obj = tmp_obj->next;
 	}
+	return (head_list);
 }
 
-void	generate_world_light(t_data *data, t_parameters *p)
+static t_color	*set_light_color(t_scene_light_param *light)
 {
-	(void)data;
-	(void)p;
+	t_color	*tmp_color;
+	t_color	*color;
+
+	tmp_color = new_color(\
+					light->l_color[0], \
+					light->l_color[1], \
+					light->l_color[2] \
+						);
+	color = multiply_scalar(tmp_color, light->l_britghness);
+	free(tmp_color);
+	return (color);
 }
+
+static t_tuple	*set_light_positon(t_scene_light_param *light)
+{
+	return (new_point(\
+					light->l_light_point[0], \
+					light->l_light_point[1], \
+					light->l_light_point[2] \
+						));
+}
+
+static t_list	*get_world_light_params(t_parameters *p)
+{
+	t_scene_light_param		*tmp_light;
+	t_list					*head_list;
+	t_point_light			*point_light;
+
+	head_list = NULL;
+	tmp_light = p->light_head;
+	while (tmp_light)
+	{
+		point_light = new_point_light(set_light_positon(p), set_light_color(p));
+		if (!head_list)
+			head_list = ft_lstnew(point_light);
+		else
+			ft_lstadd_back(&head_list, ft_lstnew(point_light));
+		tmp_light = tmp_light->next;
+	}
+	return (head_list);
+}
+
+static t_camera	*get_camera_params(t_parameters *p)
+{
+	t_camera	*camera;
+
+	camera = new_camera(0, 0, 0);
+	camera->fov = p->c_fov;
+	return (camera);
+}
+
+void	get_params(t_data *data, t_parameters *p)
+{
+	data->world = new_world();
+	data->world->lights = get_world_light_params(p);
+	data->world->objects.spheres = get_world_objects_params(p);
+}
+
 				/*
 				* BÁFICA 
 				*/
