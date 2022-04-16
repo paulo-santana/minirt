@@ -187,11 +187,13 @@ void draw_spheres(t_data *data)
 
 void	generate_world(t_data *data)
 {
+	t_world *world = new_world();
 	t_shape *floors = new_plane();
 	t_matrix *transforms[5];
 	set_transform(floors, scaling(10, 0.01, 10));
+	floors->material->color->red = .5;
 	floors->material->color->green = .9;
-	floors->material->color->blue = .9;
+	floors->material->color->blue = .6;
 	floors->material->specular = 0;
 
 	t_shape *wall = new_plane();
@@ -201,6 +203,18 @@ void	generate_world(t_data *data)
 	t_matrix *trans = matrix_multiply_n(transforms);
 	set_transform(wall, trans);
 	wall->material->specular = .1;
+
+	add_sphere(world, wall);
+
+	wall = new_plane();
+	transforms[0] = rotation_x(M_PI_2);
+	transforms[1] = translation(0, 0, -13.5);
+	transforms[2] = NULL;
+	trans = matrix_multiply_n(transforms);
+	set_transform(wall, trans);
+	wall->material->color->red = .1;
+	wall->material->color->green = .8;
+	wall->material->color->blue = 1;
 
 	t_shape *middle = new_sphere();
 	set_transform(middle, translation(0.5, 1, 0.0));
@@ -242,7 +256,6 @@ void	generate_world(t_data *data)
 				new_point(0, 1.5, -5),
 				new_point(0, 1, 0),
 				new_vector(0, 1, 0)));
-	t_world *world = new_world();
 	add_light(world, light);
 	// add_light(world, light2);
 	// t_point_light *light2 = new_point_light(new_point(10, 10, -10), new_color(.5, .2, 1));
@@ -537,42 +550,42 @@ int log_mouse(t_data *data)
 	return (0);
 }
 
-// int	main(void)
-// {
-// 	t_data data;
-//
-// 	data = (t_data){};
-// 	data.navigation_mode = 1;
-// 	data.cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
-// 	data.mlx = mlx_init();
-// 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
-// 	data.resolution = 0.2;
-// 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
-// 	generate_world(&data);
-// 	mlx_hook(data.window, 2, 1, key_press_hook, &data);
-// 	mlx_hook(data.window, 3, 2, key_release_hook, &data);
-// 	mlx_loop_hook(data.mlx, update, &data);
-// 	mlx_mouse_hide(data.mlx, data.window);
-//
-// 	data.last_tick = milis();
-// 	center_mouse(&data);
-// 	mlx_loop(data.mlx);
-// 	return (0);
-// }
-
-int	main(int argc, char **argv)
+int	main(void)
 {
-	t_parameters	*p;
+	t_data data;
 
-	if (argc != 2)
-	{
-		ft_putendl_fd("Error\nBad arguments", 2);
-		return (1);
-	}
-	p = malloc(sizeof(t_parameters));
-	init_allocated_parameters(p);
-	if (file_check(argv[1], p) == -1)
-		ft_putendl_fd("Erou!", 2);
-	free_allocated_parameters(p);
+	data = (t_data){};
+	data.navigation_mode = 1;
+	data.cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
+	data.mlx = mlx_init();
+	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
+	data.resolution = 0.2;
+	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
+	generate_world(&data);
+	mlx_hook(data.window, 2, 1, key_press_hook, &data);
+	mlx_hook(data.window, 3, 2, key_release_hook, &data);
+	mlx_loop_hook(data.mlx, update, &data);
+	mlx_mouse_hide(data.mlx, data.window);
+
+	data.last_tick = milis();
+	center_mouse(&data);
+	mlx_loop(data.mlx);
 	return (0);
 }
+//
+// int	main(int argc, char **argv)
+// {
+// 	t_parameters	*p;
+//
+// 	if (argc != 2)
+// 	{
+// 		ft_putendl_fd("Error\nBad arguments", 2);
+// 		return (1);
+// 	}
+// 	p = malloc(sizeof(t_parameters));
+// 	init_allocated_parameters(p);
+// 	if (file_check(argv[1], p) == -1)
+// 		ft_putendl_fd("Erou!", 2);
+// 	free_allocated_parameters(p);
+// 	return (0);
+// }
