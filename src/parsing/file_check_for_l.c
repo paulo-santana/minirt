@@ -6,23 +6,28 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 20:30:30 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/16 15:46:09 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "headers_bonus.h"
 
 static void	update_parameters(char **tokens, t_parameters *p)
 {
-	p->l_light_point = malloc(sizeof(double) * 3);
-	p->l_light_point[0] = (double) ft_atof(tokens[1]);
-	p->l_light_point[1] = (double) ft_atof(tokens[3]);
-	p->l_light_point[2] = (double) ft_atof(tokens[5]);
-	p->l_britghness = (double) ft_atof(tokens[6]);
-	p->l_color = malloc(sizeof(double) * 3);
-	p->l_color[0] = (double) ft_atof(tokens[7]);
-	p->l_color[1] = (double) ft_atof(tokens[9]);
-	p->l_color[2] = (double) ft_atof(tokens[11]);
+	t_scene_light_param	*light;
+
+	light = malloc(sizeof(t_scene_light_param));
+	light->l_light_point = malloc(sizeof(double) * 3);
+	light->l_light_point[0] = (double) ft_atof(tokens[1]);
+	light->l_light_point[1] = (double) ft_atof(tokens[3]);
+	light->l_light_point[2] = (double) ft_atof(tokens[5]);
+	light->l_britghness = (double) ft_atof(tokens[6]);
+	light->l_color = malloc(sizeof(double) * 3);
+	light->l_color[0] = (double) 1.0;
+	light->l_color[1] = (double) 1.0;
+	light->l_color[2] = (double) 1.0;
+	light->next = NULL;
+	add_scene_light_param(p, light);
 }
 
 static int	check_min_max(char **tokens)
@@ -80,16 +85,23 @@ static int	validate_line(char **tokens)
 int	check_for_l(char **file_tokens, t_parameters *p)
 {
 	char	**tokens;
+	int		line_index;
 	char	status;
 
 	status = 0;
 	if (count_identifiers(file_tokens, "L") != 1)
 		return (send_error("Error\nL parameter: It must be one L"));
-	tokens = tokenize_line(file_tokens[get_line(file_tokens, "L")]);
-	if (validate_line(tokens) == -1)
-		status = -1;
-	else
-		update_parameters(tokens, p);
-	free_tokens(tokens);
+	line_index = get_line(file_tokens, "L");
+	while (line_index < get_tokens_len(file_tokens))
+	{
+		tokens = tokenize_line(file_tokens[line_index]);
+		if (validate_line(tokens) == -1)
+			status = -1;
+		else
+			update_parameters(tokens, p);
+		++line_index;
+		line_index += get_line(file_tokens + line_index, "L");
+		free_tokens(tokens);
+	}
 	return (status);
 }

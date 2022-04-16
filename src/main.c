@@ -185,6 +185,163 @@ void draw_spheres(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
 }
 
+				/*
+				* BÁFICA 
+				*/
+static void	set_cylinder_props_position(t_shape *shape, t_scene_object_param *obj)
+{
+	shape->cylinder_props.position.x = obj->cordinates[0];
+	shape->cylinder_props.position.y = obj->cordinates[1];
+	shape->cylinder_props.position.z = obj->cordinates[2];
+	shape->cylinder_props.max = obj->height * 0.5;
+	shape->cylinder_props.min = - obj->height * 0.5;
+	shape->sphere_props.radius = obj->diameter * 0.5;
+}
+
+static void	set_plane_props_position(t_shape *shape, t_scene_object_param *obj)
+{
+	shape->sphere_props.position.x = obj->cordinates[0];
+	shape->sphere_props.position.y = obj->cordinates[1];
+	shape->sphere_props.position.z = obj->cordinates[2];
+}
+
+static void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
+{
+	shape->sphere_props.position.x = obj->cordinates[0];
+	shape->sphere_props.position.y = obj->cordinates[1];
+	shape->sphere_props.position.z = obj->cordinates[2];
+	shape->sphere_props.radius = obj->diameter * 0.5;
+}
+
+static void	set_props(t_shape *shape, t_scene_object_param *obj)
+{
+	if (!ft_strcmp(obj->identifier, "sp"))
+		set_sphere_props_position(shape, obj);
+	if (!ft_strcmp(obj->identifier, "pl"))
+		set_plane_props_position(shape, obj);
+	if (!ft_strcmp(obj->identifier, "cy"))
+		set_cylinder_props_position(shape, obj);
+}
+
+static void	set_color(t_shape *shape, t_scene_object_param *obj)
+{
+	shape->material->color = new_color(\
+								obj->color[0], \
+								obj->color[1], \
+								obj->color[2] \
+									);
+}
+
+static t_shape	*get_scene_shape(t_scene_object_param *obj)
+{
+	if (!ft_strcmp(obj->identifier, "sp"))
+		return (new_sphere());
+	else if (!ft_strcmp(obj->identifier, "pl"))
+		return (new_plane());
+	else if (!ft_strcmp(obj->identifier, "cy"))
+		return (new_cylinder());
+}
+
+static void	set_ambient(t_shape *shape, t_parameters *p)
+{
+	t_color	*tmp_color;
+
+	tmp_color = new_color(\
+						p->a_color[0], \
+						p->a_color[1], \
+						p->a_color[2] \
+							);
+	shape->material->color = multiply_scalar_color(tmp_color, p->a_lighting);
+	free(tmp_color);
+}
+
+static t_list	*get_world_objects_params(t_parameters *p)
+{
+	t_scene_object_param	*tmp_obj;
+	t_list					*head_list;
+	t_shape					*shape;
+
+	head_list = NULL;
+	tmp_obj = p->object_head;
+	while (tmp_obj)
+	{
+		shape = get_scene_shape(tmp_obj);
+		set_props(shape, tmp_obj);
+		set_position(shape, tmp_obj);
+		set_color(shape, tmp_obj);
+		if (!head_list)
+			head_list = ft_lstnew(shape);
+		else
+			ft_lstadd_back(&head_list, ft_lstnew(shape));
+		tmp_obj = tmp_obj->next;
+	}
+	return (head_list);
+}
+
+static t_color	*set_light_color(t_scene_light_param *light)
+{
+	t_color	*tmp_color;
+	t_color	*color;
+
+	tmp_color = new_color(\
+					light->l_color[0], \
+					light->l_color[1], \
+					light->l_color[2] \
+						);
+	color = multiply_scalar(tmp_color, light->l_britghness);
+	free(tmp_color);
+	return (color);
+}
+
+static t_tuple	*set_light_positon(t_scene_light_param *light)
+{
+	return (new_point(\
+					light->l_light_point[0], \
+					light->l_light_point[1], \
+					light->l_light_point[2] \
+						));
+}
+
+static t_list	*get_world_light_params(t_parameters *p)
+{
+	t_scene_light_param		*tmp_light;
+	t_list					*head_list;
+	t_point_light			*point_light;
+
+	head_list = NULL;
+	tmp_light = p->light_head;
+	while (tmp_light)
+	{
+		point_light = new_point_light(set_light_positon(p), set_light_color(p));
+		if (!head_list)
+			head_list = ft_lstnew(point_light);
+		else
+			ft_lstadd_back(&head_list, ft_lstnew(point_light));
+		tmp_light = tmp_light->next;
+	}
+	return (head_list);
+}
+
+static t_camera	*get_camera_params(t_parameters *p)
+{
+	t_camera	*camera;
+
+	camera = new_camera(0, 0, 0);
+	camera->fov = p->c_fov;
+	return (camera);
+}
+
+void	get_params(t_data *data, t_parameters *p)
+{
+	data->world = new_world();
+	data->world->lights = get_world_light_params(p);
+	data->world->objects.spheres = get_world_objects_params(p);
+}
+
+				/*
+				* BÁFICA 
+				*/
+
 void	generate_world(t_data *data)
 {
 	t_world *world = new_world();
