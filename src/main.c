@@ -28,14 +28,6 @@
 #define XK_rightarrow                    65363  /* U+2192 RIGHTWARDS ARROW */
 #define XK_downarrow                     65364  /* U+2193 DOWNWARDS ARROW */
 
-typedef struct s_image {
-	void	*ptr;
-	char	*data;
-	int		bpp;
-	int		size_line;
-	int		endian;
-} t_image;
-
 typedef struct s_rotation {
 	int	x_plus;
 	int x_minus;
@@ -53,25 +45,6 @@ typedef struct s_movement {
 	int up;
 	int down;
 }	t_movement;
-
-typedef struct s_data {
-	void			*mlx;
-	void			*window;
-	t_image			mlx_img;
-	t_canvas		*canvas;
-	t_camera		*camera;
-	t_tuple			*cam_position;
-	t_tuple			*cam_orientation;
-	t_world			*world;
-	t_movement		movement;
-	t_rotation		rotation;
-	double			last_tick;
-	double			resolution;
-	double			delta_mouse_x;
-	double			delta_mouse_y;
-	int				navigation_mode;
-	int				rendered;
-} t_data;
 
 double deg_to_rad(double degree)
 {
@@ -518,68 +491,6 @@ void	generate_world(t_data *data)
 	data->cam_position = new_point(0, 1, -4.5);
 }
 
-int	key_release_hook(int key, t_data *data)
-{
-	if (key == 'q')
-	{
-		destroy_world(data->world);
-		exit(0);
-	}
-	else if (key == 'w')
-		data->movement.forward = 0;
-	else if (key == 's')
-		data->movement.backward = 0;
-	else if (key == 'a')
-		data->movement.left = 0;
-	else if (key == 'd')
-		data->movement.right = 0;
-	else if (key == 'k')
-		data->movement.up = 0;
-	else if (key == 'j')
-		data->movement.down = 0;
-	else if (key == XK_uparrow)
-		data->rotation.x_plus = 0;
-	else if (key == XK_downarrow)
-		data->rotation.x_minus = 0;
-	else if (key == XK_leftarrow)
-		data->rotation.y_plus = 0;
-	else if (key == XK_rightarrow)
-		data->rotation.y_minus = 0;
-	if (key == 'm')
-		data->navigation_mode = !data->navigation_mode;
-	return (1);
-}
-
-int	key_press_hook(int key, t_data *data)
-{
-	if (key == 'q')
-	{
-		destroy_world(data->world);
-		exit(0);
-	}
-	else if (key == 'w')
-		data->movement.forward = 1;
-	else if (key == 's')
-		data->movement.backward = 1;
-	else if (key == 'a')
-		data->movement.left = 1;
-	else if (key == 'd')
-		data->movement.right = 1;
-	else if (key == 'k')
-		data->movement.up = 1;
-	else if (key == 'j')
-		data->movement.down = 1;
-	else if (key == XK_uparrow)
-		data->rotation.x_plus = 1;
-	else if (key == XK_downarrow)
-		data->rotation.x_minus = 1;
-	else if (key == XK_leftarrow)
-		data->rotation.y_plus = 1;
-	else if (key == XK_rightarrow)
-		data->rotation.y_minus = 1;
-	return (1);
-}
-
 double milis(void)
 {
 	struct timeval current_time;
@@ -597,26 +508,6 @@ void print_fps(t_data *data, double delta_time)
 	snprintf(buff, 100, "fps: %f", seconds);
 	mlx_string_put(data->mlx, data->window, 10, 10, 0xff5500, buff);
 	seconds = 0;
-}
-
-void move_camera(t_data *data, t_tuple *target)
-{
-	if (data->movement.right)
-		target->x = 1;
-	else if (data->movement.left)
-		target->x = -1;
-
-	if (data->movement.up)
-		target->y = 1;
-	else if (data->movement.down)
-		target->y = -1;
-
-	if (data->movement.forward)
-		target->z = 1;
-	else if (data->movement.backward)
-		target->z = -1;
-	else
-		target->z = 0;
 }
 
 void get_mouse_delta(t_data *data, double *x, double *y)
@@ -645,24 +536,6 @@ void rotate_camera(t_data *data, double delta_time)
 	data->cam_orientation->x += rot_speed * mousey;
 }
 
-int is_moving(t_data *data)
-{
-	return (
-			data->movement.forward ||
-			data->movement.backward ||
-			data->movement.left ||
-			data->movement.right ||
-			data->movement.up ||
-			data->movement.down ||
-			data->rotation.x_plus ||
-			data->rotation.y_plus ||
-			data->rotation.z_plus ||
-			data->rotation.x_minus ||
-			data->rotation.y_minus ||
-			data->rotation.z_minus
-			);
-}
-
 void print_stats(t_data *data)
 {
 	printf("cam: yaw: %.2f, pitch: %.2f, roll: %.2f\n",
@@ -674,66 +547,6 @@ void print_stats(t_data *data)
 void center_mouse(t_data *data)
 {
 	mlx_mouse_move(data->mlx, data->window, WIN_WIDTH / 2, WIN_HEIGHT / 2);
-}
-
-void navigate(t_data *data)
-{
-	double delta_time;
-	double current_time;
-	t_tuple *distance;
-	static t_tuple up = {0, 1, 0, 0};
-	t_tuple forward = {0, 0, 1, 0};
-	t_tuple target = {0, 0, 1, 0};
-	// t_tuple *look_at;
-	t_tuple *tmp;
-	t_tuple *direction;
-	double cam_speed = 2;
-
-	data->rendered = 0;
-	current_time = milis();
-	delta_time = (current_time - data->last_tick) / 1000;
-	data->last_tick = current_time;
-
-	// if (is_moving(data))
-	{
-		move_camera(data, &target);
-		if (data->cam_orientation->x < deg_to_rad(-90))
-			data->cam_orientation->x = deg_to_rad(-90);
-		else if (data->cam_orientation->x > deg_to_rad(90))
-			data->cam_orientation->x = deg_to_rad(90);
-
-		t_matrix *roty = rotation_y(data->cam_orientation->y);
-		t_matrix *rotx = rotation_x(data->cam_orientation->x);
-		t_matrix *cam_rotation = matrix_multiply(roty, rotx);
-		free(roty);
-		free(rotx);
-		direction = matrix_multiply_tuple(cam_rotation, &target);
-		distance = multiply_scalar(direction, cam_speed * delta_time);
-		tmp = data->cam_position;
-		data->cam_position = add_tuples(data->cam_position, distance);
-		free(tmp);
-
-		free(direction);
-		direction = matrix_multiply_tuple(cam_rotation, &forward);
-		// look_at = add_tuples(data->cam_position, direction);
-		destroy_camera(data->camera);
-
-		float ratio = (float)WIN_WIDTH / WIN_HEIGHT;
-		float size = (float)(WIN_WIDTH * data->resolution);
-		tmp = matrix_multiply_tuple(cam_rotation, &up);
-		t_matrix *view = view_transform(data->cam_position, direction, tmp);
-		data->camera = new_camera((int)size, (int)(size / ratio), M_PI / 3);
-		set_camera_transform(data->camera, view);
-		free(tmp);
-		// free(look_at);
-	}
-	// free(data->canvas);
-
-	draw_spheres(data);
-	rotate_camera(data, delta_time);
-	center_mouse(data);
-	print_fps(data, delta_time);
-	// mlx_clear_window(data->mlx, data->window);
 }
 
 void render_full(t_data *data)
@@ -753,15 +566,6 @@ void render_full(t_data *data)
 	mlx_string_put(data->mlx, data->window, 20, 20, 0xff0000, "Testado");
 }
 
-int update(t_data *data)
-{
-	if (data->navigation_mode)
-		navigate(data);
-	else
-		render_full(data);
-	return (0);
-}
-
 double get_delta_time(t_data *data)
 {
 	double current;
@@ -773,45 +577,36 @@ double get_delta_time(t_data *data)
 	return (delta);
 }
 
-void activate_firulas(t_data *data)
-{
-	data->navigation_mode = 1;
-	data->cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
-	data->resolution = 0.2;
-	mlx_loop_hook(data->mlx, update, data);
-	// mlx_mouse_hide(data->mlx, data->window);
-}
-
 int	main(int argc, char **argv)
 {
-	t_data data;
+	t_data			data;
 	t_parameters	*p;
-
-	data = (t_data){};
-	data.mlx = mlx_init();
-	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
-	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
-	mlx_hook(data.window, 2, 1, key_press_hook, &data);
-	mlx_hook(data.window, 3, 2, key_release_hook, &data);
-
-	data.last_tick = milis();
-	center_mouse(&data);
 
 	if (argc != 2)
 	{
 		ft_putendl_fd("Error\nBad arguments", 2);
 		return (1);
 	}
+	data = (t_data){};
 	p = malloc(sizeof(t_parameters));
 	init_allocated_parameters(p);
 	if (file_check(argv[1], p) == -1)
-		ft_putendl_fd("Erou!", 2);
+	{
+		free_allocated_parameters(p);
+		return (1);
+	}
 	get_params(&data, p);
-	// generate_world(&data);
-	activate_firulas(&data);
+	free_allocated_parameters(p);
+	data.mlx = mlx_init();
+	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
+	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
+	mlx_hook(data.window, 17, 1L << 2, close_screen, &data);
+
+	data.last_tick = milis();
+	center_mouse(&data);
+
 	render_full(&data);
 	mlx_loop(data.mlx);
 
-	free_allocated_parameters(p);
 	return (0);
 }

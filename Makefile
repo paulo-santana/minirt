@@ -76,6 +76,8 @@ COMMON_FILES += camera/view.c
 
 COMMON_FILES += utils/double_comparison.c
 
+COMMON_FILES += hooks/hooks.c
+
 COMMON_FILES += debug.c
 
 SRC_DIR = ./src
@@ -89,6 +91,7 @@ OBJ_DIRS += $(OBJ_ROOT)/shapes
 OBJ_DIRS += $(OBJ_ROOT)/lights
 OBJ_DIRS += $(OBJ_ROOT)/world
 OBJ_DIRS += $(OBJ_ROOT)/camera
+OBJ_DIRS += $(OBJ_ROOT)/hooks
 
 MANDATORY_OBJ = $(addprefix $(OBJ_ROOT)/, $(COMMON_FILES:.c=.o))
 MANDATORY_OBJ += $(addprefix $(OBJ_ROOT)/, $(MANDATORY_FILES:.c=.o))

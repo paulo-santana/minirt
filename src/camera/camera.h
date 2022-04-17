@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:08:55 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/17 16:50:58 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/17 23:38:33 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@
 # include "matrix/matrix.h"
 # include "ray/ray.h"
 # include "structures.h"
-
-typedef struct s_camera {
-	int			hsize;
-	int			vsize;
-	double		fov;
-	double		pixel_size;
-	double		half_width;
-	double		half_height;
-	t_matrix	*transform;
-	t_matrix	*inverse_transform;
-}	t_camera;
 
 t_camera		*new_camera(int hsize, int vsize, double field_of_view);
 void			set_camera_transform(t_camera *camera, t_matrix *t);

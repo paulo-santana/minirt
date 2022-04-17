@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 14:11:11 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/17 23:30:26 by fbafica          ###   ########.fr       */
+/*   Created: 2022/04/17 22:36:43 by fbafica           #+#    #+#             */
+/*   Updated: 2022/04/17 23:50:09 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "minirt.h"
 
-# define EPSILON 0.0000001
+void	free_data(t_data *data)
+{
+	free(data->canvas->data);
+	destroy_camera(data->camera);
+	destroy_world(data->world);
+	mlx_destroy_window(data->mlx, data->window);
+	mlx_destroy_image(data->mlx, data->mlx_img.ptr);
+}
 
-# include <stdio.h>
-# include <stdlib.h>
-
-# include <mlx.h>
-# include "structures.h"
-# include "tuple/tuple.h"
-# include "utils/utils.h"
-# include "matrix/matrix.h"
-# include "camera/camera.h"
-# include "world/world.h"
-# include "hooks/hooks.h"
-
-#endif /* !MINIRT_H */
+int	close_screen(t_data *data)
+{
+	free_data(data);
+	exit(1);
+	return (0);
+}

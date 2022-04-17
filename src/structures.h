@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 14:09:48 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/16 02:26:15 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/17 23:40:52 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct s_canvas				t_canvas;
 typedef struct s_computations		t_computations;
 typedef struct s_scene_object_param	t_scene_object_param;
 typedef struct s_parameters			t_parameters;
+typedef struct s_data				t_data;
+typedef struct s_image				t_image;
+typedef struct s_camera				t_camera;
 
 typedef struct s_scene_light_param
 {
@@ -180,6 +183,42 @@ struct s_canvas {
 	unsigned int	*data;
 	int				width;
 	int				height;
+};
+
+struct s_image {
+	void	*ptr;
+	char	*data;
+	int		bpp;
+	int		size_line;
+	int		endian;
+};
+
+struct s_camera {
+	int			hsize;
+	int			vsize;
+	double		fov;
+	double		pixel_size;
+	double		half_width;
+	double		half_height;
+	t_matrix	*transform;
+	t_matrix	*inverse_transform;
+};
+
+struct s_data {
+	void			*mlx;
+	void			*window;
+	t_image			mlx_img;
+	t_canvas		*canvas;
+	t_camera		*camera;
+	t_tuple			*cam_position;
+	t_tuple			*cam_orientation;
+	t_world			*world;
+	double			last_tick;
+	double			resolution;
+	double			delta_mouse_x;
+	double			delta_mouse_y;
+	int				navigation_mode;
+	int				rendered;
 };
 
 #endif /* !STRUCTURES_H */
