@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 14:01:39 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 20:28:50 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/17 20:36:20 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int			get_line(char **tokens, char *identidier);
 void		space_handler(char **input);
 char		**tokenize_line(char *line);
 int			check_if_digit(char *token);
+int			check_normalized(char *x, char *y, char *z);
 void		init_allocated_parameters(t_parameters *p);
 void		free_allocated_parameters(t_parameters *p);
 void		free_scene_object_param(t_scene_object_param *head);

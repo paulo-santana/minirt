@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 15:58:59 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/16 23:26:17 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/17 20:56:19 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ static int	validate_line(char **tokens)
 		return (send_error("Error\ncy parameter: Bad digit"));
 	if (check_min_max(tokens) == -1)
 		return (send_error("Error\ncy parameter: Bad min or max"));
+	if (check_normalized(tokens[6], tokens[8], tokens[10]) == -1)
+		return (send_error("Error\ncy parameter: Bad normalization"));
 	return (0);
 }
 

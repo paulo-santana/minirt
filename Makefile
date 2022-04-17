@@ -34,6 +34,7 @@ COMMON_FILES += parsing/tokens_utils_1.c
 
 MANDATORY_FILES = parsing/file_check_utils_1.c
 MANDATORY_FILES += parsing/file_check_utils_2.c
+MANDATORY_FILES += parsing/file_check_utils_3.c
 MANDATORY_FILES += parsing/list_utils_1.c
 MANDATORY_FILES += parsing/file_check_for_l.c
 
