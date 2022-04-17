@@ -68,7 +68,10 @@ COMMON_FILES += lights/lighting.c
 COMMON_FILES += lights/lighting_utils.c
 COMMON_FILES += lights/point_light.c
 
-COMMON_FILES += world/world.c
+COMMON_FILES += world/world_1.c
+COMMON_FILES += world/world_3.c
+COMMON_FILES += world/world_2.c
+COMMON_FILES += world/world_4.c
 
 COMMON_FILES += camera/camera.c
 COMMON_FILES += camera/canvas.c
