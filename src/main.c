@@ -20,41 +20,13 @@
 #include <camera/camera.h>
 #include <unistd.h>
 
-#define WIN_WIDTH 50
-#define WIN_HEIGHT 50
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 600
 
 #define XK_leftarrow                     65361 /* U+2190 LEFTWARDS ARROW */
 #define XK_uparrow                       65362  /* U+2191 UPWARDS ARROW */
 #define XK_rightarrow                    65363  /* U+2192 RIGHTWARDS ARROW */
 #define XK_downarrow                     65364  /* U+2193 DOWNWARDS ARROW */
-
-typedef struct s_rotation {
-	int	x_plus;
-	int x_minus;
-	int y_plus;
-	int y_minus;
-	int z_plus;
-	int z_minus;
-}	t_rotation;
-
-typedef struct s_movement {
-	int	forward;
-	int backward;
-	int left;
-	int right;
-	int up;
-	int down;
-}	t_movement;
-
-double deg_to_rad(double degree)
-{
-	return degree * M_PI / 180;
-}
-
-double rad_to_deg(double radian)
-{
-	return radian * 180 / M_PI;
-}
 
 void put_pixel(t_canvas *img, t_color *color, int x, int y)
 {
@@ -167,195 +139,10 @@ void draw_spheres(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
 }
 
-static t_matrix *get_orientation_matrix(double vector[3])
-{
-	double		xy_length;
-	double		z_angle;
-	double		x_angle;
-	t_matrix	*rot_angles[3];
-	t_matrix	*rot;
-
-	xy_length = sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
-	if (xy_length == 0)
-		z_angle = deg_to_rad(90);
-	else
-		z_angle = acos(vector[1] / xy_length);
-	x_angle = acos(xy_length);
-	rot_angles[0] = rotation_x(x_angle);
-	rot_angles[1] = rotation_z(z_angle);
-	rot_angles[2] = NULL;
-	rot = matrix_multiply_n(rot_angles);
-	free(rot_angles[0]);
-	free(rot_angles[1]);
-	return (rot);
-}
-
 				/*
 				* BÁFICA 
 				*/
-static void	set_cylinder_props_position(t_shape *shape, t_scene_object_param *obj)
-{
-	t_matrix	*translate;
-	t_matrix	*rot;
-	t_matrix	*scale;
-	t_matrix	*transform;
 
-	translate = translation(
-			obj->cordinates[0],
-			obj->cordinates[1],
-			obj->cordinates[2]);
-	rot = get_orientation_matrix(obj->orientation_vector);
-	scale = scaling(obj->diameter / 2, 1, obj->diameter / 2);
-	transform = matrix_multiply3(scale, rot, translate);
-	set_transform(shape, transform);
-	shape->cylinder_props.max = obj->height * 0.5;
-	shape->cylinder_props.min = - obj->height * 0.5;
-	shape->cylinder_props.radius = obj->diameter * 0.5;
-}
-
-static void	set_plane_props_position(t_shape *shape, t_scene_object_param *obj)
-{
-	t_matrix	*translate;
-	t_matrix	*rot;
-	t_matrix	*transform;
-
-	translate = translation(
-			obj->cordinates[0],
-			obj->cordinates[1],
-			obj->cordinates[2]);
-	rot = get_orientation_matrix(obj->orientation_vector);
-	transform = matrix_multiply(translate, rot);
-	set_transform(shape, transform);
-}
-
-static void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
-{
-	double		x;
-	double		y;
-	double		z;
-	t_matrix	*transl;
-	t_matrix	*scale;
-
-	x = obj->cordinates[0];
-	y = obj->cordinates[1];
-	z = obj->cordinates[2];
-	transl = translation(x, y, z);
-	scale = scaling(obj->diameter / 2, obj->diameter / 2, obj->diameter / 2);
-
-	set_transform(shape, matrix_multiply(transl, scale));
-	free(transl);
-	free(scale);
-	shape->sphere_props.radius = obj->diameter * 0.5;
-}
-
-static void	set_props(t_shape *shape, t_scene_object_param *obj)
-{
-	if (!ft_strcmp(obj->identifier, "sp"))
-		set_sphere_props_position(shape, obj);
-	if (!ft_strcmp(obj->identifier, "pl"))
-		set_plane_props_position(shape, obj);
-	if (!ft_strcmp(obj->identifier, "cy"))
-		set_cylinder_props_position(shape, obj);
-}
-
-static void	set_color(t_shape *shape, t_scene_object_param *obj)
-{
-	shape->material->color = new_color(\
-								obj->color[0], \
-								obj->color[1], \
-								obj->color[2] \
-									);
-}
-
-static t_shape	*get_scene_shape(t_scene_object_param *obj)
-{
-	if (!ft_strcmp(obj->identifier, "sp"))
-		return (new_sphere());
-	else if (!ft_strcmp(obj->identifier, "pl"))
-		return (new_plane());
-	else if (!ft_strcmp(obj->identifier, "cy"))
-		return (new_cylinder());
-	else
-		return (NULL);
-}
-
-static void	set_ambient(t_shape *shape, t_parameters *p)
-{
-	t_color	*tmp_color;
-
-	tmp_color = new_color(\
-						p->a_color[0], \
-						p->a_color[1], \
-						p->a_color[2] \
-							);
-	shape->material->ambient = multiply_scalar_color(tmp_color, p->a_lighting);
-	free(tmp_color);
-}
-
-static t_list	*get_world_objects_params(t_parameters *p)
-{
-	t_scene_object_param	*tmp_obj;
-	t_list					*head_list;
-	t_shape					*shape;
-
-	head_list = NULL;
-	tmp_obj = p->object_head;
-	while (tmp_obj)
-	{
-		shape = get_scene_shape(tmp_obj);
-		set_ambient(shape, p);
-		set_props(shape, tmp_obj);
-		set_color(shape, tmp_obj);
-		ft_lstadd_back(&head_list, ft_lstnew(shape));
-		// if (!head_list)
-		// 	head_list = ft_lstnew(shape);
-		// else
-		// 	ft_lstadd_back(&head_list, ft_lstnew(shape));
-		tmp_obj = tmp_obj->next;
-	}
-	return (head_list);
-}
-
-static t_color	*set_light_color(t_scene_light_param *light)
-{
-	t_color	*tmp_color;
-	t_color	*color;
-
-	tmp_color = new_color(\
-					light->l_color[0], \
-					light->l_color[1], \
-					light->l_color[2] \
-						);
-	color = multiply_scalar_color(tmp_color, light->l_britghness);
-	free(tmp_color);
-	return (color);
-}
-
-static t_tuple	*set_light_positon(t_scene_light_param *light)
-{
-	return (new_point(\
-					light->l_light_point[0], \
-					light->l_light_point[1], \
-					light->l_light_point[2] \
-						));
-}
-
-static t_list	*get_world_light_params(t_parameters *p)
-{
-	t_scene_light_param		*tmp_light;
-	t_list					*head_list;
-	t_point_light			*point_light;
-
-	head_list = NULL;
-	tmp_light = p->light_head;
-	while (tmp_light)
-	{
-		point_light = new_point_light(set_light_positon(tmp_light), set_light_color(tmp_light));
-		ft_lstadd_back(&head_list, ft_lstnew(point_light));
-		tmp_light = tmp_light->next;
-	}
-	return (head_list);
-}
 
 static t_camera	*get_camera_params(t_parameters *p)
 {
@@ -604,6 +391,7 @@ int	main(int argc, char **argv)
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
+	mlx_hook(data.window, 12, 1L << 15, expose_hook, &data);
 	mlx_hook(data.window, 17, 1L << 2, close_screen, &data);
 
 	data.last_tick = milis();
