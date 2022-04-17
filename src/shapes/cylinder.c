@@ -76,7 +76,7 @@ t_tuple	*cylinder_normal_at(t_shape *cylinder, t_tuple *point)
 	dist = (point->x * point->x) + (point->z * point->z);
 	if (dist < 1 && point->y >= cylinder->cylinder_props.max - EPSILON)
 		return (new_vector(0, 1, 0));
-	else if (dist < 1 && point->y <= cylinder->cylinder_props.min - EPSILON)
+	else if (dist < 1 && point->y <= cylinder->cylinder_props.min + EPSILON)
 		return (new_vector(0, -1, 0));
 	return (new_vector(point->x, 0, point->z));
 }
