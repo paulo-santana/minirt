@@ -130,14 +130,15 @@ t_color	*shade_hit(t_world *world, t_computations *comps)
 	t_color			*final_color;
 
 	light = world->lights;
+	args.material = comps->object->material;
+	args.position = comps->over_point;
+	args.eye_vector = comps->eyev;
+	args.normal_vector = comps->normalv;
 	colors = NULL;
+	ft_lstadd_front(&colors, ft_lstnew(get_ambient(&args)));
 	while (light)
 	{
-		args.material = comps->object->material;
 		args.light = light->content;
-		args.position = comps->over_point;
-		args.eye_vector = comps->eyev;
-		args.normal_vector = comps->normalv;
 		args.in_shadow = is_shadowed(world, comps->over_point, light->content);
 		ft_lstadd_front(&colors, ft_lstnew(lighting(&args)));
 		light = light->next;

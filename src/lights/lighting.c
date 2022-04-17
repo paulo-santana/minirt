@@ -53,27 +53,13 @@ t_color	*get_specular(
 	return (specular);
 }
 
-t_color	*sum_colors(t_color *ambient, t_color *diffuse, t_color *specular)
+t_color	*sum_colors(t_color *diffuse, t_color *specular)
 {
-	t_color	*tmp_color;
 	t_color	*effective_color;
 
-	tmp_color = add_colors(ambient, diffuse);
-	effective_color = add_colors(tmp_color, specular);
-	free(tmp_color);
+	effective_color = add_colors(diffuse, specular);
 	free(specular);
-	free(ambient);
 	free(diffuse);
-	return (effective_color);
-}
-
-t_color	*shadowed_color(t_color *effective_color, t_lighting_args *args)
-{
-	t_color	*tmp_color;
-
-	tmp_color = effective_color;
-	effective_color = get_ambient(args, effective_color);
-	free(tmp_color);
 	return (effective_color);
 }
 
@@ -85,16 +71,16 @@ t_color	*lighting(t_lighting_args *args)
 	t_color	*tmp_color;
 	t_color	*effective_color;
 
+	if (args->in_shadow)
+		return (new_color(0, 0, 0));
 	effective_color = multiply_colors(
 			args->material->color, args->light->intensity);
-	if (args->in_shadow)
-		return (shadowed_color(effective_color, args));
 	tmp_tuple = subtract_tuples(args->light->position, args->position);
 	light_v = normalize(tmp_tuple);
 	free(tmp_tuple);
 	light_dot_normal = dot(light_v, args->normal_vector);
 	tmp_color = effective_color;
-	effective_color = sum_colors(get_ambient(args, effective_color),
+	effective_color = sum_colors(
 			get_diffuse(args, effective_color, light_dot_normal),
 			get_specular(args, light_dot_normal, light_v));
 	free(light_v);
