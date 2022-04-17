@@ -187,19 +187,12 @@ void	draw_canvas_ascii(t_canvas *canvas)
 void draw_spheres(t_data *data)
 {
 	free(data->canvas);
-	printf("desenhando na tela...\n");
 	data->canvas = render(data->camera, data->world);
 	draw_canvas_mlx(data->canvas, &data->mlx_img);
 	// draw_canvas_ascii(data->canvas);
 	// sleep(1);
 	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
-	printf("done\n");
 }
-
-// static double get_coordinate_angle(double pa, double pb, double absolute)
-// {
-// 	return (atan2(sqrt(pa * pa + pb * pb), absolute));
-// }
 
 static t_matrix *get_orientation_matrix(double vector[3])
 {
