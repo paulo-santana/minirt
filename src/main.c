@@ -73,6 +73,16 @@ typedef struct s_data {
 	int				rendered;
 } t_data;
 
+double deg_to_rad(double degree)
+{
+	return degree * M_PI / 180;
+}
+
+double rad_to_deg(double radian)
+{
+	return radian * 180 / M_PI;
+}
+
 void put_pixel(t_canvas *img, t_color *color, int x, int y)
 {
 	img->data[y * img->width + x] = color_to_int(color);
@@ -103,7 +113,7 @@ void	draw_canvas_mlx(t_canvas *canvas, t_image *mlx_img)
 		while (x < width)
 		{
 			// int limit = WIN_HEIGHT > WIN_WIDTH ? WIN_WIDTH : WIN_HEIGHT;
-			pixel_x = (int)roundf(((float)x / (float)width) * (float)canvas->width);
+			pixel_x = (int)(((float)x / (float)width) * (float)canvas->width);
 			if (pixel_x > canvas->width || pixel_y > canvas->height)
 				return ;
 			unsigned int color = canvas->data[pixel_y * canvas->width + pixel_x];
@@ -186,14 +196,52 @@ void draw_spheres(t_data *data)
 	printf("done\n");
 }
 
+// static double get_coordinate_angle(double pa, double pb, double absolute)
+// {
+// 	return (atan2(sqrt(pa * pa + pb * pb), absolute));
+// }
+
+static t_matrix *get_orientation_matrix(double vector[3])
+{
+	double		xy_length;
+	double		z_angle;
+	double		x_angle;
+	t_matrix	*rot_angles[3];
+	t_matrix	*rot;
+
+	xy_length = sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
+	if (xy_length == 0)
+		z_angle = deg_to_rad(90);
+	else
+		z_angle = acos(vector[1] / xy_length);
+	x_angle = acos(xy_length);
+	rot_angles[0] = rotation_x(x_angle);
+	rot_angles[1] = rotation_z(z_angle);
+	rot_angles[2] = NULL;
+	rot = matrix_multiply_n(rot_angles);
+	free(rot_angles[0]);
+	free(rot_angles[1]);
+	return (rot);
+}
+
 				/*
 				* BÁFICA 
 				*/
 static void	set_cylinder_props_position(t_shape *shape, t_scene_object_param *obj)
 {
-	shape->cylinder_props.position.x = obj->cordinates[0];
-	shape->cylinder_props.position.y = obj->cordinates[1];
-	shape->cylinder_props.position.z = obj->cordinates[2];
+	t_matrix	*translate;
+	t_matrix	*rot;
+	t_matrix	*scale;
+	t_matrix	*transform;
+
+	translate = translation(
+			obj->cordinates[0],
+			obj->cordinates[1],
+			obj->cordinates[2]);
+	rot = get_orientation_matrix(obj->orientation_vector);
+	scale = scaling(obj->diameter / 2, 1, obj->diameter / 2);
+	transform = matrix_multiply3(scale, rot, translate);
+	set_transform(shape, transform);
 	shape->cylinder_props.max = obj->height * 0.5;
 	shape->cylinder_props.min = - obj->height * 0.5;
 	shape->cylinder_props.radius = obj->diameter * 0.5;
@@ -201,15 +249,17 @@ static void	set_cylinder_props_position(t_shape *shape, t_scene_object_param *ob
 
 static void	set_plane_props_position(t_shape *shape, t_scene_object_param *obj)
 {
-	t_matrix	*trans;
+	t_matrix	*translate;
+	t_matrix	*rot;
+	t_matrix	*transform;
 
-	shape->plane_props.position.x = obj->cordinates[0];
-	shape->plane_props.position.y = obj->cordinates[1];
-	shape->plane_props.position.z = obj->cordinates[2];
-	trans = translation(shape->plane_props.position.x,
-			shape->plane_props.position.y,
-			shape->plane_props.position.z);
-	set_transform(shape, trans);
+	translate = translation(
+			obj->cordinates[0],
+			obj->cordinates[1],
+			obj->cordinates[2]);
+	rot = get_orientation_matrix(obj->orientation_vector);
+	transform = matrix_multiply(translate, rot);
+	set_transform(shape, transform);
 }
 
 static void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
@@ -218,12 +268,17 @@ static void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
 	double		y;
 	double		z;
 	t_matrix	*transl;
+	t_matrix	*scale;
 
 	x = obj->cordinates[0];
 	y = obj->cordinates[1];
 	z = obj->cordinates[2];
 	transl = translation(x, y, z);
-	set_transform(shape, transl);
+	scale = scaling(obj->diameter / 2, obj->diameter / 2, obj->diameter / 2);
+
+	set_transform(shape, matrix_multiply(transl, scale));
+	free(transl);
+	free(scale);
 	shape->sphere_props.radius = obj->diameter * 0.5;
 }
 
@@ -362,10 +417,22 @@ static t_camera	*get_camera_params(t_parameters *p)
 
 void	get_params(t_data *data, t_parameters *p)
 {
+	t_shape	*sphere;
+
+	sphere = new_sphere();
 	data->world = new_world();
 	data->world->lights = get_world_light_params(p);
 	data->world->objects.spheres = get_world_objects_params(p);
+	add_sphere(data->world, sphere);
+	sphere->material->color->red = 0.12;
+	sphere->material->color->green = 0.12;
+	sphere->material->color->blue = 0.12;
+	t_matrix *translate = translation(2, 2, 0);
+	set_transform(sphere, translate);
 	data->camera = get_camera_params(p);
+	data->cam_position = new_point(p->c_view_point[0],
+		p->c_view_point[1],
+		p->c_view_point[2]);
 }
 
 				/*
@@ -611,16 +678,6 @@ void print_stats(t_data *data)
 			data->cam_orientation->z);
 }
 
-double deg_to_rad(double degree)
-{
-	return degree * M_PI / 180;
-}
-
-double rad_to_deg(double radian)
-{
-	return radian * 180 / M_PI;
-}
-
 void center_mouse(t_data *data)
 {
 	mlx_mouse_move(data->mlx, data->window, WIN_WIDTH / 2, WIN_HEIGHT / 2);
@@ -688,6 +745,16 @@ void navigate(t_data *data)
 
 void render_full(t_data *data)
 {
+	t_canvas *canvas;
+	
+	if (data->rendered)
+		return ;
+	data->rendered = 1;
+	canvas = new_canvas(WIN_WIDTH, WIN_HEIGHT);
+	free(data->canvas);
+	data->canvas = canvas;
+	set_camera_dimensions(data->camera, data->canvas);
+	mlx_mouse_show(data->mlx, data->window);
 	mlx_string_put(data->mlx, data->window, 20, 20, 0xff00, "Teste");
 	draw_spheres(data);
 	mlx_string_put(data->mlx, data->window, 20, 20, 0xff0000, "Testado");
@@ -716,7 +783,6 @@ double get_delta_time(t_data *data)
 void activate_firulas(t_data *data)
 {
 	data->navigation_mode = 1;
-	data->cam_position = new_point(0, 0, -1);
 	data->cam_orientation = new_tuple(-2 * M_PI, -2 * M_PI, 2 * M_PI, 0);
 	data->resolution = 0.2;
 	mlx_loop_hook(data->mlx, update, data);
@@ -747,8 +813,8 @@ int	main(int argc, char **argv)
 	init_allocated_parameters(p);
 	if (file_check(argv[1], p) == -1)
 		ft_putendl_fd("Erou!", 2);
-	// get_params(&data, p);
-	generate_world(&data);
+	get_params(&data, p);
+	// generate_world(&data);
 	activate_firulas(&data);
 	render_full(&data);
 	mlx_loop(data.mlx);
