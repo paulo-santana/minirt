@@ -63,9 +63,17 @@ t_world	*default_world(void)
 	return (world);
 }
 
+void	destroy_shape(void *data)
+{
+	t_shape	*shape;
+
+	shape = data;
+	shape->destroy_fn(shape);
+}
+
 void	destroy_world(t_world *world)
 {
 	ft_lstclear(&world->lights, (void (*)(void *))destroy_point_light);
-	ft_lstclear(&world->objects.spheres, (void *)destroy_sphere);
+	ft_lstclear(&world->objects.spheres, destroy_shape);
 	free(world);
 }
