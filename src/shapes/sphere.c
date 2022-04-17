@@ -21,6 +21,7 @@ t_shape	*new_sphere(void)
 	t_shape	*sphere;
 
 	sphere = new_shape();
+	sphere->type = OBJ_SPHERE;
 	sphere->sphere_props.position = (t_tuple){0, 0, 0, 1};
 	sphere->sphere_props.radius = 1;
 	sphere->intersect = sphere_intersect;
@@ -53,8 +54,11 @@ t_tuple	*sphere_normal_at(t_shape *shape, t_tuple *point)
 double	get_discriminant(t_sphere *sphere, t_ray *ray, double abc[3])
 {
 	t_tuple		*sphere_to_ray;
+	t_tuple		center;
 
-	sphere_to_ray = subtract_tuples(ray->origin, &sphere->position);
+	center = (t_tuple){0, 0, 0, 1};
+	(void)sphere;
+	sphere_to_ray = subtract_tuples(ray->origin, &center);
 	abc[0] = dot(ray->direction, ray->direction);
 	abc[1] = 2 * dot(ray->direction, sphere_to_ray);
 	abc[2] = dot(sphere_to_ray, sphere_to_ray) - 1;
