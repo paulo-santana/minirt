@@ -20,8 +20,8 @@
 #include <camera/camera.h>
 #include <unistd.h>
 
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+#define WIN_WIDTH 50
+#define WIN_HEIGHT 50
 
 #define XK_leftarrow                     65361 /* U+2190 LEFTWARDS ARROW */
 #define XK_uparrow                       65362  /* U+2191 UPWARDS ARROW */
@@ -362,6 +362,7 @@ static t_camera	*get_camera_params(t_parameters *p)
 	t_camera	*camera;
 	t_tuple		*up;
 	t_tuple		*orientation;
+	t_tuple		*from;
 
 	camera = new_camera(WIN_WIDTH, WIN_HEIGHT, p->c_fov);
 	orientation = new_vector(
@@ -370,14 +371,17 @@ static t_camera	*get_camera_params(t_parameters *p)
 			p->c_orientation_vector[2]);
 	// t_matrix *rot = rotation_x(M_PI_2);
 	// up = matrix_multiply_tuple(rot, orientation);
+	from = new_point(p->c_view_point[0],
+				p->c_view_point[1],
+				p->c_view_point[2]);
 	up = new_vector(0, 1, 0);
 	t_matrix *transform = view_transform(
-			new_point(p->c_view_point[0],
-				p->c_view_point[1],
-				p->c_view_point[2]),
+			from,
 			orientation,
 			up);
 	set_camera_transform(camera, transform);
+	free(from);
+	free(up);
 	return (camera);
 }
 
