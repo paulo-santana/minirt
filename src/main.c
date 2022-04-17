@@ -384,7 +384,7 @@ static t_list	*get_world_light_params(t_parameters *p)
 	tmp_light = p->light_head;
 	while (tmp_light)
 	{
-		point_light = new_point_light(set_light_positon(p->light_head), set_light_color(p->light_head));
+		point_light = new_point_light(set_light_positon(tmp_light), set_light_color(tmp_light));
 		ft_lstadd_back(&head_list, ft_lstnew(point_light));
 		tmp_light = tmp_light->next;
 	}
