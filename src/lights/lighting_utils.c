@@ -45,14 +45,10 @@ t_color	*get_brighter(t_color *a, t_color *b)
 	return (new_color(b->red, b->green, b->blue));
 }
 
-t_color	*get_ambient(t_lighting_args *args, t_color *effective_color)
+t_color	*get_ambient(t_lighting_args *args)
 {
 	t_color	*ambient;
-	t_color	*pure;
-	t_color	*result;
 
-	ambient = multiply_colors(effective_color, args->material->ambient);
-	pure = multiply_colors(args->material->color, args->material->ambient);
-	result = get_brighter(ambient, pure);
-	return (result);
+	ambient = multiply_colors(args->material->color, args->material->ambient);
+	return (ambient);
 }

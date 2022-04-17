@@ -34,6 +34,6 @@ t_color			*get_diffuse(
 					t_color *effective_color,
 					double light_dot_normal);
 t_color			*get_brighter(t_color *a, t_color *b);
-t_color			*get_ambient(t_lighting_args *args, t_color *effective_color);
+t_color			*get_ambient(t_lighting_args *args);
 
 #endif /* !LIGHT_H */
