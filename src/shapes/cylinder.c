@@ -54,6 +54,7 @@ void	cylinder_intersect(t_shape *cylinder, t_ray *ray, t_intersections *xs)
 	double	discriminant;
 	double	t[2];
 
+	intersect_caps(cylinder, ray, xs);
 	a = pow(ray->direction->x, 2) + pow(ray->direction->z, 2);
 	if (dequals(a, 0))
 		return ;
@@ -66,7 +67,6 @@ void	cylinder_intersect(t_shape *cylinder, t_ray *ray, t_intersections *xs)
 	t[0] = (-b - sqrt(discriminant)) / (2 * a);
 	t[1] = (-b + sqrt(discriminant)) / (2 * a);
 	add_if_intersect(xs, t, cylinder, ray);
-	intersect_caps(cylinder, ray, xs);
 }
 
 t_tuple	*cylinder_normal_at(t_shape *cylinder, t_tuple *point)
