@@ -214,9 +214,16 @@ static void	set_plane_props_position(t_shape *shape, t_scene_object_param *obj)
 
 static void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
 {
-	shape->sphere_props.position.x = obj->cordinates[0];
-	shape->sphere_props.position.y = obj->cordinates[1];
-	shape->sphere_props.position.z = obj->cordinates[2];
+	double		x;
+	double		y;
+	double		z;
+	t_matrix	*transl;
+
+	x = obj->cordinates[0];
+	y = obj->cordinates[1];
+	z = obj->cordinates[2];
+	transl = translation(x, y, z);
+	set_transform(shape, transl);
 	shape->sphere_props.radius = obj->diameter * 0.5;
 }
 
@@ -323,10 +330,7 @@ static t_list	*get_world_light_params(t_parameters *p)
 	while (tmp_light)
 	{
 		point_light = new_point_light(set_light_positon(p->light_head), set_light_color(p->light_head));
-		if (!head_list)
-			head_list = ft_lstnew(point_light);
-		else
-			ft_lstadd_back(&head_list, ft_lstnew(point_light));
+		ft_lstadd_back(&head_list, ft_lstnew(point_light));
 		tmp_light = tmp_light->next;
 	}
 	return (head_list);
