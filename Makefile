@@ -31,10 +31,10 @@ COMMON_FILES += parsing/file_check_for_pl.c
 COMMON_FILES += parsing/file_check_for_sp.c
 COMMON_FILES += parsing/load_file.c
 COMMON_FILES += parsing/tokens_utils_1.c
+COMMON_FILES += parsing/file_check_utils_3.c
 
 MANDATORY_FILES = parsing/file_check_utils_1.c
 MANDATORY_FILES += parsing/file_check_utils_2.c
-MANDATORY_FILES += parsing/file_check_utils_3.c
 MANDATORY_FILES += parsing/list_utils_1.c
 MANDATORY_FILES += parsing/file_check_for_l.c
 
