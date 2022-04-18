@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 12:10:33 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/14 19:17:51 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/18 03:41:18 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	get_line(char **file_tokens, char *identidier)
 	return (i);
 }
 
-int	check_for_invalid_line(char **file_tokens)
+int	check_invalid_line(char **file_tokens)
 {
 	int		i;
 	int		status;
@@ -81,7 +81,7 @@ int	check_for_invalid_line(char **file_tokens)
 	return (status);
 }
 
-int	check_for_tab(char **file_tokens)
+int	check_tab(char **file_tokens)
 {
 	int	i;
 
@@ -89,7 +89,7 @@ int	check_for_tab(char **file_tokens)
 	while (file_tokens[i])
 	{
 		if (ft_strchr(file_tokens[i], '\t'))
-			return (send_error("Error\n'\\t' is not a valid character"));
+			return (send_error("Error\ntab is not a valid character"));
 		++i;
 	}
 	return (0);
