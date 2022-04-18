@@ -92,6 +92,7 @@ void	copy_to_mlx_img(t_canvas *canvas, t_image *image)
 
 void draw_spheres(t_data *data)
 {
+	free(data->canvas->data);
 	free(data->canvas);
 	data->canvas = render(data->camera, data->world);
 	copy_to_mlx_img(data->canvas, &data->mlx_img);

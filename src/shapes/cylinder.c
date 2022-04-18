@@ -86,6 +86,7 @@ void	destroy_cylinder(t_shape *cyl)
 	free(cyl->transform);
 	free(cyl->inverse_transform);
 	destroy_material(cyl->material);
+	free(cyl);
 }
 
 t_shape	*new_cylinder(void)

@@ -57,6 +57,9 @@ void	set_cylinder_props_position(t_shape *shape, t_scene_object_param *obj)
 	scale = scaling(obj->diameter / 2, 1, obj->diameter / 2);
 	transform = matrix_multiply3(scale, rot, translate);
 	set_transform(shape, transform);
+	free(scale);
+	free(rot);
+	free(translate);
 	shape->cylinder_props.max = obj->height * 0.5;
 	shape->cylinder_props.min = -obj->height * 0.5;
 	shape->cylinder_props.radius = obj->diameter * 0.5;
@@ -75,6 +78,8 @@ void	set_plane_props_position(t_shape *shape, t_scene_object_param *obj)
 	rot = get_orientation_matrix(obj->orientation_vector);
 	transform = matrix_multiply(translate, rot);
 	set_transform(shape, transform);
+	free(translate);
+	free(rot);
 }
 
 void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
