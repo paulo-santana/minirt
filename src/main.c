@@ -28,45 +28,12 @@
 #define XK_rightarrow                    65363  /* U+2192 RIGHTWARDS ARROW */
 #define XK_downarrow                     65364  /* U+2193 DOWNWARDS ARROW */
 
-void put_pixel(t_canvas *img, t_color *color, int x, int y)
-{
-	img->data[y * img->width + x] = color_to_int(color);
-}
-
 void	my_mlx_put_pixel(t_image *img, unsigned int color, int x, int y)
 {
 	unsigned int	*addr;
 
 	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
 	*addr = color;
-}
-
-void	draw_canvas_mlx(t_canvas *canvas, t_image *mlx_img)
-{
-	int		y;
-	int 	x;
-	int		pixel_x;
-	int		pixel_y;
-
-	y = 0;
-	int height = WIN_HEIGHT;
-	int width = mlx_img->size_line / (mlx_img->bpp / 8);
-	while (y < height)
-	{
-		x = 0;
-		pixel_y = (int)round(((float)y / (float)height) * (float)canvas->height);
-		while (x < width)
-		{
-			// int limit = WIN_HEIGHT > WIN_WIDTH ? WIN_WIDTH : WIN_HEIGHT;
-			pixel_x = (int)(((float)x / (float)width) * (float)canvas->width);
-			if (pixel_x > canvas->width || pixel_y > canvas->height)
-				return ;
-			unsigned int color = canvas->data[pixel_y * canvas->width + pixel_x];
-			my_mlx_put_pixel(mlx_img, color, x, y);
-			x++;
-		}
-		y++;
-	}
 }
 
 int	init_mlx_image(t_image *image, int width, int height, t_data *data)
@@ -76,73 +43,6 @@ int	init_mlx_image(t_image *image, int width, int height, t_data *data)
 			&image->size_line, &image->endian);
 	return (1);
 }
-
-t_tuple *get_cam_rotation(t_data *data)
-{
-	return (new_tuple(data->cam_orientation->x,
-			data->cam_orientation->y,
-			data->cam_orientation->z,
-			data->cam_orientation->w));
-}
-
-void	draw_canvas_ascii(t_canvas *canvas)
-{
-	int		i;
-	int 	j;
-	int		pixel_x;
-	int		pixel_y;
-	unsigned int color;
-	unsigned int avg;
-	char	*buffer;
-	char	*palette = " .-~+*%YOSHD#NM";
-
-	i = 0;
-	// int width = mlx_img->size_line / (mlx_img->bpp / 8);
-	int width = 100;
-	int height = 50;
-	buffer = malloc((size_t)(width + 1) * (size_t)height + 1);
-// -	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
-	while (i < height)
-	{
-		j = 0;
-		// int height = WIN_HEIGHT;
-		while (j < width)
-		{
-			// int limit = height > width ? width : height;
-			pixel_x = (j * canvas->width) / width;
-			pixel_y = (i * canvas->height) / height;
-			// if (pixel_x > canvas->width || pixel_y > canvas->height)
-			// 	return ;
-			color = canvas->data[pixel_y * canvas->width + pixel_x];
-			// my_mlx_put_pixel(mlx_img, color, i, j);
-			avg = ((color & 0xff0000) >> 16) + ((color & 0xff00) >> 8) + (color & 0xff);
-			avg /= 3;
-			char c = palette[(int)(avg / 256. * (double)strlen(palette))];
-			buffer[i * (width + 1) + j] = c;
-			j++;
-		}
-		buffer[i * (width + 1) + j] = '\n';
-		i++;
-	}
-	buffer[i * (width + 1)] = '\0';
-	ft_putstr_fd(buffer, 1);
-	free(buffer);
-}
-
-void draw_spheres(t_data *data)
-{
-	free(data->canvas);
-	data->canvas = render(data->camera, data->world);
-	draw_canvas_mlx(data->canvas, &data->mlx_img);
-	// draw_canvas_ascii(data->canvas);
-	// sleep(1);
-	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
-}
-
-				/*
-				* BÁFICA 
-				*/
-
 
 static t_camera	*get_camera_params(t_parameters *p)
 {
@@ -156,8 +56,6 @@ static t_camera	*get_camera_params(t_parameters *p)
 			p->c_orientation_vector[0],
 			p->c_orientation_vector[1],
 			p->c_orientation_vector[2]);
-	// t_matrix *rot = rotation_x(M_PI_2);
-	// up = matrix_multiply_tuple(rot, orientation);
 	from = new_point(p->c_view_point[0],
 				p->c_view_point[1],
 				p->c_view_point[2]);
@@ -172,172 +70,43 @@ static t_camera	*get_camera_params(t_parameters *p)
 	return (camera);
 }
 
+void	copy_to_mlx_img(t_canvas *canvas, t_image *image)
+{
+	int			x;
+	int			y;
+	unsigned	color;
+
+	y = 0;
+	while (y < canvas->height)
+	{
+		x = 0;
+		while (x < canvas->width)
+		{
+			color = canvas->data[y * canvas->width + x];
+			my_mlx_put_pixel(image, color, x, y);
+			x++;
+		}
+		y++;
+	}
+}
+
+void draw_spheres(t_data *data)
+{
+	free(data->canvas);
+	data->canvas = render(data->camera, data->world);
+	copy_to_mlx_img(data->canvas, &data->mlx_img);
+	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
+}
+
 void	get_params(t_data *data, t_parameters *p)
 {
-	t_shape	*sphere;
-
-	sphere = new_sphere();
 	data->world = new_world();
 	data->world->lights = get_world_light_params(p);
 	data->world->objects.spheres = get_world_objects_params(p);
-	add_sphere(data->world, sphere);
-	sphere->material->color->red = 0.12;
-	sphere->material->color->green = 0.12;
-	sphere->material->color->blue = 0.12;
-	t_matrix *translate = translation(2, 2, 0);
-	set_transform(sphere, translate);
 	data->camera = get_camera_params(p);
 	data->cam_position = new_point(p->c_view_point[0],
 		p->c_view_point[1],
 		p->c_view_point[2]);
-}
-
-				/*
-				* BÁFICA 
-				*/
-
-void	generate_world(t_data *data)
-{
-	t_world *world = new_world();
-	t_shape *floors = new_plane();
-	t_matrix *transforms[5];
-	set_transform(floors, scaling(10, 0.01, 10));
-	floors->material->color->red = .5;
-	floors->material->color->green = .9;
-	floors->material->color->blue = .6;
-	floors->material->specular = 0;
-
-	t_shape *wall = new_plane();
-	transforms[0] = rotation_x(M_PI_2);
-	transforms[1] = translation(0, 0, 4.5);
-	transforms[2] = NULL;
-	t_matrix *trans = matrix_multiply_n(transforms);
-	set_transform(wall, trans);
-	wall->material->specular = .1;
-
-	add_sphere(world, wall);
-
-	wall = new_plane();
-	transforms[0] = rotation_x(M_PI_2);
-	transforms[1] = translation(0, 0, -13.5);
-	transforms[2] = NULL;
-	trans = matrix_multiply_n(transforms);
-	set_transform(wall, trans);
-	wall->material->color->red = .1;
-	wall->material->color->green = .8;
-	wall->material->color->blue = 1;
-
-	t_shape *middle = new_sphere();
-	// set_transform(middle, translation(0.5, 1, 0.0));
-	middle->material->color->red = 0.3;
-	middle->material->color->green = 0.4;
-	middle->material->color->blue = 0.8;
-	middle->material->diffuse = .9;
-	middle->material->ambient = new_color(0.9, 0.1, 0.2);
-	middle->material->specular = 1;
-
-	t_shape *cyl1 = new_cylinder();
-	transforms[0] = rotation_x(1);
-	transforms[1] = rotation_y(-2);
-	transforms[2] = translation(5, 2, 3);
-	transforms[3] = NULL;
-	trans = matrix_multiply_n(transforms);
-	set_transform(cyl1, trans);
-
-	t_shape *right = new_sphere();
-	// set_transform(right,translation(-1.5, 1, 0));
-	right->material->color->red = 0.1;
-	right->material->color->blue = 0.1;
-	right->material->diffuse = 0.7;
-	right->material->specular = 0.3;
-
-	t_shape *left = new_sphere();
-	// set_transform(left, matrix_multiply(translation(3.1, 1, 0), scaling(1, 1, 1)));
-	left->material->color->green = 0.4;
-	left->material->color->blue = 0.4;
-	left->material->diffuse = 0.7;
-	left->material->specular = 0.9;
-
-	t_point_light *light = new_point_light(new_point(-10, 10, -10), new_color(.5, .5, .5));
-	// t_point_light *light2 = new_point_light(new_point(-1, 1.0, -2), new_color(.5, .5, .5));
-	float ratio = (float)WIN_WIDTH / WIN_HEIGHT;
-	float size = (float)(WIN_WIDTH * data->resolution);
-	t_camera *camera = new_camera((int)size, (int)(size / ratio), M_PI / 3);
-	set_camera_transform(camera, view_transform(
-				new_point(0, 1.5, -5),
-				new_point(0, 1, 0),
-				new_vector(0, 1, 0)));
-	add_light(world, light);
-	// add_light(world, light2);
-	// t_point_light *light2 = new_point_light(new_point(10, 10, -10), new_color(.5, .2, 1));
-	// add_light(world, light2);
-	add_sphere(world, floors);
-	add_sphere(world, wall);
-	add_sphere(world, right);
-	add_sphere(world, middle);
-	add_sphere(world, left);
-	add_sphere(world, cyl1);
-	data->world = world;
-	data->camera = camera;
-	data->cam_position = new_point(0, 1, -4.5);
-}
-
-double milis(void)
-{
-	struct timeval current_time;
-	gettimeofday(&current_time, NULL);
-
-	return ((double)current_time.tv_sec * 1000 + (double)current_time.tv_usec / 1000);
-}
-
-void print_fps(t_data *data, double delta_time)
-{
-	double seconds;
-	char buff[100];
-
-	seconds = 1 / delta_time;
-	snprintf(buff, 100, "fps: %f", seconds);
-	mlx_string_put(data->mlx, data->window, 10, 10, 0xff5500, buff);
-	seconds = 0;
-}
-
-void get_mouse_delta(t_data *data, double *x, double *y)
-{
-	int px;
-	int py;
-
-	mlx_mouse_get_pos(data->mlx, data->window, &px, &py);
-	// -1  0  1;
-	*x = (double)px / (double)WIN_WIDTH * 2. - 1.;
-	*y = (double)py / (double)WIN_HEIGHT * 2. - 1.;
-	data->delta_mouse_x = *x;
-	data->delta_mouse_y = *y;
-	// printf("mouse x: %i, y: %i\n", px, py);
-	// printf("mouse x: %.15lf, y: %.15lf\n", data->delta_mouse_x, data->delta_mouse_y);
-}
-
-void rotate_camera(t_data *data, double delta_time)
-{
-	double mousex, mousey;
-	double rot_speed = M_PI * .5;
-
-	(void)delta_time;
-	get_mouse_delta(data, &mousex, &mousey);
-	data->cam_orientation->y += rot_speed * mousex;
-	data->cam_orientation->x += rot_speed * mousey;
-}
-
-void print_stats(t_data *data)
-{
-	printf("cam: yaw: %.2f, pitch: %.2f, roll: %.2f\n",
-			data->cam_orientation->y,
-			data->cam_orientation->x,
-			data->cam_orientation->z);
-}
-
-void center_mouse(t_data *data)
-{
-	mlx_mouse_move(data->mlx, data->window, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 }
 
 void render_full(t_data *data)
@@ -355,17 +124,6 @@ void render_full(t_data *data)
 	mlx_string_put(data->mlx, data->window, 20, 20, 0xff00, "Teste");
 	draw_spheres(data);
 	mlx_string_put(data->mlx, data->window, 20, 20, 0xff0000, "Testado");
-}
-
-double get_delta_time(t_data *data)
-{
-	double current;
-	double delta;
-
-	current = milis();
-	delta = (current - data->last_tick) / 1000;
-	data->last_tick = current;
-	return (delta);
 }
 
 int	main(int argc, char **argv)
@@ -393,9 +151,6 @@ int	main(int argc, char **argv)
 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
 	mlx_hook(data.window, 12, 1L << 15, expose_hook, &data);
 	mlx_hook(data.window, 17, 1L << 2, close_screen, &data);
-
-	data.last_tick = milis();
-	center_mouse(&data);
 
 	render_full(&data);
 	mlx_loop(data.mlx);
