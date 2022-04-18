@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_bonus.h"
+#include "parsing.h"
 
 static void	add_space(char **input, size_t index)
 {
