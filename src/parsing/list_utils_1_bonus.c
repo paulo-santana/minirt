@@ -19,16 +19,11 @@ void	free_scene_object_param(t_scene_object_param *head)
 	while (head)
 	{
 		tmp = head->next;
-		if (head->identifier)
-			free(head->identifier);
-		if (head->cordinates)
-			free(head->cordinates);
-		if (head->color)
-			free(head->color);
-		if (head->orientation_vector)
-			free(head->orientation_vector);
-		if (head)
-			free(head);
+		free(head->identifier);
+		free(head->cordinates);
+		free(head->color);
+		free(head->orientation_vector);
+		free(head);
 		head = tmp;
 	}
 }
@@ -40,12 +35,9 @@ void	free_scene_light_param(t_scene_light_param *head)
 	while (head)
 	{
 		tmp = head->next;
-		if (head->l_light_point)
-			free(head->l_light_point);
-		if (head->l_color)
-			free(head->l_color);
-		if (head)
-			free(head);
+		free(head->l_light_point);
+		free(head->l_color);
+		free(head);
 		head = tmp;
 	}
 }

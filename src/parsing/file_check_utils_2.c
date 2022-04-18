@@ -91,13 +91,10 @@ void	init_allocated_parameters(t_parameters *p)
 
 void	free_allocated_parameters(t_parameters *p)
 {
-	if (p->a_color)
-		free(p->a_color);
-	if (p->c_view_point)
-		free(p->c_view_point);
-	if (p->c_orientation_vector)
-		free(p->c_orientation_vector);
-	if (p->object_head)
-		free_scene_object_param(p->object_head);
+	free(p->a_color);
+	free(p->c_view_point);
+	free(p->c_orientation_vector);
+	free_scene_object_param(p->object_head);
+	free_scene_light_param(p->light_head);
 	free(p);
 }

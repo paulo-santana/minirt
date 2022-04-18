@@ -42,6 +42,7 @@ int			check_normalized(char *x, char *y, char *z);
 void		init_allocated_parameters(t_parameters *p);
 void		free_allocated_parameters(t_parameters *p);
 void		free_scene_object_param(t_scene_object_param *head);
+void		free_scene_light_param(t_scene_light_param *head);
 void		add_scene_object_param(t_parameters *p, t_scene_object_param *node);
 void		add_scene_light_param(t_parameters *p, t_scene_light_param *node);
 

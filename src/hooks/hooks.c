@@ -30,7 +30,7 @@ int	expose_hook(t_data *data)
 int	close_screen(t_data *data)
 {
 	free_data(data);
-	exit(1);
+	exit(0);
 	return (0);
 }
 

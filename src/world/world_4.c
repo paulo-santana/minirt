@@ -19,7 +19,7 @@
 #include "shapes/shapes.h"
 #include "../matrix/matrix.h"
 
-t_matrix *get_orientation_matrix(double vector[3])
+t_matrix	*get_orientation_matrix(double vector[3])
 {
 	double		xy_length;
 	double		z_angle;
@@ -58,7 +58,7 @@ void	set_cylinder_props_position(t_shape *shape, t_scene_object_param *obj)
 	transform = matrix_multiply3(scale, rot, translate);
 	set_transform(shape, transform);
 	shape->cylinder_props.max = obj->height * 0.5;
-	shape->cylinder_props.min = - obj->height * 0.5;
+	shape->cylinder_props.min = -obj->height * 0.5;
 	shape->cylinder_props.radius = obj->diameter * 0.5;
 }
 
@@ -90,7 +90,6 @@ void	set_sphere_props_position(t_shape *shape, t_scene_object_param *obj)
 	z = obj->cordinates[2];
 	transl = translation(x, y, z);
 	scale = scaling(obj->diameter / 2, obj->diameter / 2, obj->diameter / 2);
-
 	set_transform(shape, matrix_multiply(transl, scale));
 	free(transl);
 	free(scale);

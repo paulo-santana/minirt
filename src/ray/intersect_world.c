@@ -99,6 +99,7 @@ static t_ray	*ray_from_to(t_tuple *origin, t_tuple *target)
 	v = subtract_tuples(target, origin);
 	direction = normalize(v);
 	ray = new_ray(origin, direction);
+	free(v);
 	return (ray);
 }
 
