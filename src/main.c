@@ -20,8 +20,8 @@
 #include <camera/camera.h>
 #include <unistd.h>
 
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+#define WIN_WIDTH 100
+#define WIN_HEIGHT 100
 
 #define XK_leftarrow                     65361 /* U+2190 LEFTWARDS ARROW */
 #define XK_uparrow                       65362  /* U+2191 UPWARDS ARROW */
@@ -391,6 +391,7 @@ int	main(int argc, char **argv)
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
 	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
+	mlx_hook(data.window, 2, 1L << 0, keyboard_hook, &data);
 	mlx_hook(data.window, 12, 1L << 15, expose_hook, &data);
 	mlx_hook(data.window, 17, 1L << 2, close_screen, &data);
 

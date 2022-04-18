@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 22:36:43 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/18 01:19:59 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/18 02:04:39 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,12 @@ int	close_screen(t_data *data)
 {
 	free_data(data);
 	exit(1);
+	return (0);
+}
+
+int	keyboard_hook(int keycode, t_data *data)
+{
+	if (keycode == 65307)
+		return (close_screen(data));
 	return (0);
 }
