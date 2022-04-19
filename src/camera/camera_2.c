@@ -55,10 +55,7 @@ t_camera	*get_camera_params(t_parameters *p)
 			p->c_view_point[1],
 			p->c_view_point[2]);
 	up = get_up(orientation);
-	transform = view_transform(
-			from,
-			orientation,
-			up);
+	transform = view_transform(from, orientation, up);
 	set_camera_transform(camera, transform);
 	free(from);
 	free(up);
