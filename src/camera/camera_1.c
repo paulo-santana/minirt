@@ -12,6 +12,7 @@
 
 #include "camera.h"
 #include "structures.h"
+#include <math.h>
 
 #define X 0
 #define Y 1
@@ -30,7 +31,7 @@ t_camera	*new_camera(int hsize, int vsize, double field_of_view)
 	camera->fov = field_of_view;
 	camera->transform = identity_matrix();
 	camera->inverse_transform = identity_matrix();
-	half_view = tan(field_of_view / 2);
+	half_view = tan(field_of_view * M_PI / 180 / 2);
 	aspect = (double)hsize / vsize;
 	if (aspect >= 1)
 	{
