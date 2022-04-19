@@ -45,6 +45,7 @@ t_shape	*new_plane(void)
 	t_shape	*plane;
 
 	plane = new_shape();
+	plane->material->specular = .2;
 	plane->destroy_fn = destroy_plane;
 	plane->normal_at = plane_normal_at;
 	plane->intersect = plane_intersect;
