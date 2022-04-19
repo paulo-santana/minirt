@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 02:35:03 by fbafica           #+#    #+#             */
+/*   Updated: 2022/04/19 02:46:47 by fbafica          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "lights/lights.h"
 #include "matrix/matrix.h"
@@ -20,19 +32,20 @@
 #include <camera/camera.h>
 #include <unistd.h>
 
-#define WIN_WIDTH 100
-#define WIN_HEIGHT 100
+#define WIN_X 100
+#define WIND_Y 100
 
-#define XK_leftarrow                     65361 /* U+2190 LEFTWARDS ARROW */
-#define XK_uparrow                       65362  /* U+2191 UPWARDS ARROW */
-#define XK_rightarrow                    65363  /* U+2192 RIGHTWARDS ARROW */
-#define XK_downarrow                     65364  /* U+2193 DOWNWARDS ARROW */
+#define XK_LEFTARROW                     65361 /* U+2190 LEFTWARDS ARROW */
+#define XK_UPARROW                       65362  /* U+2191 UPWARDS ARROW */
+#define XK_RIGHTARROW                    65363  /* U+2192 RIGHTWARDS ARROW */
+#define XK_DOWNARROW                     65364  /* U+2193 DOWNWARDS ARROW */
 
 void	my_mlx_put_pixel(t_image *img, unsigned int color, int x, int y)
 {
 	unsigned int	*addr;
 
-	addr = (unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
+	addr = \
+	(unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
 	*addr = color;
 }
 
@@ -50,17 +63,18 @@ static t_camera	*get_camera_params(t_parameters *p)
 	t_tuple		*up;
 	t_tuple		*orientation;
 	t_tuple		*from;
+	t_matrix	*transform;
 
-	camera = new_camera(WIN_WIDTH, WIN_HEIGHT, p->c_fov);
+	camera = new_camera(WIN_X, WIND_Y, p->c_fov);
 	orientation = new_vector(
 			p->c_orientation_vector[0],
 			p->c_orientation_vector[1],
 			p->c_orientation_vector[2]);
 	from = new_point(p->c_view_point[0],
-				p->c_view_point[1],
-				p->c_view_point[2]);
+			p->c_view_point[1],
+			p->c_view_point[2]);
 	up = new_vector(0, 1, 0);
-	t_matrix *transform = view_transform(
+	transform = view_transform(
 			from,
 			orientation,
 			up);
@@ -72,9 +86,9 @@ static t_camera	*get_camera_params(t_parameters *p)
 
 void	copy_to_mlx_img(t_canvas *canvas, t_image *image)
 {
-	int			x;
-	int			y;
-	unsigned	color;
+	int				x;
+	int				y;
+	unsigned int	color;
 
 	y = 0;
 	while (y < canvas->height)
@@ -90,7 +104,7 @@ void	copy_to_mlx_img(t_canvas *canvas, t_image *image)
 	}
 }
 
-void draw_spheres(t_data *data)
+void	draw_spheres(t_data *data)
 {
 	free(data->canvas->data);
 	free(data->canvas);
@@ -106,18 +120,18 @@ void	get_params(t_data *data, t_parameters *p)
 	data->world->objects.spheres = get_world_objects_params(p);
 	data->camera = get_camera_params(p);
 	data->cam_position = new_point(p->c_view_point[0],
-		p->c_view_point[1],
-		p->c_view_point[2]);
+			p->c_view_point[1],
+			p->c_view_point[2]);
 }
 
-void render_full(t_data *data)
+void	render_full(t_data *data)
 {
-	t_canvas *canvas;
-	
+	t_canvas	*canvas;
+
 	if (data->rendered)
 		return ;
 	data->rendered = 1;
-	canvas = new_canvas(WIN_WIDTH, WIN_HEIGHT);
+	canvas = new_canvas(WIN_X, WIND_Y);
 	free(data->canvas);
 	data->canvas = canvas;
 	set_camera_dimensions(data->camera, data->canvas);
@@ -148,14 +162,10 @@ int	main(int argc, char **argv)
 	get_params(&data, p);
 	free_allocated_parameters(p);
 	data.mlx = mlx_init();
-	data.window = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Mini Ray Tracer");
-	init_mlx_image(&data.mlx_img, WIN_WIDTH, WIN_HEIGHT, &data);
-	mlx_hook(data.window, 2, 1L << 0, keyboard_hook, &data);
-	mlx_hook(data.window, 12, 1L << 15, expose_hook, &data);
-	mlx_hook(data.window, 17, 1L << 2, close_screen, &data);
-
+	data.window = mlx_new_window(data.mlx, WIN_X, WIND_Y, "MiniRT");
+	init_mlx_image(&data.mlx_img, WIN_X, WIND_Y, &data);
+	init_hooks(&data);
 	render_full(&data);
 	mlx_loop(data.mlx);
-
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 16:51:47 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/18 01:37:56 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/19 02:48:27 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ void		set_ambient(t_shape *shape, t_parameters *p);
 t_shape		*get_scene_shape(t_scene_object_param *obj);
 void		set_color(t_shape *shape, t_scene_object_param *obj);
 void		set_props(t_shape *shape, t_scene_object_param *obj);
-void		set_sphere_props_position(t_shape *shape, t_scene_object_param *obj);
-void		set_plane_props_position(t_shape *shape, t_scene_object_param *obj);
-void		set_cylinder_props_position(t_shape *shape, t_scene_object_param *obj);
+void		set_sphere_props_position(t_shape *shape, \
+				t_scene_object_param *obj);
+void		set_plane_props_position(t_shape *shape, \
+				t_scene_object_param *obj);
+void		set_cylinder_props_position(t_shape *shape, \
+				t_scene_object_param *obj);
 t_matrix	*get_orientation_matrix(double vector[3]);
-
-
-
-
 #endif /* !WORLD_H */

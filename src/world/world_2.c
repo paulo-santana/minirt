@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 01:23:06 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/18 01:33:39 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/19 02:47:19 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ t_list	*get_world_light_params(t_parameters *p)
 	}
 	return (head_list);
 }
-
