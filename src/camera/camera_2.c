@@ -19,23 +19,15 @@
 
 t_tuple	*get_up(t_tuple *orientation)
 {
-	t_matrix	*rot;
-	t_tuple		*tmp;
-	t_tuple		*result;
+	t_tuple	*right;
+	t_tuple	*up;
 
-	if (dequals(fabs(orientation->x), 1))
-		return (new_vector(0, 1, 0));
-	rot = rotation_x(M_PI_2);
-	tmp = matrix_multiply_tuple(rot, orientation);
-	if (tmp->y < 0)
-	{
-		result = negate_tuple(tmp);
-		free(tmp);
-	}
-	else
-		result = tmp;
-	free(rot);
-	return (result);
+	if (dequals(fabs(orientation->y), 1))
+		return (new_vector(1, 0, 0));
+	right = cross(&(t_tuple){0, 1, 0, 0}, orientation);
+	up = cross(orientation, right);
+	free(right);
+	return (up);
 }
 
 t_camera	*get_camera_params(t_parameters *p)
