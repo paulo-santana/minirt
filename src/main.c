@@ -36,41 +36,19 @@
 #define XK_RIGHTARROW                    65363  /* U+2192 RIGHTWARDS ARROW */
 #define XK_DOWNARROW                     65364  /* U+2193 DOWNWARDS ARROW */
 
-void	draw_spheres(t_data *data)
-{
-	free(data->canvas->data);
-	free(data->canvas);
-	data->canvas = render(data->camera, data->world);
-	copy_to_mlx_img(data->canvas, &data->mlx_img);
-	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
-}
-
 void	get_params(t_data *data, t_parameters *p)
 {
 	data->world = new_world();
 	data->world->lights = get_world_light_params(p);
 	data->world->objects.spheres = get_world_objects_params(p);
 	data->camera = get_camera_params(p);
-	data->cam_position = new_point(p->c_view_point[0],
-			p->c_view_point[1],
-			p->c_view_point[2]);
 }
 
 void	render_full(t_data *data)
 {
-	t_canvas	*canvas;
-
-	if (data->rendered)
-		return ;
-	data->rendered = 1;
-	canvas = new_canvas(WIN_X, WIND_Y);
-	free(data->canvas);
-	data->canvas = canvas;
-	set_camera_dimensions(data->camera, data->canvas);
-	mlx_mouse_show(data->mlx, data->window);
-	mlx_string_put(data->mlx, data->window, 20, 20, 0xff00, "Teste");
-	draw_spheres(data);
-	mlx_string_put(data->mlx, data->window, 20, 20, 0xff0000, "Testado");
+	data->canvas = render(data->camera, data->world);
+	copy_to_mlx_img(data->canvas, &data->mlx_img);
+	mlx_put_image_to_window(data->mlx, data->window, data->mlx_img.ptr, 0, 0);
 }
 
 int	main(int argc, char **argv)

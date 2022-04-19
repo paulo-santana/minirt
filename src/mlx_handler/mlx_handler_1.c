@@ -18,7 +18,6 @@ void	free_data(t_data *data)
 	free(data->canvas->data);
 	free(data->canvas);
 	destroy_camera(data->camera);
-	free(data->cam_position);
 	destroy_world(data->world);
 	mlx_destroy_window(data->mlx, data->window);
 	mlx_destroy_image(data->mlx, data->mlx_img.ptr);

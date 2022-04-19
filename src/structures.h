@@ -210,15 +210,7 @@ struct s_data {
 	t_image			mlx_img;
 	t_canvas		*canvas;
 	t_camera		*camera;
-	t_tuple			*cam_position;
-	t_tuple			*cam_orientation;
 	t_world			*world;
-	double			last_tick;
-	double			resolution;
-	double			delta_mouse_x;
-	double			delta_mouse_y;
-	int				navigation_mode;
-	int				rendered;
 };
 
 #endif /* !STRUCTURES_H */
