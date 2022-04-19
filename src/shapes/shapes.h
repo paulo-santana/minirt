@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 12:05:36 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/15 23:28:55 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/19 03:40:24 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,10 @@ t_material	*new_material(void);
 void		destroy_material(void *mat);
 
 void		intersect_caps(t_shape *shape, t_ray *ray, t_intersections *xs);
+
+void		cylinder_intersect(t_shape *cylinder, \
+				t_ray *ray, t_intersections *xs);
+t_tuple		*cylinder_normal_at(t_shape *cylinder, t_tuple *point);
+void		destroy_cylinder(t_shape *cyl);
 
 #endif /* !SHAPES_H */

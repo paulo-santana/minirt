@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:08:55 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/17 23:38:33 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/19 02:52:23 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void			set_camera_transform(t_camera *camera, t_matrix *t);
 t_ray			*ray_to_pixel(int x, int y, t_camera *camera);
 void			destroy_camera(t_camera *camera);
 void			set_camera_dimensions(t_camera *camera, t_canvas *canvas);
+t_camera		*get_camera_params(t_parameters *p);
 
 t_matrix		*view_transform(t_tuple *from, t_tuple *to, t_tuple *up);
 

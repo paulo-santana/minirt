@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations.c                                       :+:      :+:    :+:   */
+/*   operations_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 19:27:02 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/11 20:37:37 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/19 03:09:51 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "matrix.h"
 #include "structures.h"
 #include "tuple/tuple.h"
-#include "debug.h"
-#include <stdio.h>
 
 t_matrix	*matrix_multiply(t_matrix *a, t_matrix *b)
 {
@@ -114,31 +112,4 @@ t_matrix	*transpose(t_matrix *matrix)
 		i++;
 	}
 	return (transposed);
-}
-
-t_matrix	*inverse(t_matrix *matrix)
-{
-	t_matrix	*inversed;
-	int			row;
-	int			col;
-	double		cofact;
-	double		determn;
-
-	determn = determinant(matrix);
-	if (determn == 0)
-		return (NULL);
-	inversed = new_matrix(matrix->size, NULL);
-	row = 0;
-	while (row < matrix->size)
-	{
-		col = 0;
-		while (col < matrix->size)
-		{
-			cofact = cofactor(matrix, row, col);
-			inversed->data[col][row] = cofact / determn;
-			col++;
-		}
-		row++;
-	}
-	return (inversed);
 }

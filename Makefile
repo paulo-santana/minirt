@@ -1,4 +1,5 @@
 NAME = miniRT
+NAME_BONUS = miniRT_bonus
 
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -18,7 +19,8 @@ HEADERS += libft/libft.h
 
 COMMON_FILES += tuple/tuple_check.c
 COMMON_FILES += tuple/tuple_creation.c
-COMMON_FILES += tuple/tuple_operations.c
+COMMON_FILES += tuple/tuple_operations_1.c
+COMMON_FILES += tuple/tuple_operations_2.c
 COMMON_FILES += tuple/vector_utils.c
 COMMON_FILES += tuple/color_utils.c
 
@@ -45,15 +47,18 @@ BONUS_FILES += parsing/file_check_utils_2_bonus.c
 
 COMMON_FILES += matrix/creation.c
 COMMON_FILES += matrix/check.c
-COMMON_FILES += matrix/operations.c
+COMMON_FILES += matrix/operations_1.c
+COMMON_FILES += matrix/operations_2.c
 COMMON_FILES += matrix/determinant.c
 COMMON_FILES += matrix/submatrix.c
 COMMON_FILES += matrix/transform.c
 
 COMMON_FILES += ray/ray.c
 COMMON_FILES += ray/creation.c
-COMMON_FILES += ray/intersections.c
-COMMON_FILES += ray/intersect_world.c
+COMMON_FILES += ray/intersections_1.c
+COMMON_FILES += ray/intersections_2.c
+COMMON_FILES += ray/intersect_world_1.c
+COMMON_FILES += ray/intersect_world_2.c
 COMMON_FILES += ray/transform.c
 
 COMMON_FILES += shapes/shape.c
@@ -61,7 +66,8 @@ COMMON_FILES += shapes/material.c
 COMMON_FILES += shapes/normal.c
 COMMON_FILES += shapes/sphere.c
 COMMON_FILES += shapes/plane.c
-COMMON_FILES += shapes/cylinder.c
+COMMON_FILES += shapes/cylinder_1.c
+COMMON_FILES += shapes/cylinder_2.c
 COMMON_FILES += shapes/cylinder_utils.c
 
 COMMON_FILES += lights/lighting.c
@@ -73,15 +79,15 @@ COMMON_FILES += world/world_3.c
 COMMON_FILES += world/world_2.c
 COMMON_FILES += world/world_4.c
 
-COMMON_FILES += camera/camera.c
+COMMON_FILES += camera/camera_1.c
+COMMON_FILES += camera/camera_2.c
 COMMON_FILES += camera/canvas.c
 COMMON_FILES += camera/view.c
 
 COMMON_FILES += utils/double_comparison.c
 
-COMMON_FILES += hooks/hooks.c
-
-COMMON_FILES += debug.c
+COMMON_FILES += mlx_handler/mlx_handler_1.c
+COMMON_FILES += mlx_handler/mlx_handler_2.c
 
 SRC_DIR = ./src
 OBJ_ROOT = ./obj
@@ -94,7 +100,7 @@ OBJ_DIRS += $(OBJ_ROOT)/shapes
 OBJ_DIRS += $(OBJ_ROOT)/lights
 OBJ_DIRS += $(OBJ_ROOT)/world
 OBJ_DIRS += $(OBJ_ROOT)/camera
-OBJ_DIRS += $(OBJ_ROOT)/hooks
+OBJ_DIRS += $(OBJ_ROOT)/mlx_handler
 
 MANDATORY_OBJ = $(addprefix $(OBJ_ROOT)/, $(COMMON_FILES:.c=.o))
 MANDATORY_OBJ += $(addprefix $(OBJ_ROOT)/, $(MANDATORY_FILES:.c=.o))
@@ -113,8 +119,10 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(MANDATORY_OBJ) $(OBJ_ROOT)/main.o
 	$(CC) $(MANDATORY_OBJ) $(OBJ_ROOT)/main.o -o $(NAME) $(LFLAGS)
 
-bonus: $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(BONUS_OBJ) $(OBJ_ROOT)/main.o
-	$(CC) $(BONUS_OBJ) $(OBJ_ROOT)/main.o -o $(NAME) $(LFLAGS)
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(BONUS_OBJ) $(OBJ_ROOT)/main.o
+	$(CC) $(BONUS_OBJ) $(OBJ_ROOT)/main.o -o $(NAME_BONUS) $(LFLAGS)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
@@ -160,6 +168,7 @@ fclean: clean
 	$(RM) $(OBJ_ROOT)
 	$(RM) ./vgcore.*
 	$(RM) $(NAME)
+	$(RM) $(NAME_BONUS)
 
 re: fclean all
 

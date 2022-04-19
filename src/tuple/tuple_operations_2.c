@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   tuple_operations_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/17 23:22:49 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/19 02:46:36 by fbafica          ###   ########.fr       */
+/*   Created: 2022/04/19 03:16:03 by fbafica           #+#    #+#             */
+/*   Updated: 2022/04/19 03:17:19 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
-# include "../minirt.h"
+#include "../minirt.h"
+#include "tuple.h"
 
-void	init_hooks(t_data *data);
-int		close_screen(t_data *data);
-int		keyboard_hook(int keycode, t_data *data);
-int		expose_hook(t_data *data);
-void	free_data(t_data *data);
-#endif /* !WORLD_H */
+double	dot(t_tuple *a, t_tuple *b)
+{
+	return (
+		a->x * b->x
+		+ a->y * b->y
+		+ a->z * b->z
+		+ a->w * b->w
+	);
+}

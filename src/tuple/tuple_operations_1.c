@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple_operations.c                                 :+:      :+:    :+:   */
+/*   tuple_operations_1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:56:12 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/10 20:01:12 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/19 03:16:15 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,4 @@ t_tuple	*divide_scalar(t_tuple *tuple, double value)
 			tuple->y / value,
 			tuple->z / value,
 			tuple->w / value));
-}
-
-double	dot(t_tuple *a, t_tuple *b)
-{
-	return (
-		a->x * b->x
-		+ a->y * b->y
-		+ a->z * b->z
-		+ a->w * b->w
-	);
 }

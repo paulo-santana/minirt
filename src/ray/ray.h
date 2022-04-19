@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 13:04:58 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/10 11:03:58 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/19 03:23:19 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ void			destroy_computations(t_computations *comps);
 t_intersections	*intersect_world(t_world *world, t_ray *ray);
 t_color			*shade_hit(t_world *world, t_computations *comps);
 t_color			*color_at(t_world *world, t_ray *ray);
+t_color			*sum_color_list(t_list *colors);
 
 #endif /* !RAY_H */

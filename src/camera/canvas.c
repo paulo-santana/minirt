@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   canvas.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:37:16 by psergio-          #+#    #+#             */
-/*   Updated: 2022/03/17 19:33:00 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/19 03:00:57 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "camera.h"
-#include "debug.h"
 #include "ray/ray.h"
 #include "structures.h"
 #include <stddef.h>

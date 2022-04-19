@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 14:01:39 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/18 03:35:41 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/19 03:28:30 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int			load_file(char *file_name, char ***tokens);
 int			send_error(char *error_message);
 int			check_start(char **file_tokens);
 int			check_invalid_line(char **file_tokens);
-int			check_tab(char **tokens);
 int			check_for_a(char **file_tokens, t_parameters *p);
 int			check_for_c(char **file_tokens, t_parameters *p);
 int			check_for_l(char **file_tokens, t_parameters *p);
 int			check_for_sp(char **file_tokens, t_parameters *p);
 int			check_for_pl(char **file_tokens, t_parameters *p);
 int			check_for_cy(char **file_tokens, t_parameters *p);
+int			check_tab(char **file_tokens);
 void		free_tokens(char **tokens);
 void		print_tokens(char **tokens);
 int			get_tokens_len(char **tokens);

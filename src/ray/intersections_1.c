@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersections.c                                    :+:      :+:    :+:   */
+/*   intersections_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 15:45:23 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/11 22:04:41 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/19 03:14:43 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,24 +106,4 @@ t_intersection	*hit(t_intersections *inters)
 		i++;
 	}
 	return (NULL);
-}
-
-t_intersections	*new_intersections_list(void)
-{
-	t_intersections	*intersections;
-
-	intersections = malloc(sizeof(t_intersections));
-	intersections->count = 0;
-	intersections->size = 50;
-	intersections->is_sorted = 0;
-	intersections->intersections = malloc(sizeof(t_intersection *) * 50);
-	return (intersections);
-}
-
-void	destroy_intersections_list(t_intersections *inters)
-{
-	while (inters->count--)
-		free(inters->intersections[inters->count]);
-	free(inters->intersections);
-	free(inters);
 }

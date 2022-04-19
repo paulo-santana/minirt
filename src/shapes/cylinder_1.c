@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cylinder.c                                         :+:      :+:    :+:   */
+/*   cylinder_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psergio- <psergio->                        +#+  +:+       +#+        */
+/*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 20:49:28 by psergio-          #+#    #+#             */
-/*   Updated: 2022/04/15 23:29:27 by psergio-         ###   ########.fr       */
+/*   Updated: 2022/04/19 03:24:56 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,4 @@ void	destroy_cylinder(t_shape *cyl)
 	free(cyl->inverse_transform);
 	destroy_material(cyl->material);
 	free(cyl);
-}
-
-t_shape	*new_cylinder(void)
-{
-	t_shape	*cylinder;
-
-	cylinder = new_shape();
-	cylinder->cylinder_props.radius = 1;
-	cylinder->cylinder_props.position.w = 1;
-	cylinder->cylinder_props.min = 1;
-	cylinder->cylinder_props.max = 2;
-	cylinder->intersect = cylinder_intersect;
-	cylinder->normal_at = cylinder_normal_at;
-	cylinder->destroy_fn = destroy_cylinder;
-	return (cylinder);
 }

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
+/*   mlx_handler_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/17 22:36:43 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/19 02:46:53 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/19 03:03:04 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include "structures.h"
 
 void	free_data(t_data *data)
 {
@@ -47,7 +48,7 @@ int	keyboard_hook(int keycode, t_data *data)
 
 void	init_hooks(t_data *data)
 {
-	mlx_hook(data.window, 2, 1L << 0, keyboard_hook, data);
-	mlx_hook(data.window, 12, 1L << 15, expose_hook, data);
-	mlx_hook(data.window, 17, 1L << 2, close_screen, data);
+	mlx_hook(data->window, 2, 1L << 0, keyboard_hook, data);
+	mlx_hook(data->window, 12, 1L << 15, expose_hook, data);
+	mlx_hook(data->window, 17, 1L << 2, close_screen, data);
 }

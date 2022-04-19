@@ -6,7 +6,7 @@
 /*   By: fbafica <fbafica@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 02:35:03 by fbafica           #+#    #+#             */
-/*   Updated: 2022/04/19 02:46:47 by fbafica          ###   ########.fr       */
+/*   Updated: 2022/04/19 03:04:07 by fbafica          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "shapes/shapes.h"
 #include "structures.h"
 #include "tuple/tuple.h"
-#include "debug.h"
 #include "world/world.h"
 #include <bits/types/struct_timeval.h>
 #include <math.h>
@@ -32,77 +31,10 @@
 #include <camera/camera.h>
 #include <unistd.h>
 
-#define WIN_X 100
-#define WIND_Y 100
-
 #define XK_LEFTARROW                     65361 /* U+2190 LEFTWARDS ARROW */
 #define XK_UPARROW                       65362  /* U+2191 UPWARDS ARROW */
 #define XK_RIGHTARROW                    65363  /* U+2192 RIGHTWARDS ARROW */
 #define XK_DOWNARROW                     65364  /* U+2193 DOWNWARDS ARROW */
-
-void	my_mlx_put_pixel(t_image *img, unsigned int color, int x, int y)
-{
-	unsigned int	*addr;
-
-	addr = \
-	(unsigned int *)(img->data + (y * img->size_line + x * (img->bpp / 8)));
-	*addr = color;
-}
-
-int	init_mlx_image(t_image *image, int width, int height, t_data *data)
-{
-	image->ptr = mlx_new_image(data->mlx, width, height);
-	image->data = mlx_get_data_addr(image->ptr, &image->bpp,
-			&image->size_line, &image->endian);
-	return (1);
-}
-
-static t_camera	*get_camera_params(t_parameters *p)
-{
-	t_camera	*camera;
-	t_tuple		*up;
-	t_tuple		*orientation;
-	t_tuple		*from;
-	t_matrix	*transform;
-
-	camera = new_camera(WIN_X, WIND_Y, p->c_fov);
-	orientation = new_vector(
-			p->c_orientation_vector[0],
-			p->c_orientation_vector[1],
-			p->c_orientation_vector[2]);
-	from = new_point(p->c_view_point[0],
-			p->c_view_point[1],
-			p->c_view_point[2]);
-	up = new_vector(0, 1, 0);
-	transform = view_transform(
-			from,
-			orientation,
-			up);
-	set_camera_transform(camera, transform);
-	free(from);
-	free(up);
-	return (camera);
-}
-
-void	copy_to_mlx_img(t_canvas *canvas, t_image *image)
-{
-	int				x;
-	int				y;
-	unsigned int	color;
-
-	y = 0;
-	while (y < canvas->height)
-	{
-		x = 0;
-		while (x < canvas->width)
-		{
-			color = canvas->data[y * canvas->width + x];
-			my_mlx_put_pixel(image, color, x, y);
-			x++;
-		}
-		y++;
-	}
-}
 
 void	draw_spheres(t_data *data)
 {
