@@ -350,7 +350,7 @@ void			ft_stack_do_nothing(void *content);
 
 int				ft_strcmp(const char *s1, const char *s2);
 float			ft_atof(const char *nptr);
-int		ft_strchrlen(const char *s, int c);
-int		ft_strrchrlen(const char *s, int c);
+int				ft_strchrlen(const char *s, int c);
+int				ft_strrchrlen(const char *s, int c);
 
 #endif
