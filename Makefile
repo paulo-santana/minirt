@@ -4,9 +4,6 @@ NAME_BONUS = miniRT_bonus
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = ./minilibx-linux
-MLX = $(MLX_DIR)/libmlx.a
-
 IFLAGS = -I ./src
 
 HEADERS =  src/structures.h
@@ -109,26 +106,23 @@ BONUS_OBJ = $(addprefix $(OBJ_ROOT)/, $(COMMON_FILES:.c=.o))
 BONUS_OBJ += $(addprefix $(OBJ_ROOT)/, $(BONUS_FILES:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -Wconversion -O3 -I $(MLX_DIR) -I $(LIBFT_DIR) -I src #-fsanitize=address
-LFLAGS = -lm -L $(MLX_DIR) -lmlx -lXext -lX11 -L $(LIBFT_DIR) -lft #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -Wconversion -O3 -I $(LIBFT_DIR) -I src #-fsanitize=address
+LFLAGS = -lm -lmlx -lXext -lX11 -L $(LIBFT_DIR) -lft #-fsanitize=address
 
 RM = rm -rf
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(MANDATORY_OBJ) $(OBJ_ROOT)/main.o
+$(NAME): $(LIBFT) $(OBJ_ROOT) $(OBJ_DIRS) $(MANDATORY_OBJ) $(OBJ_ROOT)/main.o
 	$(CC) $(MANDATORY_OBJ) $(OBJ_ROOT)/main.o -o $(NAME) $(LFLAGS)
 
 bonus: $(NAME_BONUS)
 
-$(NAME_BONUS): $(LIBFT) $(MLX) $(OBJ_ROOT) $(OBJ_DIRS) $(BONUS_OBJ) $(OBJ_ROOT)/main.o
+$(NAME_BONUS): $(LIBFT) $(OBJ_ROOT) $(OBJ_DIRS) $(BONUS_OBJ) $(OBJ_ROOT)/main.o
 	$(CC) $(BONUS_OBJ) $(OBJ_ROOT)/main.o -o $(NAME_BONUS) $(LFLAGS)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
-
-$(MLX):
-	make -C $(MLX_DIR)
 
 $(OBJ_DIRS):
 	mkdir -p $@
