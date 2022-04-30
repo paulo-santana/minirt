@@ -109,7 +109,7 @@ BONUS_OBJ = $(addprefix $(OBJ_ROOT)/, $(COMMON_FILES:.c=.o))
 BONUS_OBJ += $(addprefix $(OBJ_ROOT)/, $(BONUS_FILES:.c=.o))
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -Wconversion -g3 -I $(MLX_DIR) -I $(LIBFT_DIR) -I src #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -Wconversion -O3 -I $(MLX_DIR) -I $(LIBFT_DIR) -I src #-fsanitize=address
 LFLAGS = -lm -L $(MLX_DIR) -lmlx -lXext -lX11 -L $(LIBFT_DIR) -lft #-fsanitize=address
 
 RM = rm -rf
@@ -173,7 +173,10 @@ fclean: clean
 re: fclean all
 
 run: $(NAME)
-	./$(NAME) ./file.rt
+	./$(NAME) ./file3.rt
+
+norme:
+	norminette src/ libft/ includes/
 
 #SOURCE = main.c \
 	file_check.c file_check_for_a.c file_check_for_c.c file_check_for_l.c \

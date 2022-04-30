@@ -13,8 +13,8 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define WIN_X 100
-# define WIND_Y 100
+# define WIN_X 1366
+# define WIND_Y 768
 
 # define EPSILON 0.0000001
 
