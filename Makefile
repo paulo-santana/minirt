@@ -4,7 +4,7 @@ NAME_BONUS = miniRT_bonus
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-IFLAGS = -I ./src
+IFLAGS = -I ./src -I ./minilibx-linux/
 
 HEADERS =  src/structures.h
 HEADERS += src/minirt.h
@@ -107,7 +107,7 @@ BONUS_OBJ += $(addprefix $(OBJ_ROOT)/, $(BONUS_FILES:.c=.o))
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -Wconversion -O3 -I $(LIBFT_DIR) -I src #-fsanitize=address
-LFLAGS = -lm -lmlx -lXext -lX11 -L $(LIBFT_DIR) -lft #-fsanitize=address
+LFLAGS = -L ./minilibx-linux/ -lm -lmlx -lXext -lX11 -L $(LIBFT_DIR) -lft #-fsanitize=address
 
 RM = rm -rf
 
@@ -131,7 +131,7 @@ $(OBJ_ROOT):
 	mkdir -p $(OBJ_ROOT)
 
 $(OBJ_ROOT)/%.o: $(SRC_DIR)/%.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 TEST_SRC += tests/munit/munit.c
 TEST_SRC += tests/main.c
