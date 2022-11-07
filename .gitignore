@@ -1,6 +1,5 @@
-/miniRT
-/obj
-/test_bin
-.cache/
+mao.rt
+*.o
+.cache
 compile_commands.json
-vgcore.*
+miniRT
